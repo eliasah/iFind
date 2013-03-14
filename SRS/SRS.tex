@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage[utf8]{inputenc}
 
 %opening
 \title{Cahier des charges}
@@ -14,7 +15,8 @@
 Ce document de spécification produit des informations spécifiques et\\
 nécessaires pour définir efficacement les fonctionnalités, l'architecture et la
 conception du système afin de donner la direction à l'équipe de développement
-sur l'architecture du système à développer. Le document de spécification du produit
+sur l'architecture du système à développer. Le document de spécification du
+produit
 est créé pendant la phase de planification du projet. Son public visé est le
 chef de projet, l'équipe de projet et l'équipe de développement et en partie le
 client. Les spécifications techniques et fonctionnelles de ce document sont
@@ -116,7 +118,7 @@ Le champ de saisie reçoit une requête sous forme d’expression régulière ou
 mots simples. 
 
 \begin{figure}
-\includegraphics[scale=0.7]{figure1.png}
+\includegraphics[scale=0.7]{rechercheSimple.png}
 \caption{Recherche simple}
 \end{figure}
 
@@ -135,11 +137,67 @@ Ensuite, à chaque création ou modification de fichier appartenant au corpus, l
 démon met à jour la base de données en fonction des modifications du fichier.
 
 \subsection{User characteristics}
+
+\subsubsection{Syntaxe du moteur de recherche}
+
+%\begin{tabular}{l{4cm} | c{4cm}}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+%TODO SYNTAXE A DEFINIR
+\hline
+Minuscules/ majuscules & iFind ne tient pas compte de la casse des caractères.
+Les requêtes 'ibm', 'Ibm' et 'IBM' renvoient le même résultat.\\
+\hline
+Lettres accentuées & \textbf{Important} \textit{electricite} et
+\textit{électricité} ne donnent pas le même résultat, même si les différences
+sont souvent minimes.\\
+\hline
+Ordre des mots & \textbf{Important}: \textit{paris brest } donne un résultat 
+différent de \textit{brest paris}. Une plus grande importance est donnée au
+premier 
+mot choisi.\\
+\hline
+Disjonction : & Rechercher un mot ou  l'autre, \textit{requête -or requête}
+Exemple : “machin OR bidon”. L'opérateur doit être saisi avec un tiret
+obligatoirement.\\
+\hline
+Conjonction & Exemple : 'moteur recherche' recherche les
+fichiers qui contiennent à la fois 'moteur' ET 'recherche'. Il est également
+possible d'utiliser le signe + pour demander une orthographe spécifique :
+Exemple : +jéremie ne trouvera pas la forme 'jeremie (non accentuée)\\
+ET & \\
+Opérateur par défaut & \\
+\hline
+Exclure un mot & Exemple : moteur –e automobile recherche les fichiers qui
+contiennent moteur
+mais qui ne contiennent pas automobile.\\
+-e requête & \\
+-e & \\
+\hline
+Expressions & Il n'est pas possible de faire des recherches de phrases
+exactes.\\
+Non & \\
+\hline
+Troncature & Il n'est pas possible de faire des recherches en utilisant la
+troncature sur iFind. le moteur recherche toujours exactement le mot demandé.
+mot ne trouve pas
+mots ni moteur. L'astérique (*) ne peut pas être utilisé. iFind tient cependant
+parfois compte de la troncature, sans qu'il soit possible pour l'utilisateur de
+décider quand.\\
+Non & \\
+\hline
+ Recherche sur le type   de fichier & Exemple : exemples –f pdf. Plusieurs
+formats sont possibles.\\
+ -f & \\
+\hline
+Recherche avancée & Recherche sur le format de fichiers, sur la date de mise à
+jour, etc. Cependant,
+il n’y aura pas de syntaxe spécifique mais des boites de choix au niveau de
+l’interface graphique.\\
+\hline
+\end{tabular}
+ 
 \subsubsection{Utilisation normale}
 L'utilisateur entre une requête dans la barre de recherche.
-
-% TODO INSERER ICI LA FIGURE
-Figure 2
 
 \subsubsection{Utilisation avancée}
 L'utilisateur peut également entrer une requête incluant des critères spéciaux
