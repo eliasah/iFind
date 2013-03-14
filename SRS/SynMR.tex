@@ -1,6 +1,7 @@
 \section{Syntaxe MR}
 
-\begin{tabular}{l | c}
+\begin{center}
+\begin{tabular}{| p{5cm} | p{8cm} |}
 \hline
 Minuscules/ majuscules & iFind ne tient pas compte de la casse des caractères.
 Les requêtes 'ibm', 'Ibm' et 'IBM' renvoient le même résultat.\\
@@ -8,41 +9,43 @@ Les requêtes 'ibm', 'Ibm' et 'IBM' renvoient le même résultat.\\
 Lettres accentuées & \textbf{Important} \textit{electricite} et \textit{électricité}
 ne donnent pas le même résultat, même si les différences sont souvent minimes.\\
 \hline
-Ordre des mots & \textbf{Important}: \textit{paris brest } donne un résultat 
+Ordre des mots & \textbf{Important}: \textit{paris brest} donne un résultat 
 différent de \textit{brest paris}. Une plus grande importance est donnée au premier 
 mot choisi.\\
 \hline
  Disjonction : Rechercher un mot ou  l'autre, requête -or requête
-
+&
 -or
-Exemple : “machin OR bidon”. L'opérateur doit être saisi avec un tiret obligatoirement.
+Exemple : machin OR bidon. L'opérateur doit être saisi avec un tiret obligatoirement.\\
 \hline
  Conjonction
  ET
-Opérateur par défaut
-Exemple : « moteur recherche » recherche les fichiers qui contiennent à la fois « moteur » ET « recherche ». Il est également possible d'utiliser le signe + pour demander une orthographe spécifique :
-Exemple : +jéremie ne trouvera pas la forme "jeremie" (non accentuée)
+& Opérateur par défaut
+Exemple : 'moteur recherche' recherche les fichiers qui contiennent à la fois 'moteur' ET 'recherche'. 
+Il est également possible d'utiliser le signe + pour demander une orthographe spécifique:
+Exemple : +jéremie ne trouvera pas la forme "jeremie" (non accentuée)\\
 \hline
  Exclure un mot
 -e requête
--e
-Exemple : moteur –e automobile recherche les fichiers qui contiennent moteur mais qui ne contiennent pas automobile.
+&-e
+Exemple : moteur –e automobile recherche les fichiers qui contiennent 'moteur' mais qui ne contiennent pas automobile.\\
 \hline
- Expressions
-Non.
-Il n'est pas possible de faire des recherches de phrases exactes.
+ Expressions & Non. Il n'est pas possible de faire des recherches de phrases exactes.\\
 \hline
-Troncature
-Non
-Il n'est pas possible de faire des recherches en utilisant la troncature sur iFind. le moteur recherche toujours exactement le mot demandé. mot ne trouve pas mots ni moteur. L'astérique (*) ne peut pas être utilisé. iFind tient cependant parfois compte de la troncature, sans qu'il soit possible pour l'utilisateur de décider quand.
+Troncature & Non. Il n'est pas possible de faire des recherches en utilisant la troncature sur iFind. 
+le moteur recherche toujours exactement le mot demandé. 'mot' ne trouve pas 'mots' ni 'moteur'. L'astérique (*) ne peut pas être utilisé. 
+iFind tient cependant parfois compte de la troncature, sans qu'il soit possible pour l'utilisateur de décider quand.\\
 \hline
- Recherche sur le type   de fichier
--f
-Exemple : exemples –f pdf. Plusieurs formats sont possibles.
+ Recherche sur le type de fichier
+& -f
+Exemple : exemples –f pdf. Plusieurs formats sont possibles.\\
 \hline
- Recherche avancée
-Advanced Search, Recherche avancée
-Recherche sur le format de fichiers, sur la date de mise à jour, etc. Cependant, il n’y aura pas de syntaxe spécifique mais des boites de choix au niveau de l’interface graphique.
-
+ Recherche avancée & 
+Advanced Search, Recherche avancée
+Recherche sur le format de fichiers, sur la date de mise à jour, etc. Cependant, il n’y aura pas de syntaxe spécifique mais des boites de choix au niveau de l’interface graphique.\\
+\hline
 
 \end{tabular}
+ 
+\end{center}
+
