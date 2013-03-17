@@ -46,8 +46,6 @@ IEEE Std 830-1998 Recommended Practice for Software Requirements Specifications
 
 \newpage
 
-
-
 \section{General Overview and Design Guidelines}
 Cette section décrit les principes et les stratégies qui seront utilisées comme
 des lignes directrices lors de la conception et de la mise en œuvre du système.
@@ -63,15 +61,13 @@ base, l’explorateur contiendra un tableau dans lequel on affichera les
 résultats. Le champ de saisie reçoit une requête sous forme d’expression
 régulière ou des mots simples.
 
-\begin{figure}
-\center
-\includegraphics[scale=0.7]{rechercheSimple.png}
-\caption{Recherche simple}
-\end{figure}
-
 Dans cet exemple, la recherche envoie tous les fichiers contenant les mots
 "toto" ou "abc".
 
+\begin{figure}[!h]
+\includegraphics[scale=0.7]{rechercheSimple.png}
+\caption{Interface graphique du moteur de recherche.}
+\end{figure}
 
 \subsection{Fonctionnalités du produit}
 Lors de la première utilisation, iFind lance un démon ayant pour tâche d’indexer
@@ -84,19 +80,44 @@ jouer un rôle clé dans la phase de recherche de fichiers.
 Ensuite, à chaque création ou modification de fichier appartenant au corpus, le
 démon met à jour la base de données en fonction des modifications du fichier.
 
+\subsubsection{Utilisation normale}
+L'utilisateur entre une requête dans la barre de recherche en suivant la syntaxe 
+spécifiée ci-dessus.
+
+\subsubsection{Utilisation avancée}
+L'utilisateur peut également entrer une requête incluant des critères spéciaux
+sur les fichiers à rechercher :
+\begin{itemize}
+ \item l'auteur
+ \item la date de création
+ \item la dernière date de modification
+ \item le type
+ \item la taille (pour les fichiers de type image)
+ \item la durée (pour les fichiers de type musique ou vidéo)
+\end{itemize}
+Il est possible de paramétrer les fonctionnalités suivantes de l'indexation :
+\begin{itemize}
+ \item TODO
+ \item TODO
+\end{itemize}
+
 
 \subsection{User characteristics}
-\input{SynMR}
 
 \subsubsection{Grammaire BNF}
 \setlength{\grammarparsep}{20pt plus 1pt minus 1pt} % increase separation between rules
 \setlength{\grammarindent}{12em} % increase separation between LHS/RHS 
 
+Dans ce paragraphe, on introduira la grammaire qui définira le langage de requêtes que on associe au moteur de recherche.\\
+
 Un mot est formé de chiffres et/ou de lettres minuscules ou majuscules, possiblement accentuées.\\
+
 Une requête doit obligatoirement commencer par un mot.\\
+
 Dans le cas d'une recherche multiple, la liste de mots à rechercher est soit délimitée par 
 des espaces (dans le cas d'une conjonction), soit délimitée par le marqueur \textbf{-or} (dans le
 cas d'une disjonction).\\
+
 La requête peut être complétée par des options :
 \begin{itemize}
  \item la recherche par type de fichiers, avec le marqueur \textbf{-f}
@@ -120,27 +141,7 @@ La requête peut être complétée par des options :
 <string> $\equiv$ $[ a-z A-Z 0-9 ]^+$
 \end{grammar}
  
-\subsubsection{Utilisation normale}
-L'utilisateur entre une requête dans la barre de recherche en suivant la syntaxe 
-spécifiée ci-dessus.
-
-\subsubsection{Utilisation avancée}
-L'utilisateur peut également entrer une requête incluant des critères spéciaux
-sur les fichiers à rechercher :
-\begin{itemize}
- \item l'auteur
- \item la date de création
- \item la dernière date de modification
- \item le type
- \item la taille (pour les fichiers de type image)
- \item la durée (pour les fichiers de type musique ou vidéo)
-\end{itemize}
-Il est possible de paramétrer les fonctionnalités suivantes de l'indexation :
-\begin{itemize}
- \item TODO
- \item TODO
-\end{itemize}
-
+\input{SynMR}
 
 \subsection{Contraintes générales}
 La fraîcheur des résultats dépendra de la fraîcheur de la dernière indexation faite.\\

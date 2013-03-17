@@ -1,18 +1,15 @@
 \subsubsection{Syntaxe du moteur de recherche}
 
-\begin{longtable}{| p{5cm} | p{8cm} |}
+\begin{longtable}{| p{3.5cm} | p{9cm} |}
 
 \hline
 Casse des caractères & iFind ne tient pas compte de la casse des caractères.\\
-& \\
 & Exemple: Les requêtes \textit{ibm}, \textit{Ibm} et \textit{IBM} renvoient le même résultat.\\
 
-
 \hline
-Lettres accentuées & \textbf{Important} ...\\
-& \\
-& Exemple: \textit{electricite} et\textit{électricité} ne donnent pas le même résultat, même si les différences
+Lettres accentuées & Les lettres accentuées sont prises en charge par contre la recherche ne donne pas le même résultat, même si les différences
 sont souvent minimes.\\
+& \\
 
 \hline
 Orthographe exacte & Il est possible d'utiliser le signe \textbf{+} pour demander une orthographe spécifique. \\
@@ -21,8 +18,7 @@ Orthographe exacte & Il est possible d'utiliser le signe \textbf{+} pour demande
 les documents contenant \textit{jeremie} (version non accentuée).\\
 
 \hline
-Ordre des mots & \textbf{Important} Une plus grande importance est donnée au premier mot de la requête.\\
-& \\
+Ordre des mots & On considère une relation d'ordre sur la requête, les mots de la requête sont ordonnés de gauche à droite.\\
 & Exemple: \textit{paris brest} donne un résultat différent de \textit{brest paris}.\\
 
 \hline

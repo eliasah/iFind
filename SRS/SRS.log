@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.17)  17 MAR 2013 04:59
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2012.11.2)  17 MAR 2013 22:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **SRS.tex
 (./SRS.tex
 LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, fr
-ench, basque, loaded.
+Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, lo
+aded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
@@ -287,6 +287,12 @@ File: babel.def 2008/07/08 v3.8m Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen105
 )
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `French'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@french = a dialect from \language0
 Package babel Info: Making : an active character on input line 234.
 Package babel Info: Making ; an active character on input line 235.
 Package babel Info: Making ! an active character on input line 236.
@@ -295,7 +301,6 @@ Package babel Info: Making ? an active character on input line 237.
 \std@mcc=\count89
 \dec@mcc=\count90
 \parindentFFN=\dimen107
-
 *************************************
 * Local config file frenchb.cfg used
 *
@@ -444,59 +449,67 @@ File: rechercheSimple.png Graphic file (type png)
 <use rechercheSimple.png>
 Package pdftex.def Info: rechercheSimple.png used on input line 68.
 (pdftex.def)             Requested size: 342.17603pt x 173.54718pt.
- (./SynMR.tex
-Overfull \hbox (48.88582pt too wide) in alignment at lines 3--43
+ [4 <./rechercheSimple.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 113--114
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--116
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--120
+
+ []
+
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 131.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+) [5] (./SynMR.tex
+Overfull \hbox (34.65944pt too wide) in alignment at lines 3--43
  [] [] 
  []
 
-[4 <./rechercheSimple.png>]
+
 Underfull \vbox (badness 10000) detected at line 43
  []
 
 
-Underfull \hbox (badness 1484) in paragraph at lines 61--63
-[]|\T1/cmr/m/n/10 Cette re-quête don-nera uni-que-ment les ré-sul-tats
- []
-
-
-Overfull \hbox (48.88582pt too wide) in alignment at lines 43--80
+Overfull \hbox (34.65944pt too wide) in alignment at lines 43--79
  [] [] 
  []
 
-
-Overfull \hbox (48.88582pt too wide) in alignment at lines 80--83
- [] [] 
- []
-
-[5])
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 110.
-
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-) [6] [7]
-(./SRS.aux) ) 
+[6]) [7] (./SRS.aux) ) 
 Here is how much of TeX's memory you used:
- 2908 strings out of 495030
- 38072 string characters out of 3180761
- 110557 words of memory out of 3000000
- 6043 multiletter control sequences out of 15000+200000
+ 2911 strings out of 495059
+ 38106 string characters out of 3182030
+ 109556 words of memory out of 3000000
+ 6037 multiletter control sequences out of 15000+200000
  13438 words of font info for 33 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 38i,6n,24p,249b,246s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/isabelle/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.6
-00pk> </home/isabelle/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1000.600pk> </
-home/isabelle/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk> </home/isa
-belle/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/isabelle/.t
-exmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/isabelle/.texmf-var
-/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/isabelle/.texmf-var/fonts/p
-k/ljfour/jknappen/ec/ecbx1440.600pk> </home/isabelle/.texmf-var/fonts/pk/ljfour
-/jknappen/ec/ecrm1200.600pk> </home/isabelle/.texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on SRS.pdf (7 pages, 163239 bytes).
+ 38i,6n,24p,249b,226s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/e
+ctt1000.600pk> </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1000.
+600pk> </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk> <
+/home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/uf
+r_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/ufr_info/.
+texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/ufr_info/.texmf-va
+r/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/ufr_info/.texmf-var/fonts/
+pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/ufr_info/.texmf-var/fonts/pk/ljfou
+r/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on SRS.pdf (7 pages, 163144 bytes).
 PDF statistics:
  355 PDF objects out of 1000 (max. 8388607)
  70 compressed objects within 1 object stream
