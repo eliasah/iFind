@@ -1,0 +1,12 @@
+# Les ligne commençant par '#' sont des commentaires.
+
+*~
+*.swp
+*.project
+
+# LaTeX files
+*.aux
+*.log
+*.tex.backup
+*.toc
+
