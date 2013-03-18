@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2012.11.2)  17 MAR 2013 22:49
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2012.11.2)  18 MAR 2013 15:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -469,11 +469,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 117--120
 
  []
 
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 131.
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-) [5] (./SynMR.tex
+LaTeX Warning: Command \textquoteleft invalid in math mode on input line 131.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 131.
+
+
+LaTeX Warning: Command \textquoteleft invalid in math mode on input line 132.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 132.
+
+(./SynMR.tex
 Overfull \hbox (34.65944pt too wide) in alignment at lines 3--43
  [] [] 
  []
@@ -483,36 +491,36 @@ Underfull \vbox (badness 10000) detected at line 43
  []
 
 
-Overfull \hbox (34.65944pt too wide) in alignment at lines 43--79
+Overfull \hbox (34.65944pt too wide) in alignment at lines 43--58
  [] [] 
  []
 
-[6]) [7] (./SRS.aux) ) 
+[5]) [6] [7] (./SRS.aux) ) 
 Here is how much of TeX's memory you used:
- 2911 strings out of 495059
- 38106 string characters out of 3182030
- 109556 words of memory out of 3000000
- 6037 multiletter control sequences out of 15000+200000
- 13438 words of font info for 33 fonts, out of 3000000 for 9000
+ 2892 strings out of 495059
+ 37505 string characters out of 3182030
+ 112556 words of memory out of 3000000
+ 6022 multiletter control sequences out of 15000+200000
+ 13125 words of font info for 32 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 38i,6n,24p,249b,226s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/e
-ctt1000.600pk> </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1000.
-600pk> </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk> <
-/home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/uf
-r_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/ufr_info/.
-texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/ufr_info/.texmf-va
-r/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/ufr_info/.texmf-var/fonts/
-pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/ufr_info/.texmf-var/fonts/pk/ljfou
-r/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on SRS.pdf (7 pages, 163144 bytes).
+ 38i,8n,24p,249b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/
+ec/eccc1000.600pk> </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1
+000.600pk> </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600p
+k> </home/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </hom
+e/ufr_info/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/ufr_in
+fo/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/ufr_info/.texm
+f-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/ufr_info/.texmf-var/fo
+nts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y7.pfb>
+Output written on SRS.pdf (7 pages, 162410 bytes).
 PDF statistics:
- 355 PDF objects out of 1000 (max. 8388607)
- 70 compressed objects within 1 object stream
+ 336 PDF objects out of 1000 (max. 8388607)
+ 66 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

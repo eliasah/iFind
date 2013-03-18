@@ -124,7 +124,15 @@ La requête peut être complétée par des options :
  \item l'exclusion d'une liste de mots, avec le marqueur \textbf{-e}
  \end{itemize}
 
-\paragraph{Grammaire BNF A CORRIGER\\}
+\paragraph{Grammaire BNF\\}
+
+\begin{tabular}{r c l}
+\textit{query}    &$::=$ & word $\{jonction\}$ $\{options\}$\\
+\textit{jonction} &$::=$ & $\{ \textquoteleft -or \textquoteright$ word $ | \{wordlist\}$\\
+\textit{options}  &$::=$ & $`-f' <word> | `-e' <wordlist> \textasciicircum *$\\
+\textit{wordlist} &$::=$ & $\{word \}$\\
+\textit{word}     &$\equiv$& $[ a-z A-Z 0-9 ]^+$\\
+\end{tabular}
 
 \input{SynMR}
 

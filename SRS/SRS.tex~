@@ -46,7 +46,7 @@ IEEE Std 830-1998 Recommended Practice for Software Requirements Specifications
 
 \newpage
 
-\section{General Overview and Design Guidelines}
+\section{Aperçu Général et Guide de Conception}
 Cette section décrit les principes et les stratégies qui seront utilisées comme
 des lignes directrices lors de la conception et de la mise en œuvre du système.
 
@@ -97,12 +97,12 @@ sur les fichiers à rechercher :
 \end{itemize}
 Il est possible de paramétrer les fonctionnalités suivantes de l'indexation :
 \begin{itemize}
- \item TODO
- \item TODO
+ \item Indexation ciblée : on délimite l'emplacement du corpus à indexer.
+ \item Indexation filtrée : on peut choisir le type de fichier à indexer.
 \end{itemize}
 
 
-\subsection{User characteristics}
+\subsection{Caractéristique d'utilisation}
 
 \subsubsection{Grammaire BNF}
 \setlength{\grammarparsep}{20pt plus 1pt minus 1pt} % increase separation between rules
@@ -124,23 +124,8 @@ La requête peut être complétée par des options :
  \item l'exclusion d'une liste de mots, avec le marqueur \textbf{-e}
  \end{itemize}
 
-\paragraph{Grammaire BNF}
-\begin{grammar}
-<query> ::= <word> [<jonction> ] $[ <options> ]^+$
+\paragraph{Grammaire BNF A CORRIGER\\}
 
-<jonction> ::= $[ `-or' <word> ]^+$
-\alt $[ <wordlist> ]^+$
-
-<options> ::= `-f' <word>
-\alt `-e' $<wordlist>^*$
-
-<wordlist> ::= $[ ` ' <word> ]^+$
-
-<word> ::= \textbf{+}$<string>^+$
-
-<string> $\equiv$ $[ a-z A-Z 0-9 ]^+$
-\end{grammar}
- 
 \input{SynMR}
 
 \subsection{Contraintes générales}
