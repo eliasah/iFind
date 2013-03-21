@@ -15,18 +15,46 @@ On a définit une syntaxe.
 	TYPE : OPERATEUR 
 		constantes : plus, OR et Exclu : OPERATEUR
  	TYPE : REQUETE 
-		construction : cons_requete -> string * opérateur * string * options
+
+ 		construction :  -> conj -> requête
+				-> conj * options -> requête
+				-> disj -> requête
+				-> disj * options -> requête 
+				-> word -> requête
+				-> word * options -> requête 
+
+			
+		test : estValide(requête) -> bool
+		       estConj(requête) -> bool
+		       estDisj(requête) -> bool
+
+		accès : getOptions()
+			getWords()
+		(on garde getConj() si est conj : getWords() puis recherche conjonction) 			  getDisj() si est disj : getWords() puis recherche disjonction)
+			
+		
+
+
 	TYPE : CONJ
 		cons_conj -> word * word -> conj
 		cons_conj_bis -> word* conj -> conj
 		test : estConj(CONJ) -> bool 
 
+		accès : getConj()
+
+
 	TYPE : DISJ
 		cons_disj -> word* word -> disj
 		cons_disj_bis -> word * disj -> disj
 	
+		accès : getDisj()
 	
-	TYPE : JONCTION
+	TYPE : WORD 
+		cons_word -> 
+		accès : getWords()
+		
+	
+	TYPE : JONCTION (depreciated)
 		cons_jonc -> word* word -> jonc
 		cons_jonc_bis -> word * jonc -> jonc
 
@@ -39,15 +67,9 @@ On a définit une syntaxe.
 		test :
 			       estOptions(options) -> bool
 
-
+		accès : getOptions() 
 	
 		
 
-	Constructions :
-		-> conj -> requête
-		-> conj * options -> requête
-		-> disj -> requête
-		-> disj * options -> requête 
-		-> word -> requête
-		-> word * options -> requête 
+	
 	
