@@ -1,0 +1,53 @@
+			Mode d indexation : 
+
+Type de données abstraits qu'on va utiliser : 
+	domaine : Type de Données Abstraits
+	construction : requête [string -> requête]
+On a définit une syntaxe. 
+	test : 
+	-> estValide(requête) ? false/true (on utilise BNF[] pour tester la validité de la requête)
+		-> BNF : query -> word { -or word } [options]
+			 query -> word { word } [options] 
+			 
+			options-> -e word {word}
+			word   -> char*
+			char   -> [a-z A-Z 0-9 à é è ë ä ù ï ç]   
+	TYPE : OPERATEUR 
+		constantes : plus, OR et Exclu : OPERATEUR
+ 	TYPE : REQUETE 
+		construction : cons_requete -> string * opérateur * string * options
+	TYPE : CONJ
+		cons_conj -> word * word -> conj
+		cons_conj_bis -> word* conj -> conj
+		test : estConj(CONJ) -> bool 
+
+	TYPE : DISJ
+		cons_disj -> word* word -> disj
+		cons_disj_bis -> word * disj -> disj
+	
+	
+	TYPE : JONCTION
+		cons_jonc -> word* word -> jonc
+		cons_jonc_bis -> word * jonc -> jonc
+
+		test : estConjonction (requête) -> bool
+		       estDisjonction (requête) -> bool 
+
+	TYPE : OPTIONS
+		cons_options : word 	      -> options
+			       word * options -> options
+		test :
+			       estOptions(options) -> bool
+
+
+	
+		
+
+	Constructions :
+		-> conj -> requête
+		-> conj * options -> requête
+		-> disj -> requête
+		-> disj * options -> requête 
+		-> word -> requête
+		-> word * options -> requête 
+	
