@@ -82,7 +82,7 @@ démon met à jour la base de données en fonction des modifications du fichier.
 
 \subsubsection{Utilisation normale}
 L'utilisateur entre une requête dans la barre de recherche en suivant la syntaxe 
-spécifiée ci-dessus.
+spécifiée ci-dessous.
 
 \subsubsection{Utilisation avancée}
 L'utilisateur peut également entrer une requête incluant des critères spéciaux
@@ -105,9 +105,6 @@ Il est possible de paramétrer les fonctionnalités suivantes de l'indexation :
 \subsection{Caractéristique d'utilisation}
 
 \subsubsection{Grammaire BNF}
-\setlength{\grammarparsep}{20pt plus 1pt minus 1pt} % increase separation between rules
-\setlength{\grammarindent}{12em} % increase separation between LHS/RHS 
-
 Dans ce paragraphe, on introduira la grammaire qui définira le langage de requêtes que on associe au moteur de recherche.\\
 
 Un mot est formé de chiffres et/ou de lettres minuscules ou majuscules, possiblement accentuées.\\
@@ -124,8 +121,24 @@ La requête peut être complétée par des options :
  \item l'exclusion d'une liste de mots, avec le marqueur \textbf{-e}
  \end{itemize}
 
-\paragraph{Grammaire BNF A CORRIGER\\}
+\paragraph{Grammaire BNF\\}
+Dans la suite, les symboles terminaux seront notés en \textbf{gras}.\\
+Les symboles non-terminaux seront notés en \textit{italique}.\\
+Une séquence entre crochets est optionnelle (comme par exemple ``\textit{[} word \textit{]}'').\\
+Une séquence entre accolades se répète zéro fois ou plus, (comme par exemple ``\textit{\{} , word \textit{\}}'').\\
+Sauf indication contraire, la sémantique d’une séquence est une liste dont la tête est le premier élément de la séquence.\\
 
+\begin{tabular}{p{1.5cm} p{0.5cm} p{9cm} }
+& & \\
+\textbf{char} & $\equiv$ & [ a-z A-Z 0-9 àáâãäåçèéêëìíîïðòóôõöùúûüýÿ ]\\
+\textbf{word} & $\equiv$ & $\textbf{char}^+$\\
+\textit{query} & ::= & \textbf{word} \textit{\{} \textbf{-or} \textbf{word} \textit{\}} \textit{[} \textit{options} \textit{]}\\
+& | & \textbf{word} \textit{\{} \textbf{word} \textit{\}} \textit{[} \textit{options} \textit{]}\\
+\textit{options} & ::= & \textbf{-e} \textbf{word} \textit{\{} \textbf{word} \textit{\}}\\
+\end{tabular}
+
+
+% insertion du tableau contenant la syntaxe
 \input{SynMR}
 
 \subsection{Contraintes générales}
