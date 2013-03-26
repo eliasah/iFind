@@ -6,17 +6,17 @@ Type de données abstraits qu'on va utiliser :
 On a définit une syntaxe. 
 	test : 
 	-> estValide(requête) ? false/true (on utilise BNF[] pour tester la validité de la requête)
-		-> BNF : query -> word { -or word } [options]
-			 query -> word { word } [options] 
-			 
-			options-> -e word {word}
-			word   -> char*
-			char   -> [a-z A-Z 0-9 à é è ë ä ù ï ç]   
+	-> BNF : 	
+	
+
+
+
+
 	TYPE : OPERATEUR 
 		constantes : plus, OR et Exclu : OPERATEUR
  	TYPE : REQUETE 
 
- 		construction :  -> conj -> requête
+ 		_construction :  -> conj -> requête
 				-> conj * options -> requête
 				-> disj -> requête
 				-> disj * options -> requête 
@@ -24,11 +24,11 @@ On a définit une syntaxe.
 				-> word * options -> requête 
 
 			
-		test : estValide(requête) -> bool
+		_test : estValide(requête) -> bool
 		       estConj(requête) -> bool
 		       estDisj(requête) -> bool
 
-		accès : getOptions()
+		_accès : getOptions()
 			getWords()
 		(on garde getConj() si est conj : getWords() puis recherche conjonction) 			  getDisj() si est disj : getWords() puis recherche disjonction)
 			
