@@ -81,8 +81,10 @@ Ensuite, à chaque création ou modification de fichier appartenant au corpus, l
 démon met à jour la base de données en fonction des modifications du fichier.
 
 \subsubsection{Utilisation normale}
-L'utilisateur entre une requête dans la barre de recherche en suivant la syntaxe 
-spécifiée ci-dessous.
+L'utilisateur entre une requête dans la barre de recherche en suivant la syntaxe
+du moteur de recherche (cf partie 2.3.2).\\
+TODO (retour de la requête)
+
 
 \subsubsection{Utilisation avancée}
 L'utilisateur peut également entrer une requête incluant des critères spéciaux
@@ -137,9 +139,20 @@ Sauf indication contraire, la sémantique d’une séquence est une liste dont l
 \textit{options} & ::= & \textbf{-e} \textbf{word} \textit{\{} \textbf{word} \textit{\}}\\
 \end{tabular}
 
-
 % insertion du tableau contenant la syntaxe
 \input{SynMR}
+
+\subsubsection{Messages d'erreur possibles}
+Si la requête entrée par l'utilisateur est mal formée, le message suivant apparaît :
+"La requête entrée ne respecte pas la syntaxe. Cliquez sur Aide pour plus d'informations."
+(Cliquer sur Aide ouvre une petite fenêtre contenant les règles de syntaxe d'une requête.)
+L'utilisateur est alors invité à reformuler sa requête.
+
+Si la base de données est corrompue et entraîne l'arrêt de la recherche et de l'indexation, l'utilisateur est invité à la réinitialiser :
+"La base de données a été corrompue et doit être intégralement reconstruite. 
+Cette opération peut prendre du temps. Voulez-vous réinitialiser la base de données maintenant ?
+Si vous cliquez sur Annuler, la base de données ne sera pas reconstruite et iFind ne sera plus utilisable."
+((OK) (Annuler) <- boutons)
 
 \subsection{Contraintes générales}
 La fraîcheur des résultats dépendra de la fraîcheur de la dernière indexation faite.\\
