@@ -87,6 +87,24 @@ TODO (retour de la requête)
 
 
 \subsubsection{Utilisation avancée}
+
+La recherche avancée permet d'affiner la recherche de document en se basant sur un critère de type.
+Un utilisateur pourra rechercher des morceaux de musique par artiste, album ou titre du morceaux.
+Il pourra aussi recherches des images. Le moteur de recherche dans ce cas cherche à filtrer les résultats pour faire en sorte que
+les résultats affichés en sortie corresponde juste à des fichiers de type image. (jpg,jpeg,bmp)
+
+Concernant les documents textuelles, l'interface de recherche de ces documents permet de rechercher un document par auteur du document, genre, extension et la date de modification. La pertinence des résultats obtenus dans ce cas depend de la disponibilité de ce information par rapport a ces documents. C'est à dire, si un genre de document n'est par fourni, et on souhaite rechercher un genre précis du documents.
+
+Il y a des chances que le moteur de recherche ne puisse pas retrouver le document recherché même si celui ci existe sur le disque.
+
+Dans le cas où le document recherché n'est pas présent, un message apparaîtra afin de guider l'utilisateur. 
+De plus, la date et l'heure de la dernière indexation est indiqué.
+
+La partie inférieure de la fenêtre permet de visualiser la liste des documents trouvés. 
+Cette dernière se compose d'une colonne indiquant le nom du document, une deuxième indiquant sa date de création, une troisième indiquant sa date de modification (la plus récente) et enfin la dernière indiquant le type.
+
+
+
 L'utilisateur peut également entrer une requête incluant des critères spéciaux
 sur les fichiers à rechercher :
 \begin{itemize}
@@ -97,6 +115,7 @@ sur les fichiers à rechercher :
  \item la taille (pour les fichiers de type image)
  \item la durée (pour les fichiers de type musique ou vidéo)
 \end{itemize}
+
 Il est possible de paramétrer les fonctionnalités suivantes de l'indexation :
 \begin{itemize}
  \item Indexation ciblée : on délimite l'emplacement du corpus à indexer.

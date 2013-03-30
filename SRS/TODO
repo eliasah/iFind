@@ -6,15 +6,14 @@ Ci-dessous sont listées les parties à relire et à corriger.
 ----------------------------------------
 2 General Overview and Design Guidelines (Vue générale et Lignes directrices de conception)
 
-Traduire ce titre en français.
-
-
---------------------------
+-------------------------
 2.1 Perspective du produit
 
-L'utilisteur doit-il savoir qu'un moteur d'indexation se cache derrière le logiciel iFind ?
-L'interface utilisateur est-elle assez décrite ?
+- L'utilisteur doit-il savoir qu'un moteur d'indexation se cache derrière le logiciel iFind ?
+Non.
 
+L'interface utilisateur est-elle assez décrite ?
+Il manque l'interface de la recherche avancé...
 
 ------------------------------
 2.2 Fonctionnalités du produit
