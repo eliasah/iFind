@@ -1,0 +1,35 @@
+	A. Charges fonctionnelles :
+L'utilisateur rentre en contact avec le logiciel et attend un resultat.
+
+1 Interface utilisateur en entrée
+-> maquette
+   -> choix/ parametres de la recherche
+   -> language de requetes.
+      -> presentation textuelle
+      -> exemples.
+
+2 Interface utilisateur en sortie.
+  -> textuelle ou une maquette sur l'exemple.
+
+3 Installation
+
+4 Diagrammes : Use Case.
+  -> recherche
+  -> installation
+
+5 Traitement des erreurs:
+  -> message d'erreur.
+  -> pretraitement de l'erreur.
+
+B. Charges non fonctionnelles :
+Ce qui se passe sur son système.
+
+   -> surcharge de l'utilisation.
+   -> 
+
+C. Standard : 
+Standard pour les méta-données
+-  Dublin Core ISO 15836
+
+TODO Rajouter dans la Syntaxe du MR : Recherche par rapport à une date.
+     Relecture et reecriture toutes les parties du cahier.

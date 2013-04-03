@@ -1,0 +1,73 @@
+\paragraph{BNF}
+Nous avons commencé à réfléchir à la forme qu'aurait la requête de recherche. 
+C'est pourquoi nous avons définit une syntaxe et à fortiori, une grammaire sous forme BNF.
+
+Grammaire (BNF) :\\
+\begin{tabular}{r c l}
+query &$\rightarrow$ & word { -or word } [options]\\
+query &$\rightarrow$ & word { word } [options] \\
+	 
+options&$\rightarrow$ &-e word {word}\\
+word   &$\rightarrow$ &char*\\
+char   &$\rightarrow$ & [a-z A-Z 0-9 à é è ë ä ù ï ç]\\ 
+\end{tabular}
+
+Par la suite, nous avons défini plusieurs types abstraits de données permettant de modéliser la grammaire.
+Un type a forcément une ou plusieurs opérations de constructions. 
+Chaque type peut présenter des fonctions d'accès et de test ainsi que des constantes.
+
+\paragraph{Type de données abstraites}
+En effet, nous avons définit 6 types tels que :
+
+\textbf{Type : operateur}\\
+       constantes : plus, OR et Exclu : OPERATEUR
+\textbf{requete}\\
+\begin{tabular}{r l}
+_construction :&  $\rightarrow$ conj $\rightarrow$ requête\\
+& $\rightarrow$ conj * options $\rightarrow$ requête\\
+& $\rightarrow$ disj $\rightarrow$ requête\\
+& $\rightarrow$ disj * options $\rightarrow$ requête\\
+& $\rightarrow$ word $\rightarrow$ requête\\
+& $\rightarrow$ word * options $\rightarrow$ requête\\ 
+& \\
+_test :& estValide(requête) $\rightarrow$ bool\\
+& estConj(requête) $\rightarrow$ bool\\
+& estDisj(requête) $\rightarrow$ bool\\
+_accès :& getOptions()\\
+	& getWords()\\
+\end{tabular}
+
+\paragraph{}
+On garde getConj() si est conj : getWords() puis recherche conjonction et
+getDisj() si est disj : getWords() puis recherche disjonction.
+
+\paragraph{}
+
+\begin{tabular}{r l}
+\textbf{Type : conj} & \\
+& cons_conj $\rightarrow$ word * word $\rightarrow$ conj\\
+& cons_conj_bis $\rightarrow$ word* conj $\rightarrow$ conj\\
+	
+&test : estConj(CONJ) $\rightarrow$ bool \\
+
+&accès : getConj()\\
+
+\textbf{Type disj}&\\
+&cons_disj $\rightarrow$ word* word $\rightarrow$ disj\\
+&cons_disj_bis $\rightarrow$ word * disj $\rightarrow$ disj\\
+
+&accès : getDisj()\\
+
+\textbf{Type : word}&\\ 
+&cons_word $\rightarrow$\\ 
+&accès : getWords()\\
+
+\textbf{Type : options}&\\
+&cons_options : word $\rightarrow$ options\\
+&word * options $\rightarrow$ options\\
+&test :\\
+&estOptions(options) $\rightarrow$ bool\\
+
+&accès : getOptions() \\
+\end{tabular}
+
