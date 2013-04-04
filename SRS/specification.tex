@@ -37,10 +37,16 @@ ensuite il communique avec celle-ci à l'aide d'un protocole de communication pa
 La communication entre la base d'indexation et le moteur d'indexation a pour but la mis-à-jour de la BD.
 
 \subsubsection{Architecture de la base d'indexation}
-La base d'indexation est une base de donnée PostgreSQL, en un premier temps, qui permettra au moteur de recherche de retrouver ce qu'il cherche.
+La base d'indexation est une base de donnée PostgreSQL, en un premier temps, qui permettra au moteur de recherche 
+de retrouver ce qu'il cherche.
 
 \begin{center}
 \includegraphics[scale=0.5]{seqdbi.png}
+\end{center}
+
+Le modèle conceptuel de données (MCD) de la base de données est le suivant :
+\begin{center}
+\includegraphics[scale=0.7]{mcd.png}
 \end{center}
 
 
