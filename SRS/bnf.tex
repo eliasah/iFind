@@ -1,6 +1,6 @@
 \paragraph{BNF}
 Nous avons commencé à réfléchir à la forme qu'aurait la requête de recherche. 
-C'est pourquoi nous avons définit une syntaxe et à fortiori, une grammaire sous forme BNF.
+C'est pourquoi nous avons défini une syntaxe et à fortiori, une grammaire sous forme BNF.
 
 Grammaire (BNF) :\\
 \begin{tabular}{r c l}
@@ -13,61 +13,66 @@ char   &$\rightarrow$ & [a-z A-Z 0-9 à é è ë ä ù ï ç]\\
 \end{tabular}
 
 Par la suite, nous avons défini plusieurs types abstraits de données permettant de modéliser la grammaire.
-Un type a forcément une ou plusieurs opérations de constructions. 
+Un type a forcément une ou plusieurs opérations de construction. 
 Chaque type peut présenter des fonctions d'accès et de test ainsi que des constantes.
 
 \paragraph{Type de données abstraites}
 En effet, nous avons définit 6 types tels que :
 
-\textbf{Type : operateur}\\
-       constantes : plus, OR et Exclu : OPERATEUR
-\textbf{requete}\\
 \begin{tabular}{r l}
-_construction :&  $\rightarrow$ conj $\rightarrow$ requête\\
-& $\rightarrow$ conj * options $\rightarrow$ requête\\
-& $\rightarrow$ disj $\rightarrow$ requête\\
-& $\rightarrow$ disj * options $\rightarrow$ requête\\
-& $\rightarrow$ word $\rightarrow$ requête\\
-& $\rightarrow$ word * options $\rightarrow$ requête\\ 
-& \\
-_test :& estValide(requête) $\rightarrow$ bool\\
-& estConj(requête) $\rightarrow$ bool\\
-& estDisj(requête) $\rightarrow$ bool\\
-_accès :& getOptions()\\
-	& getWords()\\
+%\textbf{Type : operateur} & \\
+%constantes :& plus, OR et Exclu : operateur
+% note (isabelle) La présence des types [conj] et [disj] rend la constante [operateur] inutile.
+
+\textbf{Type : requête} & \\
+_construction :& cons-requete-word : word $\rightarrow$ requête\\
+& cons-requete-word-options : word * options $\rightarrow$ requête\\ 
+& cons-requete-conj : conj $\rightarrow$ requête\\
+& cons-requete-conj-options : conj * options $\rightarrow$ requête\\
+& cons-requete-disj : disj $\rightarrow$ requête\\
+& cons-requete-disj-options : disj * options $\rightarrow$ requête\\
+_test :& est-word : requête $\rightarrow$ bool\\
+& est-conj : requête $\rightarrow$ bool\\
+& est-disj : requête $\rightarrow$ bool\\
+& a-options : requête $\rightarrow$ bool\\
+% est-valide : requête $\rightarrow$ bool\\
+% note (isabelle) une requête qui est construite est par définition valide (sauf erreur de ma part), donc ce test est inutile.
+_accès :& get-word : requête $\rightarrow$ word\\
+& get-conj : requête $\rightarrow$ conj\\
+& get-disj : requête $\rightarrow$ disj\\
+& get-options : requête $\rightarrow$ options\\
 \end{tabular}
 
 \paragraph{}
-On garde getConj() si est conj : getWords() puis recherche conjonction et
-getDisj() si est disj : getWords() puis recherche disjonction.
-
+On garde get-conj() si est conj : get-word() puis recherche conjonction et
+get-disj() si est disj : get-word() puis recherche disjonction.
 \paragraph{}
 
 \begin{tabular}{r l}
-\textbf{Type : conj} & \\
-& cons_conj $\rightarrow$ word * word $\rightarrow$ conj\\
-& cons_conj_bis $\rightarrow$ word* conj $\rightarrow$ conj\\
-	
-&test : estConj(CONJ) $\rightarrow$ bool \\
+\textbf{Type : conj} &\\
+_construction :& cons-conj : word * conj $\rightarrow$ conj\\
+& cons-conj-simple : word * word $\rightarrow$ conj\\
+_test :& est-conj : conj $\rightarrow$ bool\\
+_accès :& get-head : conj $\rightarrow$ word\\
+& get-tail : conj $\rightarrow$ conj\\
+& \\
 
-&accès : getConj()\\
-
-\textbf{Type disj}&\\
-&cons_disj $\rightarrow$ word* word $\rightarrow$ disj\\
-&cons_disj_bis $\rightarrow$ word * disj $\rightarrow$ disj\\
-
-&accès : getDisj()\\
+\textbf{Type : disj}&\\
+_construction :& cons-disj : word * disj $\rightarrow$ disj\\
+& cons-disj-simple : word * word $\rightarrow$ disj\\
+& accès : getDisj()\\
+& \\
 
 \textbf{Type : word}&\\ 
-&cons_word $\rightarrow$\\ 
-&accès : getWords()\\
+_construction :& cons_word : string $\rightarrow$ word\\
+_accès :& get-word : word $\rightarrow$ string\\
+& \\
 
 \textbf{Type : options}&\\
-&cons_options : word $\rightarrow$ options\\
-&word * options $\rightarrow$ options\\
-&test :\\
-&estOptions(options) $\rightarrow$ bool\\
-
-&accès : getOptions() \\
+_construction :& cons-options : word $\rightarrow$ options\\
+& cons-options-simple : word * word $\rightarrow$ options\\
+_test :& est-options : options $\rightarrow$ bool\\
+_accès :& get-head : options $\rightarrow$ word\\
+& get-tail : options $\rightarrow$ options
 \end{tabular}
 
