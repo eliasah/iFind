@@ -12,12 +12,6 @@ sont souvent minimes.\\
 & \\
 
 \hline
-Orthographe exacte & Il est possible d'utiliser le signe \textbf{+} pour demander une orthographe spécifique. \\
-& \\
-& Exemple : Une requête contenant \textit{+jéremie} ne traitera pas 
-les documents contenant \textit{jeremie} (version non accentuée).\\
-
-\hline
 Ordre des mots & On considère une relation d'ordre sur la requête, les mots de la requête sont ordonnés de gauche à droite.\\
 & Exemple: \textit{paris brest} donne un résultat différent de \textit{brest paris}.\\
 
@@ -33,7 +27,7 @@ et enfin les résultats contenant seulement \textit{recherche}.\\
 
 \hline
 Disjonction & La requête est constituée d'une liste de mots séparés par la marque \textbf{-or}.\\
-& La requête permet de rechercher les résultats contenant un mot seulement parmi la liste,
+& Les fichiers trouvés par la recherche contiennent un mot seulement parmi la liste,
 contrairement à la conjonction.\\
 & L'opérateur doit être saisi avec un tiret obligatoirement.\\
 & \\
@@ -47,15 +41,7 @@ indiquera que les résultats contenant ce mot sont à exclure.\\
 & \\
 & Exemple: \textit{moteur –e automobile essence}\\
 & La requête donnera uniquemenet les résultats contenant \textit{moteur} mais 
-\textbf{ne contenant ni} \textit{automobile}, \textbf{ni} \textbf{essence}.\\
-
-\hline
-Type de fichier & Il est possible de préciser quel type de fichier rechercher.\\
-& Plusieurs formats sont possibles.\\
-& \\
-& Exemple: \textit{exemples –f pdf}\\
-& Cette requête donnera uniquement les résultats contenant \textit{exemples} et
-dont le format de fichier est \textit{pdf}.\\
+\textbf{ne contenant ni} \textit{automobile}, \textbf{ni} \textbf{essence}. Remarque l'option -e doît être précédée par un au moins un mots\\
 
 \hline
 Expressions exactes & La recherche d'expressions exactes n'est pas possible.\\
@@ -63,17 +49,10 @@ Expressions exactes & La recherche d'expressions exactes n'est pas possible.\\
 \hline
 Troncature & Il n'est pas possible de faire des recherches en utilisant la
 troncature sur iFind. Le moteur recherche toujours exactement le mot demandé.\\
-& \\
-& Exemple: La requête \textit{mot} ne cherche ni \textit{mots} ni \textit{moteur}.\\
-& \\
-& L'astérique (*) ne peut pas être utilisé.\\
+& L'astérisque (*) ne peut pas être utilisée.\\
 & iFind tient cependant parfois compte de la troncature, sans qu'il soit possible
 pour l'utilisateur de décider quand.\\
-
+&\\
+& Exemple: La requête \textit{mot} ne cherche ni \textit{mots} ni \textit{moteur}.\\
 \hline
-Recherche avancée & D'autres options de recherche sont disponibles, telles que la 
-recherche par date de mise à jour, par auteur, etc.\\
-& Ces critères sont paramétrables via des boîtes de choix au niveau de l’interface graphique.\\
-\hline
-
 \end{longtable}
