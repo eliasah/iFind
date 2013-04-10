@@ -3,11 +3,6 @@ Relecture du cahier des charges
 Ci-dessous sont listées les parties à relire et à corriger.
 
 
-----------------------------------------
-2 General Overview and Design Guidelines
-
-Traduire ce titre en français.
-
 
 --------------------------
 2.1 Perspective du produit
@@ -15,11 +10,15 @@ Traduire ce titre en français.
 L'utilisteur doit-il savoir qu'un moteur d'indexation se cache derrière le logiciel iFind ?
 L'interface utilisateur est-elle assez décrite ?
 
+// ZACCH
+
 
 ------------------------------
 2.2 Fonctionnalités du produit
 
 Ici aussi, doit-on réellement expliquer le rôle du démon ?
+
+// ZACCH
 
 
 ------------------------
