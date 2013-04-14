@@ -1,8 +1,7 @@
 package MoteurDeRecherche;
 
 import java.io.DataInputStream;
-import junit.framework.TestCase;
-import org.junit.*;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
