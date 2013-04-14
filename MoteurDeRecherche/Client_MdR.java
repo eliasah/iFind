@@ -1,7 +1,10 @@
 package MoteurDeRecherche;
 
 import java.io.DataInputStream;
+<<<<<<< HEAD
 
+=======
+>>>>>>> fb9e76bf1e029cf58e7988475d435016036ff118
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +18,7 @@ public class Client_MdR {
 
  	
  
-	public static final int port = 5555;
+	public static final int port = 22678;
 	
 	public static void main(String[] args) {
 		try{
@@ -31,6 +34,8 @@ public class Client_MdR {
 			dos.flush();
 			
 			int nbWord = dis.readByte();
+            
+            System.out.println("Read byte");
 			
 			byte[][] bufDebuf = new byte[nbWord][];
 			for(int i =0;i<nbWord;i++){

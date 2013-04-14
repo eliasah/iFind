@@ -11,3 +11,7 @@
 *.tex.backup
 *.toc
 
+# Exclude bin and .metadata directories
+bin
+.metadata
+target/
