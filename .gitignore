@@ -2,8 +2,8 @@
 
 *~
 *.swp
-*.project
-*.class
+#*.project
+#*.class
 
 # LaTeX files
 *.aux
@@ -12,6 +12,6 @@
 *.toc
 
 # Exclude bin and .metadata directories
-bin
-.metadata
-target/
+#bin
+#.metadata
+#target/
