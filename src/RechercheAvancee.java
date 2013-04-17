@@ -84,7 +84,7 @@ public class RechercheAvancee {
 		// panel des resultats
 		JPanel panelResults = new JPanel();
 		panelResults.setLayout(new BorderLayout(margin, margin));
-		String[] names = {"Nom", "Date de création", "Date de modification", "Type"};
+		String[] names = {"Nom", "Date de creation", "Date de modification", "Type"};
 		Object[][] foo = {{"toto", "10/12/12", "02/01/13", "jpg"},
 				{"abc", "01/04/03", "15/03/06", "txt"}};
 		JTable tableResults = new JTable(foo, names);
@@ -93,8 +93,8 @@ public class RechercheAvancee {
 		results.setMinimumSize(minimumSize);
 		results.setPreferredSize(minimumSize);
 		panelResults.add(results, BorderLayout.NORTH);
-		JLabel labelIndexation = new JLabel("La dernière indexation a eu lieu "
-				+ "le 10/12/12 à 23h12.");
+		JLabel labelIndexation = new JLabel("La derniere indexation a eu lieu "
+				+ "le 10/12/12 ï¿½ 23h12.");
 		panelResults.add(labelIndexation, BorderLayout.SOUTH);
 
 		// ajout des panels internes au panel principal
