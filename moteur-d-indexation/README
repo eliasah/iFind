@@ -1,8 +1,0 @@
-[Daemon]
-- lit les fichiers de configuration et les enregistre localement
-
-[DaemonConfiguration]
-- demande à l'utilisateur de choisir un répertoire à surveiller
-- vérifie que le répertoire choisi est bien inclus ou égal au home d'un des utilisateurs de la machine
-- vérifie que l'utilisateur a les droits en lecture et en exécution sur le répertoire choisi
-- écrit le répertoire choisi dans le fichier de configuration
