@@ -1,0 +1,44 @@
+########
+14/03/13
+Réponses aux questions posées dans [m1-gla-ifind] SRS : GUI
+########
+
+
+MESSAGES D'ERREUR
+
+(sceénarios)
+On cherche mais on ne trouve rien :
+DialogBox -> le ficher que vous cherchez n'a pas été trouvé
+	     HELP (bouton cliquable) 
+	     	  -> ce msg vous a été donné pcq 
+		     a) le fichier ne fait pas partie des fichiers indexés
+		     b) le fichier n'existe pas
+
+Requête mal formée :
+Commande qui contient des caractères spécieux non reconnus par la grammaire
+(exemple: toto -x)
+
+
+RECHERCHE PAR CONTENU
+SI OUI : radiobutton
+réalisable ? ignorer les mots de 3 lettres
+
+
+CONJONCTION
+"toto tata" -> renvoie seulement les documents qui contiennent toto ET tata, ou bien dans l'ordre décroissant :
+- ceux qui contiennent toto et tata
+- ceux qui contiennent toto seulement
+- ceux qui contiennent tata seulement
+===> MODIFIER SYNTAXE EN CONSEQUENCE
+
+
+
+TRI
+ok proposition Elias sur G Groups
+
+
+
+CHARGES NON FONCTIONNELLES
+La fraîcheur des résultats dépendra de la fraîcheur de la dernière indexation faite.
+
+
