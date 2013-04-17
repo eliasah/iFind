@@ -13,7 +13,8 @@ import java.util.ListIterator;
  * @author isabelle
  *
  */
-public class Daemon {
+
+class Daemon {
 
 	private LinkedList<String> corpusList = new LinkedList<String>();
 	private LinkedList<String> excludedTypesList = new LinkedList<String>();
@@ -46,19 +47,21 @@ public class Daemon {
 		}
 	}
 
-	public static void main(String[] args) {
-		Daemon d = new Daemon();
-
-		// reading test		
-		ListIterator<String> li;
-		li = d.corpusList.listIterator();
-		while (li.hasNext()) {
-			System.out.println(li.next());
-		}		
-		li = d.excludedTypesList.listIterator();
-		while (li.hasNext()) {
-			System.out.println(li.next());
-		}
+	public LinkedList<String> getCorpusList() {
+		return corpusList;
 	}
 
+	public void setCorpusList(LinkedList<String> corpusList) {
+		this.corpusList = corpusList;
+	}
+
+	public LinkedList<String> getExcludedTypesList() {
+		return excludedTypesList;
+	}
+
+	public void setExcludedTypesList(LinkedList<String> excludedTypesList) {
+		this.excludedTypesList = excludedTypesList;
+	}
+	
+	
 }
