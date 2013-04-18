@@ -1,0 +1,80 @@
+
+Nous avons commencé à réfléchir à la forme qu'aurait la requête de recherche. 
+C'est pourquoi nous avons définit une syntaxe et à fortiori, une grammaire sous forme BNF.
+
+Grammaire (BNF) : 	query -> word { -or word } [options]
+			query -> word { word } [options] 
+			 
+			options-> -e word {word}
+			word   -> char*
+			char   -> [a-z A-Z 0-9 à é è ë ä ù ï ç]   
+
+
+Par la suite, nous avons défini plusieurs types abstraits de données permettant de modéliser la grammaire.
+Un type a forcément une ou plusieurs opérations de constructions. 
+Chaque type peut présenter des fonctions d'accès et de test ainsi que des constantes.
+
+En effet, nous avons définit 6 types tels que : 
+
+
+
+	-> TYPE : OPERATEUR 
+		constantes : plus, OR et Exclu : OPERATEUR
+ 	-> TYPE : REQUETE 
+
+ 		_construction : -> conj -> requête
+				-> conj * options -> requête
+				-> disj -> requête
+				-> disj * options -> requête 
+				-> word -> requête
+				-> word * options -> requête 
+
+			
+		_test : estValide(requête) -> bool
+		       estConj(requête) -> bool
+		       estDisj(requête) -> bool
+
+		_accès : getOptions()
+			getWords()
+		
+		(on garde getConj() si est conj : getWords() puis recherche conjonction) 			  getDisj() si est disj : getWords() puis recherche disjonction)
+			
+
+	-> TYPE : CONJ
+		cons_conj -> word * word -> conj
+		cons_conj_bis -> word* conj -> conj
+		
+		test : estConj(CONJ) -> bool 
+
+		accès : getConj()
+
+
+	-> TYPE : DISJ
+		cons_disj -> word* word -> disj
+		cons_disj_bis -> word * disj -> disj
+	
+		accès : getDisj()
+	
+	-> TYPE : WORD 
+		cons_word -> 
+		accès : getWords()
+		
+
+	-> TYPE : OPTIONS
+		cons_options : word 	      -> options
+			       word * options -> options
+		test :
+			       estOptions(options) -> bool
+
+		accès : getOptions() 
+
+
+Remarque :
+	Nous avons définit ce type comme une fusion de la conjonction et de la disjonction 	pour finir par l'abandonner.
+
+	-x TYPE : JONCTION (depreciated)
+		cons_jonc -> word* word -> jonc
+		cons_jonc_bis -> word * jonc -> jonc
+
+		test : estConjonction (requête) -> bool
+		       estDisjonction (requête) -> bool 

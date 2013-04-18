@@ -1,0 +1,24 @@
+<!ELEMENT init EMPTY>
+<!ELEMENT leave EMPTY>
+
+<!ELEMENT search (filename, content?, pathdir?, perm?, extension?, timeslot?)>
+<!ELEMENT filename (#PCDATA)>
+<!ELEMENT content (#PCDATA)>
+<!ELEMENT pathdir (#PCDATA)>
+<!ELEMENT perm (#PCDATA)>
+<!ELEMENT extension (#PCDATA)>
+<!ELEMENT timeslot (begin, end)>
+<!ELEMENT begin (#PCDATA)>
+<!ELEMENT end (#PCDATA)>
+
+<!ELEMENT result (file*)>
+<!ELEMENT file (name, path, perm, size, lastmodif?, proprio?)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT path (#PCDATA)>
+<!ELEMENT perm (#PCDATA)>
+<!ELEMENT size (#PCDATA)>
+<!ELEMENT lastmodif (#PCDATA)>
+<!ELEMENT proprio (#PCDATA)>
+
+<!ATTLIST search id CDATA #REQUIRED>
+<!ATTLIST result id CDATA #REQUIRED>

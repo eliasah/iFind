@@ -1,0 +1,7 @@
+<Daemon>
+  <Address>127.0.0.1</Address>
+  <port1>40000</port1>
+  <port2>40001</port2>
+  <port3>40002</port3>
+  <mode>TCP</mode>
+</Daemon>
