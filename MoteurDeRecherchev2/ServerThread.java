@@ -34,19 +34,17 @@ public class ServerThread extends Thread {
 				
 				ArrayList<File> filesfound = this.findFiles("/Users/jeremierouach/Documents", mot);
 				int taille = filesfound.size();
-				
+
 				if(taille == 0) {
 					System.out.println("\nLa recherche est infructeuse. ");
-
-					
-				// erreur  : Broken pipe 
-					//outputstream.writeInt(taille); //a modifier vu que ca casse la socket
-					
-					/*for(int i = 0; i<filesfound.size();i++){
-						outputstream.writeByte(filesfound.get(i).getName().length());
-						outputstream.writeBytes(filesfound.get(i).getName());
-					}*/
 				}
+					// taille + paquet
+					
+				outputstream.writeInt(filesfound.get(0).getName().length()); //ok
+ 
+ 				outputstream.writeBytes(filesfound.get(0).getName());
+					
+				
 				
 
 	//	}
