@@ -18,40 +18,39 @@ public class ServerThread extends Thread {
 	
 	public void run(){
 		try {
-			DataInputStream inputstream = new DataInputStream(s.getInputStream());
-			DataOutputStream outputstream = new DataOutputStream(s.getOutputStream());
+			DataInputStream dis = new DataInputStream(s.getInputStream());
+			DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+			String mot="";
+			String path="";
 			
-		//	while(s.isConnected()){
-			//	int longeur = inputstream.readByte();
-				//byte[] data = new byte[5];
-				//inputstream.read(data);
-				//System.out.println(data.toString());
+			//On recois le mot
+			int motLength = dis.readByte();
+			for(int i = 0; i< motLength; i++){
+				mot = mot + dis.readChar();
+			}
 			
+			//On recois le path
+			int pathLength = dis.readByte();
+			for(int i = 0; i< pathLength; i++){
+				path = path + dis.readChar();
+			}
 			
-				Scanner sc = new Scanner(System.in);
-				System.out.println("Entrez le mot a rechercher...");
-				String mot = sc.nextLine();
+			//On cherche avec les 2
+			ArrayList<File> filesfound = this.findFiles(path, mot);
+			int taille = filesfound.size();
 				
-				ArrayList<File> filesfound = this.findFiles("/Users/jeremierouach/Documents", mot);
-				int taille = filesfound.size();
-
-				if(taille == 0) {
-					System.out.println("\nLa recherche est infructeuse. ");
-				}
-					// taille + paquet
-					
-				outputstream.writeInt(filesfound.get(0).getName().length()); //ok
- 
- 				outputstream.writeBytes(filesfound.get(0).getName());
-					
+			//On envoie le nombre de fichiers trouvé puis on envoie tous les noms
+			dos.writeInt(filesfound.size());
 				
-				
-
-	//	}
-	}      catch (IOException e) {
+			for(int i=0 ; i< filesfound.size();i++){
+				dos.writeInt(filesfound.get(i).getName().length());
+				dos.writeBytes(filesfound.get(i).getName());
+			}
+		}      catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public ArrayList<File> findFiles(String directoryPath, String mot) {
 		File directory = new File(directoryPath);
