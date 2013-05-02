@@ -1,4 +1,4 @@
-package engine.crawler;
+package crawler;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
