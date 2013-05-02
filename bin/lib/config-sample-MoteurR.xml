@@ -1,7 +1,0 @@
-<MoteurR>
-  <Address>127.0.0.1</Address>
-  <port1>30000</port1>
-  <port2>30001</port2>
-  <port3>30002</port3>
-  <mode>TCP</mode>
-</MoteurR>
