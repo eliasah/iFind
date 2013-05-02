@@ -71,7 +71,7 @@ public class DaemonConfiguration {
 		if (path != null && isValidPath(path) && hasRights(path)) {
 			try {
 				// writing configuration file for the corpus to watch
-				bw = new BufferedWriter(new FileWriter("corpus.dat"));
+				bw = new BufferedWriter(new FileWriter("config/corpus.dat"));
 				bw.write(path);
 				bw.newLine();
 				bw.close();
@@ -86,7 +86,7 @@ public class DaemonConfiguration {
 	// valid types choosen by user are added to config file
 	public static boolean configureExcludedTypes() {
 		// writing configuration file for the types to exclude in indexation
-		// bw = new BufferedWriter(new FileWriter("excluded_types.dat"));
+		// bw = new BufferedWriter(new FileWriter("config/excluded_types.dat"));
 		// bw.write("*~");
 		// bw.newLine();
 		// bw.write("*.swp");
