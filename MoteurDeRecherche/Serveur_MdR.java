@@ -6,7 +6,7 @@ import java.net.*;
 public class Serveur_MdR {
 
 	ServerSocket ss;
-	static final int PORT = 22678;
+	static final int PORT = 5558;
 	
 	public Serveur_MdR(){
 		try {

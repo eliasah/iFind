@@ -1,63 +1,58 @@
 package MoteurDeRecherche;
 
-import java.io.DataInputStream;
-<<<<<<< HEAD
-
-=======
->>>>>>> fb9e76bf1e029cf58e7988475d435016036ff118
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Client_MdR {
-
- 	
  
-	public static final int port = 22678;
-	
+	public static final int port = 5558;
+ 		
 	public static void main(String[] args) {
 		try{
 			
+			
 			Socket service = new Socket("localhost",port);
-			
 			DataInputStream dis = new DataInputStream(service.getInputStream());
-			
 			DataOutputStream dos = new DataOutputStream(service.getOutputStream());
 			
-			dos.writeByte(5);
-			dos.writeBytes("Hello");
-			dos.flush();
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Entrez le mot a rechercher...");
+			String mot = sc.nextLine();
 			
-			int nbWord = dis.readByte();
-            
-            System.out.println("Read byte");
+			String path = System.getProperty("user.dir");
+			System.out.println("PATH= "+path);
 			
-			byte[][] bufDebuf = new byte[nbWord][];
-			for(int i =0;i<nbWord;i++){
-				
+			//Envoie de la requete au serveur
+			dos.writeByte(mot.length());
+			dos.writeChars(mot);
 			
-				int len = dis.readByte();
-				bufDebuf[i] = new byte[len];
-				
-				for(int j=0;i<bufDebuf[i].length;j++){
-					System.out.print(bufDebuf[i][j]+" ");
-				}
+			dos.writeByte(path.length());
+			dos.writeChars(path);
 			
-			}
-				
+		    int nbFichiers = dis.readInt(); // nb de fichiers trouvŽ
+		    System.out.println("Nombre de fichiers trouvŽ : "+nbFichiers);
+		    
+		    ArrayList<String> fichiers= new ArrayList<String>();
+		    String nomFichiers;
+		    
+		    for(int j =0;j < nbFichiers;j++){
+		    	
+		    	nomFichiers ="";
+		    	int nomLength = dis.readInt();
+		    	for(int i = 0; i< nomLength; i++){
+		    		nomFichiers = nomFichiers + dis.readChar();
+		    		
+		    	}
+		    fichiers.add(nomFichiers);
+		    }
+		    
  		} catch (Exception e){
 			System.err.println("Erreur de Socket");
 		}
- 		
-		
-		
 	}
-	 
 }
 		
 		
