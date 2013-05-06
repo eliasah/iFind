@@ -1,5 +1,3 @@
-package MoteurDeRecherche;
-
 import java.io.IOException;
 import java.net.*;
 
@@ -30,8 +28,11 @@ public class Serveur_MdR {
 			e.printStackTrace();
 		}
 	}
+
+	
 	public static void main(String[] args) {
-		Serveur_MdR s= new Serveur_MdR();
+		Serveur_MdR s = new Serveur_MdR();
 		s.start();
 	}
+	
 }

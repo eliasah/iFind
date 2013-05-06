@@ -1,12 +1,9 @@
-package MoteurDeRecherche;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ServerThread extends Thread {
 	
@@ -16,6 +13,7 @@ public class ServerThread extends Thread {
 		this.s=socket;
 	}
 	
+	@Override
 	public void run(){
 		try {
 			DataInputStream dis = new DataInputStream(s.getInputStream());
@@ -39,7 +37,7 @@ public class ServerThread extends Thread {
 			ArrayList<File> filesfound = this.findFiles(path, mot);
 			int taille = filesfound.size();
 				
-			//On envoie le nombre de fichiers trouvŽ puis on envoie tous les noms
+			//On envoie le nombre de fichiers trouvï¿½ puis on envoie tous les noms
 			dos.writeInt(taille);
 				
 			
@@ -74,7 +72,7 @@ public class ServerThread extends Thread {
 			System.out.println(message2);
 
 			for(int i=0;i<subfiles.length;i++){
-				System.out.println("Fichier n¡"+i+" : "+subfiles[i].getName());
+				System.out.println("Fichier nï¿½"+i+" : "+subfiles[i].getName());
 			}
  			
 			for(int i=0 ; i<subfiles.length; i++){

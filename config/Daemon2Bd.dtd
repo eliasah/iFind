@@ -1,0 +1,51 @@
+
+<!-- règle génerale : 
+	chaque fichier Xml doit contenir la ligne suivante 
+
+	<?xml version="1.0" encoding="UTF-8"?>
+
+
+	-->
+
+
+<!ELEMENT INDEXATION (RENOMMAGES?, MODIFICATIONS?, SUPPRESSIONS?, CREATIONS?)>
+<!-- comme convenue toutes les balises de l'indexation sont facultatives -->
+
+<!ELEMENT RENOMMAGES (FICHIERRENOMME)*>		
+
+<!ELEMENT MODIFICATIONS (FICHIERMODIFIE)*>	
+
+<!ELEMENT SUPPRESSIONS (FICHIERSUPPRIME)*>
+
+<!ELEMENT CREATIONS (FICHIERCREE)*>		
+
+<!ELEMENT FICHIERRENOMME (PATH, NEWPATH)>	<!-- un fichier renommé n'est pas nécessairement un fichier modifié -->
+
+<!ELEMENT FICHIERMODIFIE (PATH, DATEMODIFICATION, TAILLE, PROPRIETAIRE, GROUPE, PERMISSIONS, INDEXAGE, NEWPATH?)>
+
+<!-- un fichier modifé nécessite une re-indexation --> 
+
+<!ELEMENT FICHIERSUPPRIME (PATH)>
+
+<!ELEMENT FICHIERCREE (PATH, format, DATECREATION, TAILLE, PROPRIETAIRE, GROUPE, PERMISSIONS, INDEXAGE)>
+
+<!-- les meta-données --> 
+
+<!ELEMENT PATH (#PCDATA)>
+<!ELEMENT format (#PCDATA)>
+<!ELEMENT DATECREATION (#PCDATA)>
+<!ELEMENT DATEMODIFICATION (#PCDATA)>
+<!ELEMENT TAILLE (#PCDATA)>
+<!ELEMENT PROPRIETAIRE (#PCDATA)>
+<!ELEMENT GROUPE (#PCDATA)>
+<!ELEMENT PERMISSIONS (#PCDATA)>
+<!ELEMENT INDEXAGE (MOT*)>
+<!ELEMENT MOT (#PCDATA)><!ATTLIST MOT frequence CDATA #REQUIRED>
+<!ELEMENT NEWPATH (#PCDATA)>
+
+<!-- les id's seront utlisés pour la traçabilitée et la détection d'eventuel erreurs, elle sont tout de même facultatives --> 
+
+<!ATTLIST RENOMMAGES id CDATA #IMPLIED>
+<!ATTLIST MODIFICATIONS id CDATA #IMPLIED>
+<!ATTLIST SUPPRESSIONS id CDATA #IMPLIED>
+<!ATTLIST CREATIONS id CDATA #IMPLIED>
