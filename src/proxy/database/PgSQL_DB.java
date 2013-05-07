@@ -24,7 +24,7 @@ class PgSQL_DB implements Database {
 		// Connexion a la base
 		// --------------------
 		Class.forName("org.postgresql.Driver");
-		conn = DriverManager.getConnection("jdbc:postgresql://localhost/",login,motPasse);
+		conn = DriverManager.getConnection("jdbc:postgresql://localhost/ifind",login,motPasse); // Connexion UBUNTU
 		st = conn.createStatement();
 	}
 

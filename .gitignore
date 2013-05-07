@@ -17,3 +17,5 @@ bin
 target/
 /bin
 .classpath
+
+example2.txt

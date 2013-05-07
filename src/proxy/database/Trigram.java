@@ -14,6 +14,7 @@ import java.util.Set;
 public class Trigram{
 	private HashMap set;
 	private int cpt;
+	private String delim = " \t\n\r\f,.:;?!'()[]";
 
 	public Trigram(String s){
 		set = new HashMap<String,Integer>();
@@ -47,11 +48,9 @@ public class Trigram{
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				cut(line);
-				//System.out.println(line);
 			}
 			System.out.println("End processing");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

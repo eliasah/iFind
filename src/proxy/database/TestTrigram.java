@@ -10,8 +10,8 @@ public class TestTrigram {
 		Trigram t1 = new Trigram(f);
 		t1.printMap();
 		
-		/*System.out.println("Trigram File HashMap");
+		System.out.println("Trigram File HashMap");
 		Trigram t2 = new Trigram("toto et titi et toto et tata et toto");
-		t2.printMap();*/
-	}
+		t2.printMap();
+		}
 }
