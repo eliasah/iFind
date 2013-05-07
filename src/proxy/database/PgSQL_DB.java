@@ -19,7 +19,7 @@ class PgSQL_DB implements Database {
 	ResultSet rs;
 
 	// connection a la base
-	public PgSQL_DB(String login, String motPasse) throws SQLException, ClassNotFoundException{
+	protected PgSQL_DB(String login, String motPasse) throws SQLException, ClassNotFoundException{
 		// -------------------
 		// Connexion a la base
 		// --------------------
@@ -28,7 +28,7 @@ class PgSQL_DB implements Database {
 		st = conn.createStatement();
 	}
 
-	// fermeture de la connection
+	@Override
 	public void close() throws SQLException{ 
 		st.close();
 		conn.close();
@@ -64,36 +64,9 @@ class PgSQL_DB implements Database {
 		System.out.println("Entrez le numero de l Hotel:");
 		num = src.nextInt();
 	}
-
-
-
-	@Override
-	public boolean connect2DB() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean disconnect() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	@Override
 	public void request() {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public String readPassword (String prompt) {
-		String password = "";
-		try {
-			password = new String(System.console().readPassword("%s", prompt));
-		}
-		catch (Exception ioe) {
-			ioe.printStackTrace();
-		}
-		return password;
+		
 	}
 }

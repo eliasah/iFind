@@ -5,8 +5,7 @@ import java.util.Scanner;
 
 public interface Database {
 
-	boolean connect2DB();
-	boolean disconnect();
+	void close() throws SQLException;
 	void request();
-	String readPassword(String prompt);
+
 }
