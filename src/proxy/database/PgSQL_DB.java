@@ -17,15 +17,23 @@ class PgSQL_DB implements Database {
 	PreparedStatement update;
 	String querysql;
 	ResultSet rs;
+	boolean connected;
 
-	// connection a la base
-	protected PgSQL_DB(String login, String motPasse) throws SQLException, ClassNotFoundException{
-		// -------------------
-		// Connexion a la base
-		// --------------------
-		Class.forName("org.postgresql.Driver");
-		conn = DriverManager.getConnection("jdbc:postgresql://localhost/ifind",login,motPasse); // Connexion UBUNTU
-		st = conn.createStatement();
+	protected PgSQL_DB(String login, String motPasse) {
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://localhost/ifind",login,motPasse);
+			st = conn.createStatement();
+			connected = true;
+		} catch (SQLException | ClassNotFoundException e) {
+			connected = false; 
+			// e.printStackTrace();
+		} // Connexion UBUNTU
+		}
+
+	@Override
+	public boolean isconnected() {
+		return connected;
 	}
 
 	@Override
@@ -34,10 +42,16 @@ class PgSQL_DB implements Database {
 		conn.close();
 	}
 
-	public  void creationTable() throws SQLException {
-		querysql = "CREATE TABLE indices";
-		st.executeUpdate(querysql);
-		System.out.println("Creation reussi");
+	public  void createDB() {
+		querysql = "CREATE TABLE t_index ( trg_id VARCHAR(3) NOT NULL, meta_id INT NOT NULL REFERENCES t_metadata(meta_id), PRIMARY KEY(trg_id, meta_id));";
+		try {
+			st.executeUpdate(querysql);
+			System.out.println("Creation reussi");
+
+		} catch (SQLException e) {
+			System.out.println("createDB Error : SQLException");
+			e.printStackTrace();
+		}
 	}	 
 
 	public void suppressionTable(String table) throws SQLException {
