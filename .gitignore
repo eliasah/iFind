@@ -16,3 +16,6 @@ bin
 .metadata
 target/
 /bin
+.classpath
+
+example2.txt
