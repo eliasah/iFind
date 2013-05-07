@@ -2,14 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/ufr_info/workspace/ifind/lib/jnotify-lib-0.94"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ifind/lib/jnotify-lib-0.94"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/ufr_info/Downloads/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="lib" path="/home/ufr_info/Downloads/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="/home/ufr_info/Downloads/postgresql-9.2-1002.jdbc3.jar"/>
-	<classpathentry kind="lib" path="/home/ufr_info/Downloads/postgresql-9.2-1002.jdbc4.jar"/>
-	<classpathentry kind="lib" path="/home/ufr_info/workspace/ifind/lib/jnotify-lib-0.94/jnotify-0.94.jar"/>
+	<classpathentry kind="lib" path="lib/jnotify-lib-0.94/jnotify-0.94.jar"/>
+	<classpathentry kind="lib" path="/home/ufr_info/workspace/ifind/lib/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="/home/ufr_info/workspace/ifind/lib/postgresql-9.2-1002.jdbc3.jar"/>
+	<classpathentry kind="lib" path="/home/ufr_info/workspace/ifind/lib/postgresql-9.2-1002.jdbc4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
