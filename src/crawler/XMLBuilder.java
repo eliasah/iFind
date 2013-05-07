@@ -1,6 +1,7 @@
 package crawler;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -54,11 +55,17 @@ public class XMLBuilder {
 
 	public void addCreation(String path) throws IOException {
 		Path p = Paths.get(path);
+		String format = "";
 		String[] tab = path.split(".");
-		if (tab.length < 2) { // no extension 
-			return;
+		if (tab.length < 2) {
+			if (!(new File(path)).isDirectory()) { // regular file without extension
+				return;
+			} else {
+				format = "DIR"; // directory
+			}
+		} else {
+			format = tab[tab.length-1];
 		}
-		String format = tab[tab.length-1];
 		long time = Files.getLastModifiedTime(p).toMillis();
 		long size = Files.size(p);
 		PosixFileAttributes attrs = Files.readAttributes(p, PosixFileAttributes.class);
@@ -67,7 +74,7 @@ public class XMLBuilder {
 		this.creation += "<FICHIERCREE>" +
 				"<PATH>" + path + "</PATH>" +
 				"<FORMAT>" + format + "</FORMAT>" +
-				"<DATEMODIFICATION>" + time + "</DATEMODIFICATION>" +
+				"<DATECREATION>" + time + "</DATECREATION>" +
 				"<TAILLE>" + size + "</TAILLE>" +
 				"<PROPRIETAIRE>" + attrs.owner() + "</PROPRIETAIRE>" +
 				"<GROUPE>" + attrs.group() + "</GROUPE>" +

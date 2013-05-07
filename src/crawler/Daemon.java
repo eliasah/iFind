@@ -10,9 +10,10 @@ import net.contentobjects.jnotify.JNotifyException;
 
 public class Daemon {
 
-	private LinkedBlockingQueue<Event> events = new LinkedBlockingQueue<Event>();
+	private LinkedBlockingQueue<Event> events;
 
 	public Daemon() throws UnknownHostException, IOException {
+		this.events = new LinkedBlockingQueue<Event>();
 		this.addIndexer();
 		this.addListeners();
 	}
@@ -26,11 +27,7 @@ public class Daemon {
 		String line;
 		br = new BufferedReader(new FileReader("config/corpus.dat"));
 		while ((line = br.readLine()) != null) {
-			try {
-				new FileListener(line, this.events);
-			} catch (JNotifyException e) {
-				e.printStackTrace();
-			}
+			new FileListener(line, this.events);
 		}
 		br.close();
 	}

@@ -14,7 +14,7 @@ public class Indexer extends Thread {
 
 	private final String ADDRESS = "localhost";
 	private final int PORT = 40000;
-	private final int LIMIT = 3;
+	private final int LIMIT = 10;
 
 	private LinkedBlockingQueue<Event> events;
 	private Hashtable<String, Event> eventsTable;
@@ -26,7 +26,6 @@ public class Indexer extends Thread {
 		this.eventsTable = new Hashtable<String, Event>();
 		this.socket = new Socket(ADDRESS, PORT);
 		this.bw = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-
 	}
 
 	public void run() {
@@ -34,7 +33,7 @@ public class Indexer extends Thread {
 			try {
 				Event event = this.events.take();
 				this.addEvent(event);
-				if (this.eventsTable.size() > LIMIT) {
+				if (this.eventsTable.size() >= LIMIT) {
 					this.sendEvents();
 					this.eventsTable = new Hashtable<String, Event>();
 				}
