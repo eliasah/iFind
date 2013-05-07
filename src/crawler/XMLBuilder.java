@@ -13,7 +13,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.regex.Pattern;
 
 public class XMLBuilder {
 
@@ -55,12 +54,11 @@ public class XMLBuilder {
 
 	public void addCreation(String path) throws IOException {
 		Path p = Paths.get(path);
-		//			String[] tab = path.split(".");
-		//			if (tab.length < 2) { // no extension 
-		//				return;
-		//			}
-		//			String format = tab[tab.length-1];
-		String format = "FIXME";
+		String[] tab = path.split(".");
+		if (tab.length < 2) { // no extension 
+			return;
+		}
+		String format = tab[tab.length-1];
 		long time = Files.getLastModifiedTime(p).toMillis();
 		long size = Files.size(p);
 		PosixFileAttributes attrs = Files.readAttributes(p, PosixFileAttributes.class);
@@ -68,7 +66,7 @@ public class XMLBuilder {
 
 		this.creation += "<FICHIERCREE>" +
 				"<PATH>" + path + "</PATH>" +
-				"<format>" + format + "</format>" +
+				"<FORMAT>" + format + "</FORMAT>" +
 				"<DATEMODIFICATION>" + time + "</DATEMODIFICATION>" +
 				"<TAILLE>" + size + "</TAILLE>" +
 				"<PROPRIETAIRE>" + attrs.owner() + "</PROPRIETAIRE>" +
@@ -131,7 +129,7 @@ public class XMLBuilder {
 		Hashtable<String, Integer> frequences = new Hashtable<String, Integer>();
 		String line;
 		while ((line = br.readLine()) != null) {
-			String delimiters = Pattern.compile(" \t\n\r\f,.:;?!'").toString();
+			String delimiters = " \t\n\r\f,.:;?!'";
 			StringTokenizer token = new StringTokenizer(line, delimiters);
 			while (token.hasMoreTokens()) {
 				String tmp = token.nextToken();
