@@ -56,15 +56,18 @@ public class XMLBuilder {
 	public void addCreation(String path) throws IOException {
 		Path p = Paths.get(path);
 		String format = "";
-		String[] tab = path.split(".");
-		if (tab.length < 2) {
+		StringTokenizer tokens = new StringTokenizer(path, ".");
+		String token = "";
+		while (tokens.hasMoreTokens())
+			token = tokens.nextToken();
+		if (token.equals("")) {
 			if (!(new File(path)).isDirectory()) { // regular file without extension
 				return;
 			} else {
 				format = "DIR"; // directory
 			}
 		} else {
-			format = tab[tab.length-1];
+			format = token;
 		}
 		long time = Files.getLastModifiedTime(p).toMillis();
 		long size = Files.size(p);
@@ -136,7 +139,7 @@ public class XMLBuilder {
 		Hashtable<String, Integer> frequences = new Hashtable<String, Integer>();
 		String line;
 		while ((line = br.readLine()) != null) {
-			String delimiters = " \t\n\r\f,.:;?!'";
+			String delimiters = " \t\n\r\f,.:;?!'+*-/()[]{}";
 			StringTokenizer token = new StringTokenizer(line, delimiters);
 			while (token.hasMoreTokens()) {
 				String tmp = token.nextToken();
@@ -149,8 +152,8 @@ public class XMLBuilder {
 			}
 		}
 		br.close();
-		Iterator itWords = frequences.keySet().iterator();
-		Iterator itFrequences = frequences.values().iterator();
+		Iterator<String> itWords = frequences.keySet().iterator();
+		Iterator<Integer> itFrequences = frequences.values().iterator();
 		while (itWords.hasNext() && itFrequences.hasNext()) {
 			words += "<MOT frequence=\"" + itFrequences.next() + "\">" + itWords.next() + "</MOT>";
 		}

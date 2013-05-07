@@ -70,7 +70,7 @@ public class FirstIndexation {
 		try {
 			new FirstIndexation();
 		} catch (BadCorpusFile e) {
-			System.err.println("Erreur : fichier de configuration \"corpus\"");
+			System.err.println("Erreur : fichier de configuration \"corpus.dat\"");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 

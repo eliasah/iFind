@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import net.contentobjects.jnotify.JNotifyException;
-
 public class Daemon {
 
 	private LinkedBlockingQueue<Event> events;
