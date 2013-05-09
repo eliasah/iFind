@@ -21,14 +21,16 @@ class Login extends JFrame implements ActionListener {
 		text2 = new JPasswordField(15);
 
 		connect = new JButton("Connect");
-		quit = new JButton("Quit");
-		panel=new JPanel(new GridLayout(3,1));
+		quit    = new JButton("Quit");
+		
+		panel   = new JPanel(new GridLayout(3,1));
 		panel.add(label1);
 		panel.add(text1);
 		panel.add(label2);
 		panel.add(text2);
 		panel.add(connect);
 		panel.add(quit);
+		
 		add(panel,BorderLayout.CENTER);
 		connect.addActionListener(this);
 		quit.addActionListener(new ActionListener() {
@@ -36,6 +38,7 @@ class Login extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		});
+		
 		setTitle("LOGIN FORM");
 	}
 
