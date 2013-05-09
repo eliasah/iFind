@@ -18,8 +18,6 @@ class Proxy_PgSQL implements Database {
 		db.createDB();	
 	}
 
-
-
 	@Override
 	public void request(){
 		// TODO Auto-generated method stub

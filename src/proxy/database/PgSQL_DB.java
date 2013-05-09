@@ -29,7 +29,7 @@ class PgSQL_DB implements Database {
 			connected = false; 
 			// e.printStackTrace();
 		} // Connexion UBUNTU
-		}
+	}
 
 	@Override
 	public boolean isconnected() {
@@ -81,6 +81,6 @@ class PgSQL_DB implements Database {
 	@Override
 	public void request() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

@@ -71,6 +71,7 @@ public class FirstIndexation {
 			new FirstIndexation();
 		} catch (BadCorpusFile e) {
 			System.err.println("Erreur : fichier de configuration \"corpus.dat\"");
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
