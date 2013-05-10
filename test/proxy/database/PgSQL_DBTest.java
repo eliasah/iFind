@@ -9,23 +9,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PgSQL_DBTest {
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+	private PgSQL_DB conn;
 
 	@Before
 	public void setUp() throws Exception {
+		conn = new PgSQL_DB("abou","x55efviq");
 	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
+	
 	@Test
 	public void testPgSQL_DB() {
 		fail("Not yet implemented");
@@ -33,7 +23,7 @@ public class PgSQL_DBTest {
 
 	@Test
 	public void testIsconnected() {
-		fail("Not yet implemented");
+		assertTrue(conn.isconnected());
 	}
 
 	@Test

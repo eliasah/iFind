@@ -14,11 +14,6 @@ class Proxy_PgSQL implements Database {
 	}
 
 	@Override
-	public void createDB() {
-		db.createDB();	
-	}
-
-	@Override
 	public void request(){
 		// TODO Auto-generated method stub
 	}
@@ -31,5 +26,17 @@ class Proxy_PgSQL implements Database {
 	@Override
 	public boolean isconnected() {
 		return db.connected;
+	}
+
+	@Override
+	public void createDatabase() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resetDatabase() {
+		// TODO Auto-generated method stub
+		
 	}
 }

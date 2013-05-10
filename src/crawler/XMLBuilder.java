@@ -23,7 +23,7 @@ import java.util.StringTokenizer;
  * qui ont ensuite été transmises par l'indexeur.
  * Le document généré respecte la DTD fournie à l'ensemble des groupes. 
  * 
- * @author isabelle
+ * @author Isabelle Richard
  *
  */
 public class XMLBuilder {

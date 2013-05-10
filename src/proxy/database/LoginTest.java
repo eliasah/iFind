@@ -53,7 +53,7 @@ class Login extends JFrame implements ActionListener {
 			page.setVisible(true);
 			JLabel label = new JLabel("Connexion to database established, welcome "+value1);
 			page.getContentPane().add(label);
-			conn.createDB();
+			conn.createDatabase();
 
 		}
 		else {	
