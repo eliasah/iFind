@@ -7,5 +7,9 @@ public interface Database {
 
 	void close() throws SQLException;
 	void request();
-
+	boolean isconnected();
+	void createDatabase();
+	void resetDatabase();
+	
 }
+
