@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -26,6 +27,9 @@ public class Trigram{
 		cutfile(f);
 	}
 
+	boolean containsKey(String s) {
+		return set.containsKey(s);
+	}
 	private void cut(String s) {
 		int length = s.length();
 		String ss;

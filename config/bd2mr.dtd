@@ -1,24 +1,51 @@
-<!ELEMENT init EMPTY>
-<!ELEMENT leave EMPTY>
+<!-- Description de la requête de recherche -->
+<!ELEMENT SEARCH (WORD, CONTENT?, PATHDIR?, PERM?, EXTENSION?, TIMESLOT?)>
+<!-- Le mot à rechercher -->
+<!ELEMENT WORD (#PCDATA)>
+<!-- Un booléen qui dit si l'on fait 
+     une recherche de contenu (true) 
+     ou une recherche sur les nom de 
+     fichier (false) -->
+<!ELEMENT CONTENT (#PCDATA)>
+<!-- Le nom du fichier à partir duquel
+     on recherche -->
+<!ELEMENT PATHDIR (#PCDATA)>
+<!-- Les permissions du fichier à chercher -->
+<!ELEMENT PERM (#PCDATA)>
+<!-- L'extension des fichiers à chercher -->
+<!ELEMENT EXTENSION (#PCDATA)>
+<!-- Interval de temps -->
+<!ELEMENT TIMESLOT (BEGIN, END)>
+<!-- Debut de l'interval -->
+<!ELEMENT BEGIN (DAY, MONTH, YEAR)>
+<!-- Fin de l'interval -->
+<!ELEMENT END (DAY, MONTH, YEAR)>
+<!-- Le jour -->
+<!ELEMENT DAY (#PCDATA)>
+<!-- Le mois -->
+<!ELEMENT MONTH (#PCDATA)>
+<!-- L'année -->
+<!ELEMENT YEAR (#PCDATA)>
 
-<!ELEMENT search (filename, content?, pathdir?, perm?, extension?, timeslot?)>
-<!ELEMENT filename (#PCDATA)>
-<!ELEMENT content (#PCDATA)>
-<!ELEMENT pathdir (#PCDATA)>
-<!ELEMENT perm (#PCDATA)>
-<!ELEMENT extension (#PCDATA)>
-<!ELEMENT timeslot (begin, end)>
-<!ELEMENT begin (#PCDATA)>
-<!ELEMENT end (#PCDATA)>
+<!-- Balise contenant les résultats de la requête search -->
+<!ELEMENT RESULT (FILE*)>
+<!-- Balise file correspond à un fichier resultat 
+     donc n balises files = n résultats -->
+<!ELEMENT FILE (NAME, PATH, PERM, SIZE, LASTMODIF?, PROPRIO?)>
+<!-- Le nom du fichier -->
+<!ELEMENT NAME (#PCDATA)>
+<!-- Le chemin complet du fichier -->
+<!ELEMENT PATH (#PCDATA)>
+<!-- Les permissions du fichier -->
+<!ELEMENT PERM (#PCDATA)>
+<!-- La taille du fichier -->
+<!ELEMENT SIZE (#PCDATA)>
+<!-- La date de dérnière modification du fichier -->
+<!ELEMENT LASTMODIF (#PCDATA)>
+<!-- Le propriétaire du fichier -->
+<!ELEMENT PROPRIO (#PCDATA)>
 
-<!ELEMENT result (file*)>
-<!ELEMENT file (name, path, perm, size, lastmodif?, proprio?)>
-<!ELEMENT name (#PCDATA)>
-<!ELEMENT path (#PCDATA)>
-<!ELEMENT perm (#PCDATA)>
-<!ELEMENT size (#PCDATA)>
-<!ELEMENT lastmodif (#PCDATA)>
-<!ELEMENT proprio (#PCDATA)>
-
-<!ATTLIST search id CDATA #REQUIRED>
-<!ATTLIST result id CDATA #REQUIRED>
+<!-- L'id du resultat correspondant à une recherche 
+     aura le même id que la recherche -->
+<!ATTLIST SEARCH id CDATA #REQUIRED>
+<!ATTLIST RESULT id CDATA #REQUIRED>

@@ -54,10 +54,3 @@ public class Client_MdR {
 		}
 	}
 }
-		
-		
-		
-		 
-	 
-
-
