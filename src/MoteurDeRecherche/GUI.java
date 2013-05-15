@@ -3,7 +3,6 @@ package MoteurDeRecherche;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,26 +10,60 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.text.StyledDocument;
 import javax.swing.text.StyledEditorKit;
 
-public class GUI {
+ 
+public class GUI implements Runnable{
 
 	
 	public static void main(String[] args) {
 
-		final JFrame frame = new JFrame("Moteur de Recherche");
-		JPanel panel = new JPanel();
+		SwingUtilities.invokeLater(new GUI());
+
 		
+	}
+
+	@Override
+	public void run() {
+		final JFrame frame = new JFrame("Moteur de Recherche");
+		final JPanel panel = new JPanel();
+		frame.setContentPane(panel);
 		BorderLayout layout = new BorderLayout();
 		panel.setLayout(layout);
-		frame.add(panel);
-		
+ 		
 		JPanel panel_north = new JPanel();
 		panel.add(panel_north,BorderLayout.NORTH);
 		
-		frame.setResizable(false);
-		frame.setBounds(100, 100, 710, 610);
+		final JPanel user_advanced = new JPanel();
+		
+		JLabel searchAdvLabel = new JLabel("Une partie ou l'ensemble du nom du document : ");
+		JTextField searchAdv = new JTextField();
+ 		JCheckBox att1 = new JCheckBox("Auteur");
+		JCheckBox att2 = new JCheckBox("Date");
+		JCheckBox att3 = new JCheckBox("Type");
+		JCheckBox att4 = new JCheckBox("Contenu");
+		
+		user_advanced.add(searchAdvLabel,BorderLayout.EAST);
+		user_advanced.add(searchAdv,BorderLayout.CENTER);
+		
+		
+		JPanel UAdv_sub = new JPanel(new GridLayout(2,2));
+		user_advanced.add(UAdv_sub,BorderLayout.CENTER); // Probleme de BorderLayout pas a la bonne place... car textfield presk invible
+		UAdv_sub.add(att1);
+		UAdv_sub.add(att2);
+		UAdv_sub.add(att3);
+		UAdv_sub.add(att4);
+
+		
+		
+	/*	JPanel between = new JPanel();
+		BorderLayout layout_between = new BorderLayout();
+		between.setLayout(layout_between);
+		frame.add(between,BorderLayout.CENTER); */
+		
+		
+ 		frame.setResizable(true);
+		frame.setBounds(100, 100, 910, 610);
 		
 		JMenuBar mbar = new JMenuBar();
 		JMenu menu = new JMenu("Fichier");
@@ -118,6 +151,9 @@ public class GUI {
 		searchField.setColumns(20);
 		panel_north.add(searchField,BorderLayout.NORTH);
 		
+	
+		
+		
 		JButton envoyer = new JButton("Rechercher");
 		panel_north.add(envoyer,BorderLayout.CENTER);
 
@@ -125,28 +161,54 @@ public class GUI {
 		// Le probleme de la JTable() c'est qu'on peut pas la centrer dans le conteneur, elle ecrase tout.
 
 		
-		final String[] entetes = {"Nom ","Auteur","Date de Création","Type","Taille"};
+		final String[] entetes = {"Nom ","Auteur","Date de Creation","Type"};
+		  final Object [][] donnees = new Object[][]{
+	                {"Jonathan", "Sykes", "01/01/2013", true},
+	                {"Nicolas", "Van de Kampf", "01/01/2013", true},
+	                {"Damien", "Cuthbert", "01/01/2013", true},
+	                {"Corinne", "Valance", "01/01/2013", false},
+	                {"Emilie", "Schrödinger", "01/01/2013",true},
+	                {"Delphine", "Duke", "01/01/2013", false},
+	                {"Eric", "Trump", "01/01/2013", true},
+	        };
+		  
 	       TableModel dataModel = new AbstractTableModel() {
 	           public int getColumnCount() { return entetes.length; }
 	           public String getColumnName(int columnIndex) { return entetes[columnIndex];}
-	           public Object getValueAt(int row, int col) { return new Integer(row*col); }
+	           public Object getValueAt(int row, int col) { return donnees[row][col]; }
 			@Override
 			public int getRowCount() {
 			
-				return 0;
+				return donnees.length;
 			}
  			
 		
 	     };
 	       
-	       
-	      
 	       JTable table = new JTable(dataModel);
+	       table.setPreferredSize(new Dimension(100,100));
 	
-       
+			user_advanced.add(table);
+
 	       // table.setAutoCreateRowSorter(true);
   	       //set size car bcp trop grande, elle cache le bouton et le txtfield 
- 	       panel.add(table,BorderLayout.CENTER);
+	       //table.setSize(50, 50);
+ 	    //   JCheckBox jcb = new JCheckBox("Interface Avancee ?");
+ 	       JButton advanced = new JButton("Utilisateur Avancé ?");
+ 	       panel_north.add(advanced,BorderLayout.SOUTH);
+ 	       
+ 	       advanced.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+			
+				panel.setVisible(false);
+				frame.setContentPane(user_advanced);
+				
+			}
+		});
+	       
+	       panel.add(table,BorderLayout.CENTER);
 	         
 		
 		envoyer.addActionListener(new ActionListener() {
@@ -159,6 +221,7 @@ public class GUI {
  			}
 			
 		});
+		
 		// Le pb de ce scrollPane/JTable , c'est qu'il cache la vue du textField et du bouton rechercher.
 
 
@@ -169,15 +232,13 @@ public class GUI {
 		mbar.add(menu2);
 		mbar.add(menu3);
 
-		
+		//frame.pack();
+		frame.setMinimumSize(frame.getSize());
 		frame.setJMenuBar(mbar);		
 		
  		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		
-		
-		
 		
 	}
 
