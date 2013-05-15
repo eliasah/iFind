@@ -31,7 +31,7 @@ public class FirstIndexation {
 
 	private final String ADDRESS = "localhost";
 	private final int PORT = 40000;
-	private final String CONFIG_FILE = "config/corpus.dat";
+	private final String CONFIG_FILE = "ccorpus.dat";
 	private LinkedBlockingQueue<Event> events;
 
 	/**
