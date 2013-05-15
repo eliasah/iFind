@@ -1,5 +1,7 @@
 package MoteurDeRecherche;
 
+import java.util.Stack;
+
 import org.xml.sax.*;
 import org.xml.sax.helpers.LocatorImpl;
 
@@ -12,6 +14,10 @@ import org.xml.sax.helpers.LocatorImpl;
  */
 public class SimpleContentHandler implements ContentHandler {
 
+	Search search=null;
+	TimeSlot timeSlot;
+	Stack<String> balises = new Stack<String>();
+	
         public SimpleContentHandler() {
                 super();
                 // On definit le locator par defaut.
@@ -80,11 +86,20 @@ public class SimpleContentHandler implements ContentHandler {
          */
         public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributs) throws SAXException {
                 System.out.println("Ouverture de la balise : " + localName);
-
+                
+                if (localName.equals("SEARCH")){
+                	if (attributs.getLocalName(0).equals("id")){
+                		this.search = new Search(Integer.parseInt(attributs.getValue(0)));
+                	}
+                }
+                
+                this.balises.push(localName);
+                
+                /*
                 if ( ! "".equals(nameSpaceURI)) { // espace de nommage particulier
                         System.out.println("  appartenant a l'espace de nom : "  + nameSpaceURI);
                 }
-
+                */
                 System.out.println("  Attributs de la balise : ");
 
                 for (int index = 0; index < attributs.getLength(); index++) { // on parcourt la liste des attributs
@@ -98,7 +113,7 @@ public class SimpleContentHandler implements ContentHandler {
          */
         public void endElement(String nameSpaceURI, String localName, String rawName) throws SAXException {
                 System.out.print("Fermeture de la balise : " + localName);
-
+                this.balises.pop();
                 if ( ! "".equals(nameSpaceURI)) { // name space non null
                         System.out.print("appartenant a l'espace de nommage : " + localName);
                 }
@@ -116,6 +131,55 @@ public class SimpleContentHandler implements ContentHandler {
          */
         public void characters(char[] ch, int start, int end) throws SAXException {
                 System.out.println("#PCDATA : " + new String(ch, start, end));
+                
+                if(this.balises.peek().equals("WORD")){
+                	this.search.word = Boolean.parseBoolean(new String(ch, start, end));
+                }
+                if(this.balises.peek().equals("CONTENT")){
+                	this.search.content=new String(ch, start, end);
+                }
+                if(this.balises.peek().equals("PATHDIR")){
+                	this.search.pathdir=new String(ch, start, end);
+                }
+                if(this.balises.peek().equals("PERM")){
+                	this.search.perm=new String(ch, start, end);
+                }
+                if(this.balises.peek().equals("EXTENSION")){
+                	this.search.extension=new String(ch, start, end);
+                }
+                if(this.balises.peek().equals("TIMESLOT")){
+                	this.timeSlot= new TimeSlot();
+                }
+                if(this.balises.peek().equals("DAY")){
+                	String temp = this.balises.pop();
+                	if(this.balises.peek().equals("BEGIN")){
+                		this.timeSlot.dayB= Integer.parseInt(new String(ch, start, end));
+                	}
+                	if(this.balises.peek().equals("END")){
+                		this.timeSlot.dayE= Integer.parseInt(new String(ch, start, end));
+                	}
+                	this.balises.push(temp);
+                }
+                if(this.balises.peek().equals("MONTH")){
+                	String temp = this.balises.pop();
+                	if(this.balises.peek().equals("BEGIN")){
+                		this.timeSlot.monthB= Integer.parseInt(new String(ch, start, end));
+                	}
+                	if(this.balises.peek().equals("END")){
+                		this.timeSlot.monthE= Integer.parseInt(new String(ch, start, end));
+                	}
+                	this.balises.push(temp);
+                }
+                if(this.balises.peek().equals("YEAR")){
+                	String temp = this.balises.pop();
+                	if(this.balises.peek().equals("BEGIN")){
+                		this.timeSlot.yearB= Integer.parseInt(new String(ch, start, end));
+                	}
+                	if(this.balises.peek().equals("END")){
+                		this.timeSlot.yearE= Integer.parseInt(new String(ch, start, end));
+                	}
+                	this.balises.push(temp);
+                }
         }
 
         /**
