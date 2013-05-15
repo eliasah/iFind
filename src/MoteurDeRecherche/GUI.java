@@ -3,7 +3,6 @@ package MoteurDeRecherche;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,14 +10,21 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.text.StyledDocument;
 import javax.swing.text.StyledEditorKit;
 
-public class GUI {
+ 
+public class GUI implements Runnable{
 
 	
 	public static void main(String[] args) {
 
+		SwingUtilities.invokeLater(new GUI());
+
+		
+	}
+
+	@Override
+	public void run() {
 		final JFrame frame = new JFrame("Moteur de Recherche");
 		final JPanel panel = new JPanel();
 		frame.setContentPane(panel);
@@ -233,9 +239,6 @@ public class GUI {
  		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		
-		
-		
 		
 	}
 
