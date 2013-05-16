@@ -49,10 +49,12 @@ class Login extends JFrame implements ActionListener {
 		Database conn = new Proxy_PgSQL(value1, value2);
 
 		if (conn.isconnected()) {
+			System.out.println("Connection Established");
 			NextPage page = new NextPage();
 			page.setVisible(true);
 			JLabel label = new JLabel("Connexion to database established, welcome "+value1);
 			page.getContentPane().add(label);
+			System.out.println("test");
 			conn.createDatabase();
 
 		}

@@ -17,10 +17,7 @@ public class GUI implements Runnable{
 
 	
 	public static void main(String[] args) {
-
 		SwingUtilities.invokeLater(new GUI());
-
-		
 	}
 
 	@Override
@@ -167,7 +164,7 @@ public class GUI implements Runnable{
 	                {"Nicolas", "Van de Kampf", "01/01/2013", true},
 	                {"Damien", "Cuthbert", "01/01/2013", true},
 	                {"Corinne", "Valance", "01/01/2013", false},
-	                {"Emilie", "Schršdinger", "01/01/2013",true},
+	                {"Emilie", "Schrï¿½dinger", "01/01/2013",true},
 	                {"Delphine", "Duke", "01/01/2013", false},
 	                {"Eric", "Trump", "01/01/2013", true},
 	        };
@@ -194,7 +191,7 @@ public class GUI implements Runnable{
   	       //set size car bcp trop grande, elle cache le bouton et le txtfield 
 	       //table.setSize(50, 50);
  	    //   JCheckBox jcb = new JCheckBox("Interface Avancee ?");
- 	       JButton advanced = new JButton("Utilisateur AvancŽ ?");
+ 	       JButton advanced = new JButton("Utilisateur Avancï¿½ ?");
  	       panel_north.add(advanced,BorderLayout.SOUTH);
  	       
  	       advanced.addActionListener(new ActionListener() {
@@ -217,16 +214,12 @@ public class GUI implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				// connexion a la BDD
 				
-				JOptionPane.showMessageDialog(frame, "Erreur : \nLe Moteur n'arrive pas ˆ joindre la BDD.\nVeuillez vŽrifiez vos connexions.");
+				JOptionPane.showMessageDialog(frame, "Erreur : \nLe Moteur n'arrive pas ï¿½ joindre la BDD.\nVeuillez vï¿½rifiez vos connexions.");
  			}
 			
 		});
 		
 		// Le pb de ce scrollPane/JTable , c'est qu'il cache la vue du textField et du bouton rechercher.
-
-
-		
-       
 
 		mbar.add(menu);
 		mbar.add(menu2);

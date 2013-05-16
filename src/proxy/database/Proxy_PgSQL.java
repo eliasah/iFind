@@ -30,8 +30,7 @@ class Proxy_PgSQL implements Database {
 
 	@Override
 	public void createDatabase() {
-		// TODO Auto-generated method stub
-		
+		db.createDatabase();
 	}
 
 	@Override

@@ -2,7 +2,11 @@ package proxy.database;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
+
+import crawler.FileListener;
 
 class PgSQL_DB implements Database {
 
@@ -38,15 +42,44 @@ class PgSQL_DB implements Database {
 		conn.close();
 	}
 
-	public  void createDatabase() {
-		querysql = "CREATE TABLE t_index ( trg_id VARCHAR(3) NOT NULL, meta_id INT NOT NULL REFERENCES t_metadata(meta_id), PRIMARY KEY(trg_id, meta_id));";
+	public void createDatabase() {
+		System.out.println("Creating Database");
+		
+		ArrayList<String> req = new ArrayList();
+		
+		BufferedReader br = null;
+		String line;
 		try {
-			st.executeUpdate(querysql);
-			System.out.println("Creation reussi");
+			br = new BufferedReader(new FileReader("config/indices.sql"));
+		} catch (FileNotFoundException e1) {
+			System.out.println("DB config file not found");
+			e1.printStackTrace();
+		}
+		try {
+			while ((line = br.readLine()) != null) {
+				req.add(line);
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		try {
+			br.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		Iterator it = req.iterator();
+		while (it.hasNext()){
+			querysql = (String) it.next();
+			System.out.println(querysql);
+			try {
+				st.executeUpdate(querysql);
+				System.out.println("Creation reussi");
 
-		} catch (SQLException e) {
-			System.out.println("createDB Error : SQLException");
-			e.printStackTrace();
+			} catch (SQLException e) {
+				System.out.println("createDB Error : SQLException");
+				e.printStackTrace();
+			}
 		}
 	}	 
 
@@ -79,52 +112,52 @@ class PgSQL_DB implements Database {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public void resetDatabase()  
-    {  
-        String s = new String();  
-        StringBuffer sb = new StringBuffer();  
-  
-        try  
-        {  
-            FileReader fr = new FileReader(new File("config/indices.sql"));  
-            // be sure to not have line starting with "--" or "/*" or any other non aplhabetical character  
-  
-            BufferedReader br = new BufferedReader(fr);  
-  
-            while((s = br.readLine()) != null) {  
-                sb.append(s);  
-            }  
-            br.close();  
-  
-            // here is our splitter ! We use ";" as a delimiter for each request  
-            // then we are sure to have well formed statements  
-            String[] inst = sb.toString().split(";");  
-  
-            Connection c = ((Statement) conn).getConnection();  
-            Statement st = c.createStatement();  
-  
-            for(int i = 0; i<inst.length; i++)  
-            {  
-                // we ensure that there is no spaces before or after the request string  
-                // in order to not execute empty statements  
-                if(!inst[i].trim().equals(""))  
-                {  
-                    st.executeUpdate(inst[i]);  
-                    System.out.println(">>"+inst[i]);  
-                }  
-            }  
-    
-        }  
-        catch(Exception e)  
-        {  
-            System.out.println("*** Error : "+e.toString());  
-            System.out.println("*** ");  
-            System.out.println("*** Error : ");  
-            e.printStackTrace();  
-            System.out.println("################################################");  
-            System.out.println(sb.toString());  
-        }  
-  
-    }  
+	{  
+		String s = new String();  
+		StringBuffer sb = new StringBuffer();  
+
+		try  
+		{  
+			FileReader fr = new FileReader(new File("config/indices.sql"));  
+			// be sure to not have line starting with "--" or "/*" or any other non aplhabetical character  
+
+			BufferedReader br = new BufferedReader(fr);  
+
+			while((s = br.readLine()) != null) {  
+				sb.append(s);  
+			}  
+			br.close();  
+
+			// here is our splitter ! We use ";" as a delimiter for each request  
+			// then we are sure to have well formed statements  
+			String[] inst = sb.toString().split(";");  
+
+			Connection c = ((Statement) conn).getConnection();  
+			Statement st = c.createStatement();  
+
+			for(int i = 0; i<inst.length; i++)  
+			{  
+				// we ensure that there is no spaces before or after the request string  
+				// in order to not execute empty statements  
+				if(!inst[i].trim().equals(""))  
+				{  
+					st.executeUpdate(inst[i]);  
+					System.out.println(">>"+inst[i]);  
+				}  
+			}  
+
+		}  
+		catch(Exception e)  
+		{  
+			System.out.println("*** Error : "+e.toString());  
+			System.out.println("*** ");  
+			System.out.println("*** Error : ");  
+			e.printStackTrace();  
+			System.out.println("################################################");  
+			System.out.println(sb.toString());  
+		}  
+
+	}  
 }

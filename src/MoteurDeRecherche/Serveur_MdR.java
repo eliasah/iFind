@@ -6,7 +6,8 @@ import java.net.*;
 public class Serveur_MdR {
 
 	ServerSocket ss;
-	static final int PORT = 5558;
+	// TODO Ce port ne doit pas etre en final. Il faut regarder config/config-sample-MoteurR.xml pour configurer
+	static final int PORT = 3000; 
 	
 	public Serveur_MdR(){
 		try {
@@ -20,13 +21,12 @@ public class Serveur_MdR {
 	
 	public void start(){
 		try {
-			while (true)
-			{
+			while (true) {
 				Socket s = ss.accept();
 				new ServerThread(s).run();
 			}
 		} catch (IOException e) {
-			
+			// TODO Signaler que la connection n'a pas été établie.
 			e.printStackTrace();
 		}
 	}
