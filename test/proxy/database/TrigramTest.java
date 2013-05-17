@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import database.trigram.Trigram;
+
+
 public class TrigramTest {
 	private Trigram ts;
 	private Trigram tf;

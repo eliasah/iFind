@@ -10,6 +10,8 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import database.proxy.MiniHashMap;
+
 public class MiniHashMapTest {
 
     @Test

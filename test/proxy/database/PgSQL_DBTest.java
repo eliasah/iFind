@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import database.proxy.PgSQL_DB;
+
 public class PgSQL_DBTest {
 	private PgSQL_DB conn;
 
