@@ -23,7 +23,9 @@ public class GUI implements Runnable{
 		
 	}
 
-	@Override
+	// la GUI se définit comme telle :
+    // une interface de base contenant une menubar habituelle avec fichier, edition et aide... de plus on a un champ de recherche de type textfield et un bouton (rechercher), ainsi qu'un bouton advanced  qui permet d afficher l interface de l utilisateur avancé. Il y a egalement une JTable qui fait office de tableau des résultats de la recherche.
+    
 	public void run() {
 		final JFrame frame = new JFrame("Moteur de Recherche");
 		final JPanel panel = new JPanel();
@@ -55,11 +57,7 @@ public class GUI implements Runnable{
 		UAdv_sub.add(att4);
 
 		
-		
-	/*	JPanel between = new JPanel();
-		BorderLayout layout_between = new BorderLayout();
-		between.setLayout(layout_between);
-		frame.add(between,BorderLayout.CENTER); */
+ 
 		
 		
  		frame.setResizable(true);
@@ -139,9 +137,6 @@ public class GUI implements Runnable{
 			}
 		});
 		
-		// pour save, je me tate en fait, parce que la on est dans un moteur de recherche, donc on cherche des docs
-		// et si on les trouve, on les ouvre, sinon bah on recommence avec une nouvelle indexation mais dans aucun cas 
-		// on a besoin d'enregistrer le resultat... ex : Terminal...
 		
 				
 		JLabel search = new JLabel("Une partie ou l'ensemble du nom du document : ");
@@ -190,10 +185,7 @@ public class GUI implements Runnable{
 	
 			user_advanced.add(table);
 
-	       // table.setAutoCreateRowSorter(true);
-  	       //set size car bcp trop grande, elle cache le bouton et le txtfield 
-	       //table.setSize(50, 50);
- 	    //   JCheckBox jcb = new JCheckBox("Interface Avancee ?");
+	     
  	       JButton advanced = new JButton("Utilisateur Avancé ?");
  	       panel_north.add(advanced,BorderLayout.SOUTH);
  	       
@@ -222,7 +214,9 @@ public class GUI implements Runnable{
 			
 		});
 		
-		// Le pb de ce scrollPane/JTable , c'est qu'il cache la vue du textField et du bouton rechercher.
+		// La connexion a la BD a lieu dans le moteur de recherche (fichiers Serveur_Mdr / ServerThread )
+        
+        // l'interface n'est pas finie.
 
 
 		
