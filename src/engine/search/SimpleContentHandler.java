@@ -148,7 +148,8 @@ public class SimpleContentHandler implements ContentHandler {
                 	this.search.extension=new String(ch, start, end);
                 }
                 if(this.balises.peek().equals("TIMESLOT")){
-                	this.timeSlot= new TimeSlot();
+                	// TODO
+                	this.timeSlot= new TimeSlot(end, end, end, end, end, end);
                 }
                 if(this.balises.peek().equals("DAY")){
                 	String temp = this.balises.pop();

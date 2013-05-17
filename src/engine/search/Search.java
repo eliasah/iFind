@@ -20,6 +20,10 @@ public class Search {
 		timeSlot = t;
 	}
 	
+	public Search(int parseInt) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void ConvertToXml(){
 		//This.file string will contain the xml
 		file = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
