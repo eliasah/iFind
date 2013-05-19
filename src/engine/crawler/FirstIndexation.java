@@ -9,7 +9,9 @@ import java.io.OutputStreamWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.regex.Pattern;
 
 /**
  * Cette classe génère un document XML contenant l'ensemble des fichiers
@@ -31,8 +33,10 @@ public class FirstIndexation {
 
 	private final String ADDRESS = "localhost";
 	private final int PORT = 40000;
-	private final String CONFIG_FILE = "ccorpus.dat";
+	private final String CORPUS_FILE = "config/corpus.dat";
+	private final String TYPES_FILE = "config/excluded_types.dat";
 	private LinkedBlockingQueue<Event> events;
+	private LinkedList<String> excludedTypes;
 
 	/**
 	 * Constructeur qui lance l'indexation sur le corpus.
@@ -41,8 +45,42 @@ public class FirstIndexation {
 	 */
 	public FirstIndexation() throws IOException, BadCorpusFile {
 		this.events = new LinkedBlockingQueue<Event>();
+		this.excludedTypes = new LinkedList<String>();
+		this.loadExcludedTypes();
 		this.scanDirectories();
 		this.sendToDatabase();
+	}
+
+	/**
+	 * Récupère la liste des types de fichiers à exclure de l'indexation.
+	 * @throws IOException
+	 */
+	public void loadExcludedTypes() throws IOException {
+		BufferedReader br =
+				new BufferedReader(new FileReader(TYPES_FILE));
+		String line;
+		while ((line = br.readLine()) != null) {
+			this.excludedTypes.add(line);
+		}
+		br.close();
+	}
+
+	/**
+	 * Vérifie si un fichier doit être indexé ou non.
+	 * @param path Le chemin du fichier à analyser.
+	 * @return False si le fichier doit être ignoré, True sinon.
+	 */
+	public boolean isIndexable(String path) {
+		boolean indexable = true;
+		String name = (new File(path).getName());
+		for (String s : this.excludedTypes) {
+			System.out.print("Pattern.compile("+s+").matcher("+name+").matches() : ");
+			System.out.println(Pattern.compile(s).matcher(name).matches());
+			if (Pattern.compile(s).matcher(name).matches()) {
+				return false;
+			}
+		}
+		return indexable;
 	}
 
 	/**
@@ -54,7 +92,7 @@ public class FirstIndexation {
 	public void scanDirectories() throws IOException, BadCorpusFile {
 		BufferedReader br;
 		String line;
-		br = new BufferedReader(new FileReader(CONFIG_FILE));
+		br = new BufferedReader(new FileReader(CORPUS_FILE));
 		while ((line = br.readLine()) != null) {
 			this.scanDirectory(line);
 		}
@@ -70,6 +108,7 @@ public class FirstIndexation {
 	 * @throws BadCorpusFile
 	 */
 	public void scanDirectory(String path) throws BadCorpusFile {
+		if (!isIndexable(path)) return;
 		File directory = new File(path);
 		if (!directory.exists()) {
 			throw new BadCorpusFile();
