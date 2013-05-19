@@ -13,9 +13,8 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 public class SimpleSaxParser {
 
-        /**
-         * Contructeur.
-         */
+    //Simple parseur qui utilise le SimpleContentHandler
+	//Tout se fait dans le contentHandler, ceci ne sert qu'a le lancer
         public SimpleSaxParser(String uri) throws SAXException, IOException {
                         XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
                         saxReader.setContentHandler(new SimpleContentHandler());

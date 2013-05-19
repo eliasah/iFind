@@ -12,6 +12,11 @@ import org.xml.sax.helpers.LocatorImpl;
  * est purement pedagogique.
  * Very simple implementation sample for XML SAX ContentHandler.
  */
+
+
+//Implementation pour les XML de type Search fini, il renvoie en sortie un objet Search comme attribu de la classe.
+//TODO idem pour les fichiers RESULT
+
 public class SimpleContentHandler implements ContentHandler {
 
 	Search search=null;
@@ -85,7 +90,9 @@ public class SimpleContentHandler implements ContentHandler {
          * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
          */
         public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributs) throws SAXException {
-                System.out.println("Ouverture de la balise : " + localName);
+            //Ouverture d'une balise,on la met sur la pile
+        	
+        	System.out.println("Ouverture de la balise : " + localName);
                 
                 if (localName.equals("SEARCH")){
                 	if (attributs.getLocalName(0).equals("id")){
@@ -112,6 +119,7 @@ public class SimpleContentHandler implements ContentHandler {
          * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
          */
         public void endElement(String nameSpaceURI, String localName, String rawName) throws SAXException {
+        	//Fermeture d'une balise, on la depile donc.
                 System.out.print("Fermeture de la balise : " + localName);
                 this.balises.pop();
                 if ( ! "".equals(nameSpaceURI)) { // name space non null
@@ -130,6 +138,10 @@ public class SimpleContentHandler implements ContentHandler {
          * @see org.xml.sax.ContentHandler#characters(char[], int, int)
          */
         public void characters(char[] ch, int start, int end) throws SAXException {
+        	// lit l'interieure des balises, la balise sur la pile est la balise courante,
+        	//On regarde ainsi dans quel balise on est pour recupéré le string et le mettre dans l'attribu de search correspondant
+        	//TODO lire des xml RESULT
+        	
                 System.out.println("#PCDATA : " + new String(ch, start, end));
                 
                 if(this.balises.peek().equals("WORD")){

@@ -1,6 +1,9 @@
 package engine.search;
 
 public class Search {
+	//Objet qui represente un XML Search comme définie dans la DTD
+	//Permet une manupulation facile contrairement a un XML
+	
 	boolean word;
 	String content;
 	String pathdir;
