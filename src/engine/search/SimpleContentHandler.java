@@ -15,11 +15,13 @@ import org.xml.sax.helpers.LocatorImpl;
 
 
 //Implementation pour les XML de type Search fini, il renvoie en sortie un objet Search comme attribu de la classe.
+//La construction se fait au fil du parsing, donc en cas d'erreur l'objet peut contenir des attribus null
 //TODO idem pour les fichiers RESULT
 
 public class SimpleContentHandler implements ContentHandler {
 
 	Search search=null;
+	Result result = null;
 	TimeSlot timeSlot;
 	Stack<String> balises = new Stack<String>();
 	
@@ -100,6 +102,16 @@ public class SimpleContentHandler implements ContentHandler {
                 	}
                 }
                 
+                if (localName.equals("RESULT")){
+                	if (attributs.getLocalName(0).equals("id")){
+                		this.result = new Result(Integer.parseInt(attributs.getValue(0)));
+                	}
+                }
+                
+                if (localName.equals("FILE")){
+                	this.result.files.add(new ResultFile());
+                }
+                
                 this.balises.push(localName);
                 
                 /*
@@ -140,10 +152,8 @@ public class SimpleContentHandler implements ContentHandler {
         public void characters(char[] ch, int start, int end) throws SAXException {
         	// lit l'interieure des balises, la balise sur la pile est la balise courante,
         	//On regarde ainsi dans quel balise on est pour recupéré le string et le mettre dans l'attribu de search correspondant
-        	//TODO lire des xml RESULT
-        	
-                System.out.println("#PCDATA : " + new String(ch, start, end));
-                
+     
+        	//########   PARTIE SEARCH   ########
                 if(this.balises.peek().equals("WORD")){
                 	this.search.word = Boolean.parseBoolean(new String(ch, start, end));
                 }
@@ -193,6 +203,30 @@ public class SimpleContentHandler implements ContentHandler {
                 	}
                 	this.balises.push(temp);
                 }
+                //##### FIN PARTIE SEARCH #####
+                
+                
+                //##### PARTIE RESULT ######
+                if(this.balises.peek().equals("NAME")){
+                	this.result.files.get(this.result.files.size()-1).name = new String(ch, start, end);
+                }
+                if(this.balises.peek().equals("PATH")){
+                	this.result.files.get(this.result.files.size()-1).path = new String(ch, start, end);
+                }
+                if(this.balises.peek().equals("PERM")){
+                	this.result.files.get(this.result.files.size()-1).perm = new String(ch, start, end);
+                }
+                if(this.balises.peek().equals("SIZE")){
+                	this.result.files.get(this.result.files.size()-1).size = new String(ch, start, end);
+                }
+                if(this.balises.peek().equals("LASTMODIF")){
+                	this.result.files.get(this.result.files.size()-1).lastmodif = new String(ch, start, end);
+                }
+                if(this.balises.peek().equals("PROPRIO")){
+                	this.result.files.get(this.result.files.size()-1).proprio = new String(ch, start, end);
+                }
+                
+                //##### FIN PARTIE RESULT ######
         }
 
         /**
