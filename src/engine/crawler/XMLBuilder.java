@@ -40,11 +40,11 @@ public class XMLBuilder {
 	 */
 	public String buildXML() {
 		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-				"<CREATIONS>" + this.creation + "</CREATIONS>" +
 				"<INDEXATION>" +
-				"<SUPPRESSIONS>" + this.deletion + "</SUPPRESSIONS>" +
+				"<RENOMMAGES>" + this.renaming + "</RENOMMAGES>" +
 				"<MODIFICATIONS>" + this.modification + "</MODIFICATIONS>" +
-				"<RENOMMAGES>" + this.renaming + "</RENOMMAGES>" +			
+				"<SUPPRESSIONS>" + this.deletion + "</SUPPRESSIONS>" +		
+				"<CREATIONS>" + this.creation + "</CREATIONS>" +	
 				"</INDEXATION>";
 	}
 
@@ -199,13 +199,13 @@ public class XMLBuilder {
 	/**
 	 * Récupère les mots et leur fréquence d'un fichier
 	 * et génère le code XML associé.  
-	 * @param path Le chemin du fichier à indexer.
+	 * @param path Le chemin du fichier à indexer. Le fichier doit être de type
+	 * régulier.
 	 * @return Le code XML correspondant à la liste des mots du fichier
 	 * donné au paramètre.
 	 * @throws IOException
 	 */
-	public String indexWords(String path) throws IOException {
-		// FIXME actuellement ne fonctionne qu'avec un fichier texte simple 
+	public String indexWords(String path) throws IOException { 
 		String words = "";
 		BufferedReader br = new BufferedReader(new FileReader(path));
 		Hashtable<String, Integer> frequences =
