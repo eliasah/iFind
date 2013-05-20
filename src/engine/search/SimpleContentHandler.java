@@ -152,83 +152,90 @@ public class SimpleContentHandler implements ContentHandler {
         public void characters(char[] ch, int start, int end) throws SAXException {
         	// lit l'interieure des balises, la balise sur la pile est la balise courante,
         	//On regarde ainsi dans quel balise on est pour recupéré le string et le mettre dans l'attribu de search correspondant
-     
+        	String content = new String(ch, start, end);
+        	
+        	if(content.trim().equals("")){
+        		return;
+        	}
+        	System.out.println("PCDATA:"+content);
         	//########   PARTIE SEARCH   ########
-                if(this.balises.peek().equals("WORD")){
-                	this.search.word = Boolean.parseBoolean(new String(ch, start, end));
-                }
-                if(this.balises.peek().equals("CONTENT")){
-                	this.search.content=new String(ch, start, end);
-                }
-                if(this.balises.peek().equals("PATHDIR")){
-                	this.search.pathdir=new String(ch, start, end);
-                }
-                if(this.balises.peek().equals("PERM")){
-                	this.search.perm=new String(ch, start, end);
-                }
-                if(this.balises.peek().equals("EXTENSION")){
-                	this.search.extension=new String(ch, start, end);
-                }
-                if(this.balises.peek().equals("TIMESLOT")){
-                	// TODO
-                	this.timeSlot= new TimeSlot(end, end, end, end, end, end);
-                }
-                if(this.balises.peek().equals("DAY")){
-                	String temp = this.balises.pop();
-                	if(this.balises.peek().equals("BEGIN")){
-                		this.timeSlot.dayB= Integer.parseInt(new String(ch, start, end));
-                	}
-                	if(this.balises.peek().equals("END")){
-                		this.timeSlot.dayE= Integer.parseInt(new String(ch, start, end));
-                	}
-                	this.balises.push(temp);
-                }
-                if(this.balises.peek().equals("MONTH")){
-                	String temp = this.balises.pop();
-                	if(this.balises.peek().equals("BEGIN")){
-                		this.timeSlot.monthB= Integer.parseInt(new String(ch, start, end));
-                	}
-                	if(this.balises.peek().equals("END")){
-                		this.timeSlot.monthE= Integer.parseInt(new String(ch, start, end));
-                	}
-                	this.balises.push(temp);
-                }
-                if(this.balises.peek().equals("YEAR")){
-                	String temp = this.balises.pop();
-                	if(this.balises.peek().equals("BEGIN")){
-                		this.timeSlot.yearB= Integer.parseInt(new String(ch, start, end));
-                	}
-                	if(this.balises.peek().equals("END")){
-                		this.timeSlot.yearE= Integer.parseInt(new String(ch, start, end));
-                	}
-                	this.balises.push(temp);
-                }
-                //##### FIN PARTIE SEARCH #####
-                
-                
-                //##### PARTIE RESULT ######
-                if(this.balises.peek().equals("NAME")){
-                	this.result.files.get(this.result.files.size()-1).name = new String(ch, start, end);
-                }
-                if(this.balises.peek().equals("PATH")){
-                	this.result.files.get(this.result.files.size()-1).path = new String(ch, start, end);
-                }
-                if(this.balises.peek().equals("PERM")){
-                	this.result.files.get(this.result.files.size()-1).perm = new String(ch, start, end);
-                }
-                if(this.balises.peek().equals("SIZE")){
-                	this.result.files.get(this.result.files.size()-1).size = new String(ch, start, end);
-                }
-                if(this.balises.peek().equals("LASTMODIF")){
-                	this.result.files.get(this.result.files.size()-1).lastmodif = new String(ch, start, end);
-                }
-                if(this.balises.peek().equals("PROPRIO")){
-                	this.result.files.get(this.result.files.size()-1).proprio = new String(ch, start, end);
-                }
-                
-                //##### FIN PARTIE RESULT ######
-        }
-
+        	if(this.balises.peek().equals("WORD")){
+               	this.search.word = Boolean.parseBoolean(content);
+        	}
+        	if(this.balises.peek().equals("CONTENT")){
+        		this.search.content=content;
+        	}
+        	if(this.balises.peek().equals("PATHDIR")){
+        		this.search.pathdir=content;
+        	}
+        	if(this.balises.peek().equals("PERM")){
+        		if(this.search != null)
+        			this.search.perm=content;
+        	}
+        	if(this.balises.peek().equals("EXTENSION")){
+        		this.search.extension=content;
+        	}
+        	if(this.balises.peek().equals("TIMESLOT")){
+        		this.timeSlot= new TimeSlot(0, 0, 0, 0, 0, 0);
+        	}
+        	if(this.balises.peek().equals("DAY")){
+        		String temp = this.balises.pop();
+        		if(this.balises.peek().equals("BEGIN")){
+        			this.timeSlot.dayB= Integer.parseInt(content);
+        		}
+        		if(this.balises.peek().equals("END")){
+        			this.timeSlot.dayE= Integer.parseInt(content);
+        		}
+        		this.balises.push(temp);
+        	}
+        	if(this.balises.peek().equals("MONTH")){
+        		String temp = this.balises.pop();
+        		if(this.balises.peek().equals("BEGIN")){
+        			this.timeSlot.monthB= Integer.parseInt(content);
+        		}
+        		if(this.balises.peek().equals("END")){
+        			this.timeSlot.monthE= Integer.parseInt(content);
+        		}
+        		this.balises.push(temp);
+        	}
+        	
+        	if(this.balises.peek().equals("YEAR")){
+        		String temp = this.balises.pop();
+        		if(this.balises.peek().equals("BEGIN")){
+        			this.timeSlot.yearB= Integer.parseInt(content);
+        		}
+        		if(this.balises.peek().equals("END")){
+        			this.timeSlot.yearE= Integer.parseInt(content);
+        		}
+        		this.balises.push(temp);
+        	}
+        	//##### FIN PARTIE SEARCH #####
+        	
+        	
+        	//##### PARTIE RESULT ######
+        	if(this.balises.peek().equals("NAME")){
+        		this.result.files.get(this.result.files.size()-1).name = content;
+        	} 
+        	if(this.balises.peek().equals("PATH")){
+        		this.result.files.get(this.result.files.size()-1).path = content;
+        	}
+        	if(this.balises.peek().equals("PERM")){
+        		if(this.result != null)
+        			this.result.files.get(this.result.files.size()-1).perm = content;
+        	}
+        	if(this.balises.peek().equals("SIZE")){
+        		this.result.files.get(this.result.files.size()-1).size = content;
+        	}
+        	if(this.balises.peek().equals("LASTMODIF")){
+        		this.result.files.get(this.result.files.size()-1).lastmodif = content;
+        	}
+        	if(this.balises.peek().equals("PROPRIO")){
+        		this.result.files.get(this.result.files.size()-1).proprio = content;
+        	}
+        	
+        	//##### FIN PARTIE RESULT ######
+        	}
+        
         /**
          * Recu chaque fois que des caracteres d'espacement peuvent etre ignores au sens de
          * XML. CÔøΩest-a-dire que cet evenement est envoye pour plusieurs espaces se succedant,
@@ -265,6 +272,13 @@ public class SimpleContentHandler implements ContentHandler {
                 // Je ne fais rien, ce qui se passe n'est pas franchement normal.
                 // Pour eviter cet evenement, le mieux est quand meme de specifier une DTD pour vos
                 // documents XML et de les faire valider par votre parser.              
+        }
+        
+        public Result getResult(){
+        	return this.result;
+        }
+        public Search getSearch(){
+        	return this.search;
         }
 
         private Locator locator;

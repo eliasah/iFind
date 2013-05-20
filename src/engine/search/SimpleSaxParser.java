@@ -2,6 +2,9 @@ package engine.search;
 
 import java.io.IOException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -15,9 +18,13 @@ public class SimpleSaxParser {
 
     //Simple parseur qui utilise le SimpleContentHandler
 	//Tout se fait dans le contentHandler, ceci ne sert qu'a le lancer
-        public SimpleSaxParser(String uri) throws SAXException, IOException {
-                        XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
-                        saxReader.setContentHandler(new SimpleContentHandler());
+	SimpleContentHandler myHandler;
+	
+        public SimpleSaxParser(String uri) throws SAXException, IOException, ParserConfigurationException {
+                        //XMLReader saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
+                        XMLReader saxReader = XMLReaderFactory.createXMLReader();
+                        myHandler = new SimpleContentHandler();
+        				saxReader.setContentHandler(myHandler);
                         saxReader.parse(uri);
         }
 

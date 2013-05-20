@@ -11,7 +11,7 @@ public class Search {
 	String extension;
 	TimeSlot timeSlot;	
 	int id;
-	String file;
+
 	
 	public Search(boolean w, String cont, String path, String permission, String ext, TimeSlot t){
 		//Seul w ne doit pas etre null
@@ -27,8 +27,9 @@ public class Search {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void ConvertToXml(){
+	public String ConvertToXml(){
 		//This.file string will contain the xml
+		String file;
 		file = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		file += "<SEARCH id=\""+this.id+"\">\n";
 		file += "    <WORD>"+word+"</WORD>\n";
@@ -57,6 +58,7 @@ public class Search {
 			file += "    </TIMESLOT>\n";
 		}
 		file += "</SEARCH>\n\0";
+		return file;
 	}
 }
 
