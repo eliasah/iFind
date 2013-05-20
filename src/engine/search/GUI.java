@@ -20,8 +20,8 @@ public class GUI implements Runnable{
 		SwingUtilities.invokeLater(new GUI());
 	}
 
-	// la GUI se dŽfinit comme telle :
-    // une interface de base contenant une menubar habituelle avec fichier, edition et aide... de plus on a un champ de recherche de type textfield et un bouton (rechercher), ainsi qu'un bouton advanced  qui permet d afficher l interface de l utilisateur avancŽ. Il y a egalement une JTable qui fait office de tableau des rŽsultats de la recherche.
+	// la GUI se dï¿½finit comme telle :
+    // une interface de base contenant une menubar habituelle avec fichier, edition et aide... de plus on a un champ de recherche de type textfield et un bouton (rechercher), ainsi qu'un bouton advanced  qui permet d afficher l interface de l utilisateur avancï¿½. Il y a egalement une JTable qui fait office de tableau des rï¿½sultats de la recherche.
     
 	public void run() {
 		final JFrame frame = new JFrame("Moteur de Recherche");
@@ -182,16 +182,12 @@ public class GUI implements Runnable{
 	
 			user_advanced.add(table);
 
-<<<<<<< HEAD:src/MoteurDeRecherche/GUI.java
-	     
- 	       JButton advanced = new JButton("Utilisateur AvancŽ ?");
-=======
-	       // table.setAutoCreateRowSorter(true);
+ 	       JButton advanced = new JButton("Utilisateur Avancï¿½ ?");
+
+ 	       // table.setAutoCreateRowSorter(true);
   	       //set size car bcp trop grande, elle cache le bouton et le txtfield 
 	       //table.setSize(50, 50);
  	    //   JCheckBox jcb = new JCheckBox("Interface Avancee ?");
- 	       JButton advanced = new JButton("Utilisateur Avancï¿½ ?");
->>>>>>> 4d59ae7184b9a2949eda6bdef29206496153e1dc:src/engine/search/GUI.java
  	       panel_north.add(advanced,BorderLayout.SOUTH);
  	       
  	       advanced.addActionListener(new ActionListener() {

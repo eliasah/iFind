@@ -1,12 +1,16 @@
 package engine.crawler;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.regex.Pattern;
 
@@ -37,10 +41,12 @@ public class Indexer extends Thread {
 
 	private final String ADDRESS = "localhost";
 	private final int PORT = 40000;
-	private final int LIMIT = 10;
+	private final int LIMIT = 3;
+	private final String TYPES_FILE = "config/excluded_types.dat";
 
 	private LinkedBlockingQueue<Event> events;
 	private Hashtable<String, Event> eventsTable;
+	private LinkedList<String> excludedTypes;
 	private Socket socket;
 	private BufferedWriter bw;
 
@@ -53,34 +59,62 @@ public class Indexer extends Thread {
 	public Indexer(LinkedBlockingQueue<Event> events) 
 			throws UnknownHostException, IOException {
 		this.events = events;
+		this.excludedTypes = new LinkedList<String>();
 		this.eventsTable = new Hashtable<String, Event>();
 		this.socket = new Socket(ADDRESS, PORT);
 		this.bw = new BufferedWriter(
 				new OutputStreamWriter(this.socket.getOutputStream()));
+		this.loadExcludedTypes();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Thread#run()
-	 */
 	public void run() {
 		while (true) {
 			try {
-				// les évènements sont traités en temps réel
+				// Les évènements sont traités en temps réel
 				Event event = this.events.take();
 				this.addEvent(event);
 				if (this.eventsTable.size() >= LIMIT) {
-					// le nombre d'évènements nécessaires à l'envoi a été
+					// Le nombre d'évènements nécessaires à l'envoi a été
 					// atteint, les évènements sont envoyés 
 					// à la base d'indexation
 					this.sendEvents();
 					this.eventsTable = new Hashtable<String, Event>();
 				}
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				// FIXME
 			} catch (IOException e) {
-				e.printStackTrace();
+				// FIXME
 			}
 		}
+	}
+
+	/**
+	 * Récupère la liste des types de fichiers à exclure de l'indexation.
+	 * @throws IOException
+	 */
+	public void loadExcludedTypes() throws IOException {
+		BufferedReader br =
+				new BufferedReader(new FileReader(TYPES_FILE));
+		String line;
+		while ((line = br.readLine()) != null) {
+			this.excludedTypes.add(line);
+		}
+		br.close();
+	}
+
+	/**
+	 * Vérifie si un fichier doit être indexé ou non.
+	 * @param path Le chemin du fichier à analyser.
+	 * @return False si le fichier doit être ignoré, True sinon.
+	 */
+	public boolean isIndexable(String path) {
+		boolean indexable = true;
+		for (String s : this.excludedTypes) {
+			if (Pattern.compile(s).matcher(path).matches()) {
+				return false;
+			}
+		}
+		return indexable;
 	}
 
 	/**
@@ -88,20 +122,14 @@ public class Indexer extends Thread {
 	 * appropriée qui supprimera les conflits entraînés par l'ajout de certains
 	 * évènements incompatibles.
 	 * @param event L'évènement du fichier à traiter.
+	 * @throws IOException 
 	 */
-	public void addEvent(Event event) {
+	public void addEvent(Event event) throws IOException {
 		int type = event.getType();
 		String path = event.getPath();
 
-		if (Pattern.matches(path, ".*~")) // ignorer les fichiers de sauvegarde
-			return;
-		if (Pattern.matches(path, ".*/\\.swp")) // ignorer les fichiers swap
-			return;
-		if (Pattern.matches(path, "/\\..*")) // ignorer les fichiers cachés
-			return;
-
-		// TODO ignorer aussi les types de fichiers choisis par l'utilisateur
-
+		if (!isIndexable(path)) return; // Ignorer les fichiers exclus 
+		
 		switch (type) {
 		case Event.CREATION:
 			this.addCreation(event);
@@ -127,7 +155,7 @@ public class Indexer extends Thread {
 		String path = event.getPath();
 		if (this.eventsTable.containsKey(path)) {
 			if (this.eventsTable.get(path).getType() == Event.DELETION) {
-				// le fichier a été supprimé puis recréé:
+				// Le fichier a été supprimé puis recréé:
 				// cela revient à une modification du fichier
 				this.eventsTable.get(path).setType(Event.MODIFICATION);
 			}
@@ -145,10 +173,10 @@ public class Indexer extends Thread {
 		String path = event.getPath();
 		if (this.eventsTable.containsKey(path)) {
 			if (this.eventsTable.get(path).getType() == Event.CREATION) {
-				// le fichier a été créé puis supprimé: inutile de l'indexer
+				// Le fichier a été créé puis supprimé: inutile de l'indexer
 				this.eventsTable.remove(path);
 			} else {
-				// le fichier a déjà été indexé, puis a été renommé ou modifié:
+				// Le fichier a déjà été indexé, puis a été renommé ou modifié:
 				// il suffit de le supprimer
 				this.eventsTable.get(path).setType(Event.DELETION);
 			}
@@ -166,7 +194,7 @@ public class Indexer extends Thread {
 		String path = event.getPath();
 		if (this.eventsTable.containsKey(path)) {
 			if (this.eventsTable.get(path).getType() == Event.RENAMING) {
-				// le fichier a été renommé et est maintenant modifié
+				// Le fichier a été renommé et est maintenant modifié
 				this.eventsTable.get(path).setType(
 						Event.MODIFICATION_AND_RENAMING);
 			}
@@ -185,7 +213,7 @@ public class Indexer extends Thread {
 		String newPath = event.getNewPath();
 		if (this.eventsTable.containsKey(path)) {
 			if (this.eventsTable.get(path).getType() == Event.CREATION) {
-				// le fichier n'a pas encore été indexé: il suffit de l'indexer
+				// Le fichier n'a pas encore été indexé: il suffit de l'indexer
 				// avec le nom attribué lors du renommage 
 				this.eventsTable.remove(path);
 				Event newEvent = new Event(Event.CREATION, newPath, null);
@@ -194,7 +222,7 @@ public class Indexer extends Thread {
 					== Event.MODIFICATION
 					|| this.eventsTable.get(path).getType() 
 					== Event.MODIFICATION_AND_RENAMING) {
-				// le fichier a été modifié: il faut indexer la 
+				// Le fichier a été modifié: il faut indexer la 
 				// modification sous forme de "modification et renommage"
 				String oldPath = this.eventsTable.get(path).getPath();
 				this.eventsTable.remove(path);
@@ -202,7 +230,7 @@ public class Indexer extends Thread {
 						oldPath, newPath);
 				this.eventsTable.put(newPath, newEvent);
 			} else if (this.eventsTable.get(path).getType() == Event.RENAMING) {
-				// l'ancien renommage du fichier n'a pas encore été indexé:
+				// L'ancien renommage du fichier n'a pas encore été indexé:
 				// on fusionne les deux renommages
 				String oldPath = this.eventsTable.get(path).getPath();
 				this.eventsTable.remove(path);
@@ -226,8 +254,9 @@ public class Indexer extends Thread {
 		while (it.hasNext()) {
 			xmlBuilder.addEvent(it.next());
 		}
-
+		
 		this.bw.write(xmlBuilder.buildXML());
+		this.bw.write("\n"); // FIXME
 		this.bw.flush();
 	}
 

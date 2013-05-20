@@ -1,4 +1,4 @@
-package database.proxy;
+package engine.gui;
 
 import javax.swing.*;
 import java.awt.*;

@@ -2,13 +2,9 @@
 <!ELEMENT SEARCH (WORD, CONTENT?, PATHDIR?, PERM?, EXTENSION?, TIMESLOT?)>
 <!-- Le mot à rechercher -->
 <!ELEMENT WORD (#PCDATA)>
-<!-- Un booléen qui dit si l'on fait 
-     une recherche de contenu (true) 
-     ou une recherche sur les nom de 
-     fichier (false) -->
+<!-- Un booléen qui dit si l'on fait une recherche de contenu (true) ou une recherche sur les nom de fichier (false) -->
 <!ELEMENT CONTENT (#PCDATA)>
-<!-- Le nom du fichier à partir duquel
-     on recherche -->
+<!-- Le nom du fichier à partir duquel on recherche -->
 <!ELEMENT PATHDIR (#PCDATA)>
 <!-- Les permissions du fichier à chercher -->
 <!ELEMENT PERM (#PCDATA)>
@@ -29,8 +25,7 @@
 
 <!-- Balise contenant les résultats de la requête search -->
 <!ELEMENT RESULT (FILE*)>
-<!-- Balise file correspond à un fichier resultat 
-     donc n balises files = n résultats -->
+<!-- Balise file correspond à un fichier resultat donc n balises files = n résultats -->
 <!ELEMENT FILE (NAME, PATH, PERM, SIZE, LASTMODIF?, PROPRIO?)>
 <!-- Le nom du fichier -->
 <!ELEMENT NAME (#PCDATA)>
@@ -45,7 +40,6 @@
 <!-- Le propriétaire du fichier -->
 <!ELEMENT PROPRIO (#PCDATA)>
 
-<!-- L'id du resultat correspondant à une recherche 
-     aura le même id que la recherche -->
+<!-- L'id du resultat correspondant à une recherche aura le même id que la recherche -->
 <!ATTLIST SEARCH id CDATA #REQUIRED>
 <!ATTLIST RESULT id CDATA #REQUIRED>
