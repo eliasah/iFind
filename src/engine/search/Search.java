@@ -1,20 +1,23 @@
 package engine.search;
 
+/** Objet qui represente un XML Search comme dï¿½finie dans la DTD
+ *  permet une manupulation facile contrairement a un XML
+ * 
+ * @author Ahl Mikael - Univ. Paris Denis Diderot
+ *
+ */
 public class Search {
-	//Objet qui represente un XML Search comme dŽfinie dans la DTD
-	//Permet une manupulation facile contrairement a un XML
 	
-	boolean word;
-	String content;
-	String pathdir;
-	String perm;
-	String extension;
-	TimeSlot timeSlot;	
-	int id;
-
+	private int id;
+	private boolean word;
+	private String content;
+	private String pathdir;
+	private String perm;
+	private String extension;
+	private TimeSlot timeSlot;
 	
-	public Search(boolean w, String cont, String path, String permission, String ext, TimeSlot t){
-		//Seul w ne doit pas etre null
+	public Search(int i, boolean w, String cont, String path, String permission, String ext, TimeSlot t){
+		id = i;
 		word = w;
 		content = cont;
 		pathdir = path;
@@ -23,12 +26,11 @@ public class Search {
 		timeSlot = t;
 	}
 	
-	public Search(int parseInt) {
-		// TODO Auto-generated constructor stub
+	public Search(int i) {
+		id = i;
 	}
 
 	public String ConvertToXml(){
-		//This.file string will contain the xml
 		String file;
 		file = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		file += "<SEARCH id=\""+this.id+"\">\n";
@@ -46,14 +48,14 @@ public class Search {
 		if (timeSlot != null){
 			file += "    <TIMESLOT>\n";
 			file += "        <BEGIN>\n";
-			file += "            <DAY>"+timeSlot.dayB+"</DAY>\n";
-			file += "            <MONTH>"+timeSlot.monthB+"</MONTH>\n";
-			file += "            <YEAR>"+timeSlot.yearB+"</YEAR>\n";
+			file += "            <DAY>"+timeSlot.getDayB()+"</DAY>\n";
+			file += "            <MONTH>"+timeSlot.getMonthB()+"</MONTH>\n";
+			file += "            <YEAR>"+timeSlot.getYearB()+"</YEAR>\n";
 			file += "        </BEGIN>\n";
 			file += "        <END>\n";
-			file += "            <DAY>"+timeSlot.dayE+"</DAY>\n";
-			file += "            <MONTH>"+timeSlot.monthE+"</MONTH>\n";
-			file += "            <YEAR>"+timeSlot.yearE+"</YEAR>\n";
+			file += "            <DAY>"+timeSlot.getDayE()+"</DAY>\n";
+			file += "            <MONTH>"+timeSlot.getMonthE()+"</MONTH>\n";
+			file += "            <YEAR>"+timeSlot.getYearE()+"</YEAR>\n";
 			file += "        </END>\n";
 			file += "    </TIMESLOT>\n";
 		}
@@ -61,7 +63,3 @@ public class Search {
 		return file;
 	}
 }
-
-
-
-
