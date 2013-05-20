@@ -14,7 +14,6 @@ import org.xml.sax.helpers.LocatorImpl;
 
 //Implementation pour les XML de type Search fini, il renvoie en sortie un objet Search comme attribu de la classe.
 //La construction se fait au fil du parsing, donc en cas d'erreur l'objet peut contenir des attribus null
-//TODO idem pour les fichiers RESULT
 
 public class SimpleContentHandler implements ContentHandler {
 	
