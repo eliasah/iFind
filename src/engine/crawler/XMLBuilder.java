@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.PosixFileAttributes;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
@@ -14,6 +15,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Cette classe génère un document XML destiné à être envoyé 
@@ -45,7 +47,7 @@ public class XMLBuilder {
 				"<MODIFICATIONS>" + this.modification + "</MODIFICATIONS>" +
 				"<SUPPRESSIONS>" + this.deletion + "</SUPPRESSIONS>" +		
 				"<CREATIONS>" + this.creation + "</CREATIONS>" +	
-				"</INDEXATION>";
+				"</INDEXATION>\n";
 	}
 
 	/**
@@ -84,24 +86,25 @@ public class XMLBuilder {
 	 */
 	public void addCreation(String path) throws IOException {
 		Path p = Paths.get(path);
+		// l'extension du fichier se trouve derrière le dernier point
 		String format = "";
-		StringTokenizer tokens = new StringTokenizer(path, ".");
-		String token = "";
-		while (tokens.hasMoreTokens())
-			token = tokens.nextToken();
-		if (token.equals("")) {
-			if (!(new File(path)).isDirectory()) {
-				return; // fichier régulier sans extension
-			} else {
+		if (!path.contains(".")) {
+			if ((new File(path)).isDirectory())
 				format = "DIR"; // répertoire
-			}
+			else 
+				return; // fichier sans extension
 		} else {
+			StringTokenizer tokens = new StringTokenizer(path, ".");
+			String token = "";
+			while (tokens.hasMoreTokens()) {
+				token = tokens.nextToken();
+			}
 			format = token;
 		}
-		long time = Files.getLastModifiedTime(p).toMillis();
-		long size = Files.size(p);
 		PosixFileAttributes attrs = Files.readAttributes(p, 
 				PosixFileAttributes.class);
+		long time = attrs.creationTime().to(TimeUnit.SECONDS); // FIXME
+		long size = attrs.size();
 		Set<PosixFilePermission> permissions = attrs.permissions();
 
 		this.creation += "<FICHIERCREE>" +
@@ -136,10 +139,10 @@ public class XMLBuilder {
 	 */
 	public void addModification(String path) throws IOException {
 		Path p = Paths.get(path);
-		long time = Files.getLastModifiedTime(p).toMillis();
-		long size = Files.size(p);
 		PosixFileAttributes attrs = Files.readAttributes(p, 
 				PosixFileAttributes.class);
+		long time = attrs.lastModifiedTime().to(TimeUnit.SECONDS); // FIXME
+		long size = attrs.size();
 		Set<PosixFilePermission> permissions = attrs.permissions();
 
 		this.modification = "<FICHIERMODIFIE>" +
@@ -176,10 +179,10 @@ public class XMLBuilder {
 	public void addModificationAndRenaming(String oldPath, String path) 
 			throws IOException {
 		Path p = Paths.get(path);
-		long time = Files.getLastModifiedTime(p).toMillis();
-		long size = Files.size(p);
 		PosixFileAttributes attrs = Files.readAttributes(p, 
 				PosixFileAttributes.class);
+		long time = attrs.lastModifiedTime().to(TimeUnit.SECONDS); // FIXME
+		long size = attrs.size();
 		Set<PosixFilePermission> permissions = attrs.permissions();
 
 		this.modification = "<FICHIERMODIFIE>" +

@@ -31,10 +31,11 @@ public class FirstIndexation {
 	 */
 	public static class BadCorpusFile extends Exception {};
 
-	private final String ADDRESS = "localhost";
-	private final int PORT = 40000;
 	private final String CORPUS_FILE = "config/corpus.dat";
 	private final String TYPES_FILE = "config/excluded_types.dat";
+	private final String COMMUNICATION_FILE = "config/daemon_to_bi.dat";
+	private String address;
+	private int port;
 	private LinkedBlockingQueue<Event> events;
 	private LinkedList<String> excludedTypes;
 
@@ -44,11 +45,20 @@ public class FirstIndexation {
 	 * @throws BadCorpusFile
 	 */
 	public FirstIndexation() throws IOException, BadCorpusFile {
+		this.configureCommunication();
 		this.events = new LinkedBlockingQueue<Event>();
 		this.excludedTypes = new LinkedList<String>();
 		this.loadExcludedTypes();
 		this.scanDirectories();
 		this.sendToDatabase();
+	}
+	
+	public void configureCommunication() throws IOException {
+		BufferedReader br =
+				new BufferedReader(new FileReader(COMMUNICATION_FILE));
+		this.address = br.readLine();
+		this.port = Integer.parseInt(br.readLine());
+		br.close();
 	}
 
 	/**
@@ -74,8 +84,6 @@ public class FirstIndexation {
 		boolean indexable = true;
 		String name = (new File(path).getName());
 		for (String s : this.excludedTypes) {
-			System.out.print("Pattern.compile("+s+").matcher("+name+").matches() : ");
-			System.out.println(Pattern.compile(s).matcher(name).matches());
 			if (Pattern.compile(s).matcher(name).matches()) {
 				return false;
 			}
@@ -131,7 +139,7 @@ public class FirstIndexation {
 	 * @throws IOException
 	 */
 	public void sendToDatabase() throws UnknownHostException, IOException {
-		Socket socket = new Socket(ADDRESS, PORT);
+		Socket socket = new Socket(address, port);
 		BufferedWriter bw = new BufferedWriter(
 				new OutputStreamWriter(socket.getOutputStream()));
 		XMLBuilder xmlBuilder = new XMLBuilder();
@@ -143,6 +151,7 @@ public class FirstIndexation {
 		bw.write(xmlBuilder.buildXML());
 		bw.flush();
 		socket.close();
+		System.out.println("Flux XML envoyé"); // FIXME
 	}
 
 	public static void main(String[] args) {
