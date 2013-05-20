@@ -39,7 +39,8 @@ public class SimpleContentHandler implements ContentHandler {
          * @param value le locator a utiliser.
          * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
          */
-        public void setDocumentLocator(Locator value) {
+        @Override
+		public void setDocumentLocator(Locator value) {
                 locator =  value;
         }
 
@@ -49,7 +50,8 @@ public class SimpleContentHandler implements ContentHandler {
          * se lancer dans l'analyse du document.
          * @see org.xml.sax.ContentHandler#startDocument()
          */
-        public void startDocument() throws SAXException {
+        @Override
+		public void startDocument() throws SAXException {
                 System.out.println("Debut de l'analyse du document");
         }
 
@@ -59,7 +61,8 @@ public class SimpleContentHandler implements ContentHandler {
          * considerer l'analyse du document comme etant complete.
          * @see org.xml.sax.ContentHandler#endDocument()
          */
-        public void endDocument() throws SAXException {
+        @Override
+		public void endDocument() throws SAXException {
                 System.out.println("Fin de l'analyse du document" );
         }
 
@@ -69,7 +72,8 @@ public class SimpleContentHandler implements ContentHandler {
          * @param URI de l'espace de nommage.
          * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String)
          */
-        public void startPrefixMapping(String prefix, String URI) throws SAXException {
+        @Override
+		public void startPrefixMapping(String prefix, String URI) throws SAXException {
                 System.out.println("Traitement de l'espace de nommage : " + URI + ", prefixe choisi : " + prefix);
         }
 
@@ -78,7 +82,8 @@ public class SimpleContentHandler implements ContentHandler {
          * @param prefixe le prefixe choisi a l'ouverture du traitement de l'espace nommage.
          * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
          */
-        public void endPrefixMapping(String prefix) throws SAXException {
+        @Override
+		public void endPrefixMapping(String prefix) throws SAXException {
                 System.out.println("Fin de traitement de l'espace de nommage : " + prefix);
         }
 
@@ -91,7 +96,8 @@ public class SimpleContentHandler implements ContentHandler {
          * comme non-respect d'une DTD.
          * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
          */
-        public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributs) throws SAXException {
+        @Override
+		public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributs) throws SAXException {
             //Ouverture d'une balise,on la met sur la pile
         	
         	System.out.println("Ouverture de la balise : " + localName);
@@ -130,7 +136,8 @@ public class SimpleContentHandler implements ContentHandler {
          * Evenement recu a chaque fermeture de balise.
          * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
          */
-        public void endElement(String nameSpaceURI, String localName, String rawName) throws SAXException {
+        @Override
+		public void endElement(String nameSpaceURI, String localName, String rawName) throws SAXException {
         	//Fermeture d'une balise, on la depile donc.
                 System.out.print("Fermeture de la balise : " + localName);
                 this.balises.pop();
@@ -149,9 +156,10 @@ public class SimpleContentHandler implements ContentHandler {
          * @param end le rang du dernier caractere a traiter effectivement
          * @see org.xml.sax.ContentHandler#characters(char[], int, int)
          */
-        public void characters(char[] ch, int start, int end) throws SAXException {
+        @Override
+		public void characters(char[] ch, int start, int end) throws SAXException {
         	// lit l'interieure des balises, la balise sur la pile est la balise courante,
-        	//On regarde ainsi dans quel balise on est pour recupŽrŽ le string et le mettre dans l'attribu de search correspondant
+        	//On regarde ainsi dans quel balise on est pour recupï¿½rï¿½ le string et le mettre dans l'attribu de search correspondant
      
         	//########   PARTIE SEARCH   ########
                 if(this.balises.peek().equals("WORD")){
@@ -239,7 +247,8 @@ public class SimpleContentHandler implements ContentHandler {
          * @param end le rang du dernier caractere a traiter effectivement
          * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
          */
-        public void ignorableWhitespace(char[] ch, int start, int end) throws SAXException {
+        @Override
+		public void ignorableWhitespace(char[] ch, int start, int end) throws SAXException {
                 System.out.println("espaces inutiles rencontres : ..." + new String(ch, start, end) +  "...");
         }
 
@@ -250,7 +259,8 @@ public class SimpleContentHandler implements ContentHandler {
          * d'une serie de paires nom/valeur.
          * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String)
          */
-        public void processingInstruction(String target, String data) throws SAXException {
+        @Override
+		public void processingInstruction(String target, String data) throws SAXException {
                 System.out.println("Instruction de fonctionnement : " + target);
                 System.out.println("  dont les arguments sont : " + data);
         }
@@ -261,7 +271,8 @@ public class SimpleContentHandler implements ContentHandler {
          * en ayez besoin dans vos traitements.
          * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
          */
-        public void skippedEntity(String arg0) throws SAXException {
+        @Override
+		public void skippedEntity(String arg0) throws SAXException {
                 // Je ne fais rien, ce qui se passe n'est pas franchement normal.
                 // Pour eviter cet evenement, le mieux est quand meme de specifier une DTD pour vos
                 // documents XML et de les faire valider par votre parser.              
