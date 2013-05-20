@@ -1,15 +1,23 @@
 \paragraph{BNF}
-Nous avons commencé à réfléchir à la forme qu'aurait la requête de recherche. 
-C'est pourquoi nous avons défini une syntaxe et à fortiori, une grammaire sous forme BNF.
+Nous avons défini une syntaxe et à fortiori, une grammaire sous forme BNF.
 
 Grammaire (BNF) :\\
-\begin{tabular}{r c l}
-query &$\rightarrow$ & word { -or word } [options]\\
-query &$\rightarrow$ & word { word } [options] \\
-	 
-options&$\rightarrow$ &-e word {word}\\
-word   &$\rightarrow$ &char*\\
-char   &$\rightarrow$ & [a-z A-Z 0-9 à é è ë ä ù ï ç]\\ 
+% \begin{tabular}{r c l}
+% query &$\rightarrow$ & word { -or word } [options]\\
+% query &$\rightarrow$ & word { word } [options] \\
+% 	 
+% options&$\rightarrow$ &-e word {word}\\
+% word   &$\rightarrow$ &char*\\
+% char   &$\rightarrow$ & [a-z A-Z 0-9 à é è ë ä ù ï ç]\\ 
+% \end{tabular}
+
+\begin{tabular}{p{1.5cm} p{0.5cm} p{9cm} }
+& & \\
+\textbf{char} & $\equiv$ & [:alnum:]\\
+\textbf{word} & $\equiv$ & $\textbf{char}^+$\\
+\textit{query} & ::= & \textbf{word} \textit{\{} \textbf{-or} \textbf{word} \textit{\}} \textit{[} \textit{options} \textit{]}\\
+& | & \textbf{word} \textit{\{} \textbf{word} \textit{\}} \textit{[} \textit{options} \textit{]}\\
+\textit{options} & ::= & \textbf{-e} \textbf{word} \textit{\{} \textbf{word} \textit{\}}\\
 \end{tabular}
 
 Par la suite, nous avons défini plusieurs types abstraits de données permettant de modéliser la grammaire.

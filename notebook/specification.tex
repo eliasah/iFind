@@ -10,11 +10,11 @@ Cette partie du cahier de charge présentera les trois axes principaux du dével
 Ce paragraphe présente un point du vue haut niveau de l'architecture préconisée du système et la distribution de fonctionnalités à travers 
 les modules du système.
 
-Notre système ce compose de trois sous-système :
+Notre système se compose de trois sous-systèmes :
 \begin{itemize}
  \item Moteur de recherche : Architecture Model View Controler
  \item Moteur d'indexation : Deamon
- \item Base de donnée indexée : Architecture en couche : PostgreSQL + surcouche de gestion de la base de donnée : Hibernate
+ \item Base de donnée indexée : Architecture en couche : PostgreSQL
 \end{itemize}
 
 \subsubsection{Architecture du Moteur de recherche}
@@ -31,10 +31,11 @@ Controler : search-engine-core
 
 
 \subsubsection{Architecture du moteur d'indexation}
-Il s'agit juste d'un démon parametrable qui construit en premier temps une base d'indexation 
-ensuite il communique avec celle-ci à l'aide d'un protocole de communication par socket.
-
-La communication entre la base d'indexation et le moteur d'indexation a pour but la mis-à-jour de la BD.
+Le moteur d'indexation se compose de deux instances.\\
+La première est lancée uniquement lorsqu'il faut entièrement créer l'index (lors de l'installation, par exemple).\\
+La deuxième, le démon, communique en permanence avec la base d'indexation afin de lui envoyer
+les différents évènements qui ont eu lieu à l'intérieur du corpus et qui doivent être indexés.
+L'envoi se fait par l'intermédiaire d'un flux XML au travers d'une Socket (voir annexe TODO et TODO).
 
 \subsubsection{Architecture de la base d'indexation}
 La base d'indexation est une base de donnée PostgreSQL, en un premier temps, qui permettra au moteur de recherche 
@@ -61,7 +62,7 @@ Ce paragraphe décrit les charges fonctionnelles du système en détail et d'aut
 Ce paragraphe décrit les divers modèles du système ainsi que leurs relations entre composantes du système et de son environnement.
 
 \subsubsection{Modèle de communication}
-le module de BD crée deux sockets Server :\\
+Le module de BD crée deux sockets Server :\\
 L’instanciation de ces sockets doit se faire avec les informations lues à partir des fichier config-sample-Deamon.XML et config-sample-MoteurR.
 
 On définit tout d'abord la socket entre la base d'indexation et le moteur de recherche. Le socket reste en écoute 
