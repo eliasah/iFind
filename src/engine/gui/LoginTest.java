@@ -61,12 +61,14 @@ class Login extends JFrame implements ActionListener {
 			page.setVisible(true);
 			JLabel label = new JLabel("Connexion to database established, welcome "+value1);
 			page.getContentPane().add(label);
-			System.out.println("test");
+
 			// conn.createDatabase();
 			Search s = new Search(1, "exemple", true, "", "", "txt", new TimeSlot());
 			Trigram t = new Trigram("exemple");
-			System.out.println(t.toString());
-			// conn.request(s);
+			//System.out.println(t.toString());
+			conn.insert("exemple");
+			conn.request(s);
+
 		}
 		else {	
 			System.out.println("enter the valid username and password");
@@ -81,7 +83,21 @@ class LoginTest {
 	public static void main(String arg[]) {
 		try {
 			Login frame=new Login();
-			frame.setSize(300,100);
+			frame.setSize(382,455);
+			frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+			
+			JPanel panel = new JPanel();
+			frame.getContentPane().add(panel);
+			
+			JButton btnCreateDatabase = new JButton("Create Database");
+			btnCreateDatabase.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			panel.add(btnCreateDatabase);
+			
+			JButton btnResetDatabase = new JButton("Reset Database");
+			panel.add(btnResetDatabase);
 			frame.setVisible(true);
 		}
 		catch(Exception e) {

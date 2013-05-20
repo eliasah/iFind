@@ -13,7 +13,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.StyledEditorKit;
 
- 
 public class GUI implements Runnable{
 	final JFrame frame;
 	final JPanel panel;
@@ -146,16 +145,16 @@ public class GUI implements Runnable{
 		panel_north.add(envoyer,BorderLayout.CENTER);
 
 	
-		//tableau de donnŽes de la JTable
+		//tableau de donnï¿½es de la JTable
 		
 		final String[] entetes = {"Nom ","Auteur","Date de Creation","Type"};
 		  final Object [][] donnees = new Object[][]{
-	                {"Nom", "Auteur", "Date de CrŽation", "Type"},
+	                {"Nom", "Auteur", "Date de Crï¿½ation", "Type"},
 	                {" ", " ", " ", " "},
 	                {"Nicolas", "Van de Kampf", "01/01/2013", true},
 	                {"Damien", "Cuthbert", "01/01/2013", true},
 	                {"Corinne", "Valance", "01/01/2013", false},
-	                {"Emilie", "Schršdinger", "01/01/2013",true},
+	                {"Emilie", "Schrï¿½dinger", "01/01/2013",true},
 	                {"Delphine", "Duke", "01/01/2013", false},
 	                {"Eric", "Trump", "01/01/2013", true},
 	        };
@@ -178,9 +177,9 @@ public class GUI implements Runnable{
 	       JTable table = new JTable(dataModel);
 	       table.setPreferredSize(new Dimension(100,100));
 	
-	       //bouton pour passer a l interface avancŽe
+	       //bouton pour passer a l interface avancï¿½e
 	       
- 	       JButton advanced = new JButton("Utilisateur AvancŽ ?");
+ 	       JButton advanced = new JButton("Utilisateur Avancï¿½ ?");
  	       panel_north.add(advanced,BorderLayout.SOUTH);
  	       
  	       advanced.addActionListener(new ActionListener() {
@@ -206,7 +205,7 @@ public class GUI implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				// connexion a la BDD
 				
-				JOptionPane.showMessageDialog(frame, "Erreur : \nLe Moteur n'arrive pas ˆ joindre la BDD.\nVeuillez vŽrifiez vos connexions.");
+				JOptionPane.showMessageDialog(frame, "Erreur : \nLe Moteur n'arrive pas ï¿½ joindre la BDD.\nVeuillez vï¿½rifiez vos connexions.");
  			}
 			
 		});
@@ -233,7 +232,7 @@ public class GUI implements Runnable{
 		
 		frame.setVisible(false);// disparition de l interface simple
 	/*	
-		JFrame advFrame = new JFrame("Interface AvancŽe");
+		JFrame advFrame = new JFrame("Interface Avancï¿½e");
 		
 		advFrame.setBounds(100,100,910,610);
 		advFrame.setResizable(true);
