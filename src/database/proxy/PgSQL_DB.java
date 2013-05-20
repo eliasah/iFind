@@ -15,7 +15,7 @@ import engine.search.Search;
  * PostgreSQL Database
  * 
  * @author Abou Haydar Elias - Univ. Paris Denis Diderot
- *
+ * 
  */
 class PgSQL_DB implements Database {
 
@@ -27,15 +27,17 @@ class PgSQL_DB implements Database {
 	private String querysql;
 	private ResultSet rs;
 	private boolean connected;
-
+	private int id_meta;
+	
 	protected PgSQL_DB(String login, String motPasse) {
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://localhost/ifind",login,motPasse);
+			conn = DriverManager.getConnection(
+					"jdbc:postgresql://localhost/ifind", login, motPasse);
 			st = conn.createStatement();
 			connected = true;
 		} catch (SQLException | ClassNotFoundException e) {
-			connected = false; 
+			connected = false;
 		} // Connexion UBUNTU
 	}
 
@@ -45,16 +47,16 @@ class PgSQL_DB implements Database {
 	}
 
 	@Override
-	public void close() throws SQLException{ 
+	public void close() throws SQLException {
 		st.close();
 		conn.close();
 	}
 
 	public void createDatabase() {
 		System.out.println("Creating Database");
-		
+
 		ArrayList<String> req = new ArrayList();
-		
+
 		BufferedReader br = null;
 		String line;
 		try {
@@ -75,9 +77,9 @@ class PgSQL_DB implements Database {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		Iterator it = req.iterator();
-		while (it.hasNext()){
+		while (it.hasNext()) {
 			querysql = (String) it.next();
 			System.out.println(querysql);
 			try {
@@ -89,96 +91,93 @@ class PgSQL_DB implements Database {
 				e.printStackTrace();
 			}
 		}
-	}	 
-
-	public void suppressionTable(String table) throws SQLException {
-		querysql = "DROP TABLE"+table;
-		st.executeUpdate(querysql);
-		System.out.println("Suppression "+table+" reussi");
 	}
 
-	public void insertionTuplesPredefinis() throws SQLException{
-		querysql="INSERT...";
+	public void suppressionTable(String table) throws SQLException {
+		querysql = "DROP TABLE" + table;
+		st.executeUpdate(querysql);
+		System.out.println("Suppression " + table + " reussi");
+	}
+	
+	@Override
+	public void insert(String mot) {
+		int id_meta = 1000;
+		Trigram t = new Trigram(mot);
+		ArrayList<String> tab = t.toArrayList();
+		Iterator it = tab.iterator();
+		String trg;
+		querysql = "INSERT INTO t_metadata VALUES (" + id_meta + ",'fichier 1','path 1',777,'1999-01-08');";
+		try {
+			insert = conn.prepareStatement(querysql);
+			insert.execute();
+		} catch (SQLException e1) {
+			String errmsg = "ERROR:  duplicate key value violates unique constraint 't_metadata_pkey' \n" +
+					"DETAIL:  Key (meta_id)=("+id_meta+") already exists.";
+		}
+		
+		while (it.hasNext()) {
+			trg = (String) it.next();
+			try {
+				querysql = "INSERT INTO T_INDEX VALUES('" + trg + "'," + id_meta +");";
+				insert = conn.prepareStatement(querysql);
+				insert.execute();
+
+			} catch (SQLException e) {
+				String errmsg = "ERROR:  duplicate key value violates unique constraint 't_index_pkey' \n " +
+						"DETAIL:  Key (trg_id, meta_id)=("+trg+","+ id_meta+") already exists.";
+				System.out.println(errmsg);
+			}
+		}
+	}
+	
+	public void insertionTuplesPredefinis() throws SQLException {
+		querysql = "INSERT...";
 		insert = conn.prepareStatement(querysql);
 		insert.execute();
 		System.out.println("Insertion reussi");
 	}
 
-	public ResultSet query(String s) throws SQLException{
-		return st.executeQuery("SELECT * FROM t_index,t_metadata WHERE trg_id = '"+ s + "' and t_index.meta_id = t_metadata.meta_id;"); 
+	public ResultSet query(String s) throws SQLException {
+		return st
+				.executeQuery("SELECT * FROM t_index,t_metadata WHERE trg_id = '"
+						+ s + "' and t_index.meta_id = t_metadata.meta_id;");
 	}
 
-	public ResultSet queryTrg(Trigram t) throws SQLException{
+	@Override
+	public ResultSet queryTrg(Trigram t) throws SQLException {
 		ArrayList<String> tab = new ArrayList<String>();
 		tab = t.toArrayList();
-		
-		String req = "SELECT * from t_index,t_metadate WHERE trg_id = ";
-		
-		// TODO cut array list to fit query
-		
+
+		String req = "SELECT * from t_index,t_metadata WHERE ";
+
+		Iterator<String> itr = tab.iterator();
+		int cpt = 0;
+		while (itr.hasNext()) {
+			if (cpt > 0)
+				req += " AND ";
+			req += "trg_id = '" + itr.next() + "'";
+			cpt++;
+		}
+		req += " AND t_index.meta_id = t_metadata.meta_id;";
+		System.out.println(req);
 		return st.executeQuery(req);
-		
+
 	}
-	
+
 	@Override
 	public void request(Search s) {
 		Trigram trg = new Trigram(s.getWord());
-		System.out.println(trg.toString());
-		
-		
+		try {
+			ResultSet res = queryTrg(trg);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void resetDatabase() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-/**	public void resetDatabase()  
-	{  
-		String s = new String();  
-		StringBuffer sb = new StringBuffer();  
-
-		try  
-		{  
-			FileReader fr = new FileReader(new File("config/indices.sql"));  
-			// be sure to not have line starting with "--" or "/*" or any other non aplhabetical character  
-
-			BufferedReader br = new BufferedReader(fr);  
-
-			while((s = br.readLine()) != null) {  
-				sb.append(s);  
-			}  
-			br.close();  
-
-			// here is our splitter ! We use ";" as a delimiter for each request  
-			// then we are sure to have well formed statements  
-			String[] inst = sb.toString().split(";");  
-
-			Connection c = ((Statement) conn).getConnection();  
-			Statement st = c.createStatement();  
-
-			for(int i = 0; i<inst.length; i++)  
-			{  
-				// we ensure that there is no spaces before or after the request string  
-				// in order to not execute empty statements  
-				if(!inst[i].trim().equals(""))  
-				{  
-					st.executeUpdate(inst[i]);  
-					System.out.println(">>"+inst[i]);  
-				}  
-			}  
-
-		}  
-		catch(Exception e)  
-		{  
-			System.out.println("*** Error : "+e.toString());  
-			System.out.println("*** ");  
-			System.out.println("*** Error : ");  
-			e.printStackTrace();  
-			System.out.println("################################################");  
-			System.out.println(sb.toString());  
-		}  
-
-	}  **/
 }

@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 /**
  * 
- * @author ahl
+ * @author Ahl Mikael
  *
  */
 public class DBServerConnectionListener extends Thread{

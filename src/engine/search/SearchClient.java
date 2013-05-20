@@ -69,7 +69,7 @@ public class SearchClient {
 	}
 	
 	public Result EcouteReponse(){
-		//Recoit la réponse du serveur, la recoit et transforme l'xml recu en un objet Result
+		//Recoit la reponse du serveur, la recoit et transforme l'xml recu en un objet Result
 		Result result = null;
 		try {
 			in = new InputStreamReader(socket.getInputStream());
