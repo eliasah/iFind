@@ -10,9 +10,9 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
- * Cette classe est livree telle quelle.
- * @author smeric
- * @version 1.0
+ * 
+ * @author ahl
+ *
  */
 public class SimpleSaxParser {
 
