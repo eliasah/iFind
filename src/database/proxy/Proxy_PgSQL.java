@@ -4,6 +4,8 @@ package database.proxy;
 import java.sql.*;
 import java.util.Scanner;
 
+import engine.search.Search;
+
 public class Proxy_PgSQL implements Database {
 
 	private PgSQL_DB db;
@@ -29,12 +31,12 @@ public class Proxy_PgSQL implements Database {
 
 	@Override
 	public boolean isconnected() {
-		return db.connected;
+		return db.isconnected();
 	}
 
 	@Override
-	public void request(){
-		// TODO Auto-generated method stub
+	public void request(Search s){
+		db.request(s);
 	}
 
 	@Override
