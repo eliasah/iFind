@@ -55,4 +55,17 @@ public class Proxy_PgSQL implements Database {
 	public void insert(String s) {
 		db.insert(s);
 	}
+
+	@Override
+	public PreparedStatement prepareStatement(String sql){
+		return db.prepareStatement(sql);
+	}
+
+	@Override
+	public Statement createStatement(int t, int r) {
+		return db.createStatement(t, r);
+	}
+
+	
+
 }

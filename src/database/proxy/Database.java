@@ -27,6 +27,9 @@ public interface Database {
 	ResultSet queryTrg(Trigram t) throws SQLException;
 
 	void insert(String mot);
+
+	PreparedStatement prepareStatement(String sql);
 	
+	Statement createStatement(int t,int r);
 }
 

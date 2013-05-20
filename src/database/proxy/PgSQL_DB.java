@@ -130,6 +130,8 @@ class PgSQL_DB implements Database {
 		}
 	}
 	
+	
+	
 	public void insertionTuplesPredefinis() throws SQLException {
 		querysql = "INSERT...";
 		insert = conn.prepareStatement(querysql);
@@ -180,4 +182,29 @@ class PgSQL_DB implements Database {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public PreparedStatement prepareStatement(String sql) {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ps;
+	}
+
+	@Override
+	public Statement createStatement(int t, int r) {
+		Statement s = null;
+		try {
+			s = conn.createStatement(t, r);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return s;
+	}
+	
 }
