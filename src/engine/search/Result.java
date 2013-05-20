@@ -14,7 +14,7 @@ public class Result {
 	public String ConvertToXml(){
 		String file;
 		file = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		file += "<RESULT>\n";
+		file += "<RESULT id =\""+this.id +"\">\n";
 		for (int i = 0; i < files.size(); i++) {
 			file+= "    <FILE> \n";
 			file+= "        <NAME>"+files.get(i).name+"</NAME>\n";
@@ -29,6 +29,7 @@ public class Result {
 			}
 			file+= "    </FILE>\n";
 			}
+		file += "</RESULT>";
 		return file;
 	}
 	

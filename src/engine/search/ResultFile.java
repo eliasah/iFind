@@ -17,4 +17,14 @@ public class ResultFile {
 		proprio = null;
 	}
 	
+	public ResultFile(String n, String p, String pe, String si, String lm, String prop){
+		name = n;
+		path=p;
+		perm=pe;
+		size = si;
+		lastmodif = lm;
+		proprio = prop;
+				
+	}
+	
 }
