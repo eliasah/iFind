@@ -4,6 +4,9 @@ import javax.swing.*;
 
 import database.proxy.Database;
 import database.proxy.Proxy_PgSQL;
+import database.trigram.Trigram;
+import engine.search.Search;
+import engine.search.TimeSlot;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -59,8 +62,11 @@ class Login extends JFrame implements ActionListener {
 			JLabel label = new JLabel("Connexion to database established, welcome "+value1);
 			page.getContentPane().add(label);
 			System.out.println("test");
-			conn.createDatabase();
-
+			// conn.createDatabase();
+			Search s = new Search(1, "exemple", true, "", "", "txt", new TimeSlot());
+			Trigram t = new Trigram("exemple");
+			System.out.println(t.toString());
+			// conn.request(s);
 		}
 		else {	
 			System.out.println("enter the valid username and password");

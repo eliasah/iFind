@@ -60,6 +60,29 @@ public class Trigram{
 
 	}
 
+	public ArrayList<String> toArrayList() {
+		ArrayList<String> ret = new ArrayList<String>();
+		Iterator it = set.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        ret.add((String) pairs.getKey());
+	        it.remove();
+	    }
+		return ret;
+		
+	}
+	
+	public String toString(){
+		String res = "{";
+		Iterator it = set.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        res += pairs.getKey() + " = " + pairs.getValue()+"\n";
+	        it.remove();
+	    }
+		return res+"}";
+	}
+	
 	public void printMap() {
 	    Iterator it = set.entrySet().iterator();
 	    while (it.hasNext()) {

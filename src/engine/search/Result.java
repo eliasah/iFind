@@ -33,4 +33,8 @@ public class Result {
 		return file;
 	}
 	
+	public ArrayList<ResultFile> getFiles(){
+		return files;
+	}
+	
 }

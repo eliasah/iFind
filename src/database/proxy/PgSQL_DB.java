@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import database.trigram.Trigram;
+
 import engine.crawler.FileListener;
 import engine.search.Search;
 
@@ -102,17 +104,28 @@ class PgSQL_DB implements Database {
 		System.out.println("Insertion reussi");
 	}
 
-	public ResultSet query(int a) throws SQLException{
-		if (a == 1) rs = st.executeQuery("SELECT * FROM t_index;"); 
-		else rs =st.executeQuery("SELECT * FROM t_metadata;");    	
-		return rs;
+	public ResultSet query(String s) throws SQLException{
+		return st.executeQuery("SELECT * FROM t_index,t_metadata WHERE trg_id = '"+ s + "' and t_index.meta_id = t_metadata.meta_id;"); 
 	}
 
+	public ResultSet queryTrg(Trigram t) throws SQLException{
+		ArrayList<String> tab = new ArrayList<String>();
+		tab = t.toArrayList();
+		
+		String req = "SELECT * from t_index,t_metadate WHERE trg_id = ";
+		
+		// TODO cut array list to fit query
+		
+		return st.executeQuery(req);
+		
+	}
+	
 	@Override
 	public void request(Search s) {
-		Trigram trg = new Trigram(s.)
-		// TODO Auto-generated method stub
-
+		Trigram trg = new Trigram(s.getWord());
+		System.out.println(trg.toString());
+		
+		
 	}
 
 	@Override
