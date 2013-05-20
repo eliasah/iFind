@@ -4,7 +4,7 @@ package database.proxy;
 import java.sql.*;
 import java.util.Scanner;
 
-class Proxy_PgSQL implements Database {
+public class Proxy_PgSQL implements Database {
 
 	private PgSQL_DB db;
 	private String line;

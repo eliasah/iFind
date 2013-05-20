@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 /**
- * Interface Database qui définissent les actions de connections vers la BD
+ * Interface Database qui définit les actions de connections vers la BD
  * @author Abou Haydar Elias - Univ. Paris Denis Diderot
  *
  */

@@ -1,6 +1,10 @@
-package database.proxy;
+package engine.gui;
 
 import javax.swing.*;
+
+import database.proxy.Database;
+import database.proxy.Proxy_PgSQL;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;

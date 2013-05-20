@@ -1,3 +1,5 @@
+package engine.search;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -43,11 +45,11 @@ public class User_Advanced {
 		mid_panel.add(button_panel,BorderLayout.CENTER);
 		
 		
-		// Top Panel : Presentation de l'interface avancée
+		// Top Panel : Presentation de l'interface avancÔøΩe
 		
 		top_panel.setBackground(Color.LIGHT_GRAY);
-		JLabel lab = new JLabel("Bienvenue sur l'interface avancée.");
-		JLabel lab2 = new JLabel("Vous avez la possibilité d'ajouter plusieurs critères à votre recherche.");
+		JLabel lab = new JLabel("Bienvenue sur l'interface avancÔøΩe.");
+		JLabel lab2 = new JLabel("Vous avez la possibilitÔøΩ d'ajouter plusieurs critÔøΩres ÔøΩ votre recherche.");
 		JLabel lab3 = new JLabel("Appuyez sur le bouton pour lancer la recherche.");
  		
  		lab.setHorizontalAlignment(JLabel.CENTER);
@@ -64,7 +66,7 @@ public class User_Advanced {
  		
  		JLabel lab4 = new JLabel("Une partie ou l'ensemble du fichier.");
  		JLabel lab5 = new JLabel("Type");
- 		JLabel lab6 = new JLabel("Date de Création");
+ 		JLabel lab6 = new JLabel("Date de CrÔøΩation");
  		JLabel lab7 = new JLabel("Contenu");
  		
  		lab4.setHorizontalAlignment(JLabel.CENTER);
@@ -97,22 +99,17 @@ public class User_Advanced {
  		
   		button_panel.add(button);
  		
- 		
- 		
- 		
- 		
- 		
- 		
- 		// bot Panel : Tableau des résultats
+		
+ 		// bot Panel : Tableau des rÔøΩsultats
  		
  		final String[] entetes = {"Nom ","Auteur","Date de Creation","Type"};
 		  final Object [][] donnees = new Object[][]{
-	                {"Nom", "Auteur", "Date de Création", "Type"},
+	                {"Nom", "Auteur", "Date de CrÔøΩation", "Type"},
 	                {" ", " ", " ", " "},
 	                {"Nicolas", "Van de Kampf", "01/01/2013", true},
 	                {"Damien", "Cuthbert", "01/01/2013", true},
 	                {"Corinne", "Valance", "01/01/2013", false},
-	                {"Emilie", "Schrödinger", "01/01/2013",true},
+	                {"Emilie", "SchrÔøΩdinger", "01/01/2013",true},
 	                {"Delphine", "Duke", "01/01/2013", false},
 	                {"Eric", "Trump", "01/01/2013", true},
 	        };
@@ -132,7 +129,7 @@ public class User_Advanced {
 		
 	     };
 	       
-	     //creation de la Jtable contenant le tableau des résultats
+	     //creation de la Jtable contenant le tableau des rÔøΩsultats
 	     
 	       JTable table = new JTable(dataModel);
 	      
