@@ -64,33 +64,62 @@ public class Search {
 		file += "</SEARCH>\n\0";
 		return file;
 	}
+	
 
 	public boolean isContent() {
 		return content;
+	}
+
+	public void setContent(boolean content) {
+		this.content = content;
 	}
 
 	public String getExtension() {
 		return extension;
 	}
 
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getPathdir() {
 		return pathdir;
 	}
 
+	public void setPathdir(String pathdir) {
+		this.pathdir = pathdir;
+	}
+
 	public String getPerm() {
 		return perm;
+	}
+
+	public void setPerm(String perm) {
+		this.perm = perm;
 	}
 
 	public TimeSlot getTimeSlot() {
 		return timeSlot;
 	}
 
-	public boolean isWord() {
+	public void setTimeSlot(TimeSlot timeSlot) {
+		this.timeSlot = timeSlot;
+	}
+
+	public String getWord() {
 		return word;
+	}
+
+	public void setWord(String word) {
+		this.word = word;
 	}
 
 	@Override
