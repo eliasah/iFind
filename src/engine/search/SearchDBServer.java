@@ -3,37 +3,29 @@ package engine.search;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+/** Lance le serveur, qui lance des sous thread pour ecouter 3 ports: 30000 30001 et 30002
+ * 
+ * @author ahl
+ *
+ */
 public class SearchDBServer {
 
-	private ServerSocket ss;
+	private int[] ports;
 	
-	public SearchDBServer(int port){
-		try {
-			System.out.println("ServerSocket");
-			this.ss = new ServerSocket(port);
-		} catch (IOException e) {
-			System.err.println("Server Socket failed to bind on port " + port);
-			e.printStackTrace();
-			System.exit(1);
-		}
+	public SearchDBServer(int[] p){
+		ports=p;
 	}
 	
 	public void start(){
-		try {
-			while (true) {
-				Socket s = ss.accept();
-				new ServerThread(s).run();
-			}
-		} catch (IOException e) {
-			System.err.println("Connection pas établie");
-			// e.printStackTrace();
+
+		for (int i = 0; i < ports.length; i++) {
+			new DBServerConnectionListener(ports[i]).run();
 		}
 	}
 	
 	public static void main(String[] args) {
-		SearchDBServer server = new SearchDBServer(30000);
-		
+		int [] ports = {30000,30001,30002};
+		SearchDBServer server = new SearchDBServer(ports);
 		server.start();
 	}
 

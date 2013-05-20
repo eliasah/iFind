@@ -186,5 +186,12 @@ public class SimpleContentHandler implements ContentHandler {
 			
 		}
 
-        
+		public Search getSearch() {
+			return search;
+		}
+
+		public Result getResult() {
+			return result;
+		}
+
 }
