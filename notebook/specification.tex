@@ -1,0 +1,87 @@
+\section{Spécification du Système}
+Cette partie du cahier de charge présentera les trois axes principaux du développement de ifind.
+\begin{itemize}
+ \item Architecture du système.
+ \item Charges du système.
+ \item Modèles dy système.
+\end{itemize}
+
+\subsection{Architecture du Système}
+Ce paragraphe présente un point du vue haut niveau de l'architecture préconisée du système et la distribution de fonctionnalités à travers 
+les modules du système.
+
+Notre système se compose de trois sous-systèmes :
+\begin{itemize}
+ \item Moteur de recherche : Architecture Model View Controler
+ \item Moteur d'indexation : Deamon
+ \item Base de donnée indexée : Architecture en couche : PostgreSQL
+\end{itemize}
+
+\subsubsection{Architecture du Moteur de recherche}
+
+\input{bnf}
+Model :
+
+View : GUI
+
+Controler : search-engine-core
+\begin{center}
+\includegraphics[scale=0.5]{seqmrbi.png}
+\end{center}
+
+
+\subsubsection{Architecture du moteur d'indexation}
+Le moteur d'indexation se compose de deux instances.\\
+La première est lancée uniquement lorsqu'il faut entièrement créer l'index (lors de l'installation, par exemple).\\
+La deuxième, le démon, communique en permanence avec la base d'indexation afin de lui envoyer
+les différents évènements qui ont eu lieu à l'intérieur du corpus et qui doivent être indexés.
+L'envoi se fait par l'intermédiaire d'un flux XML au travers d'une Socket (voir annexe TODO et TODO).
+
+\subsubsection{Architecture de la base d'indexation}
+La base d'indexation est une base de donnée PostgreSQL, en un premier temps, qui permettra au moteur de recherche 
+de retrouver ce qu'il cherche.
+
+\begin{center}
+\includegraphics[scale=0.5]{seqdbi.png}
+\end{center}
+
+Le modèle conceptuel de données (MCD) de la base de données est le suivant :
+\begin{center}
+\includegraphics[scale=0.7]{mcd.png}
+\end{center}
+
+
+\subsection{Charges du Système}
+Ce paragraphe décrit les charges fonctionnelles du système en détail et d'autres charges non fonctionnelles : 
+\begin{itemize}
+ \item interface
+ \item autres...
+\end{itemize}
+
+\subsection{Modèles du système}
+Ce paragraphe décrit les divers modèles du système ainsi que leurs relations entre composantes du système et de son environnement.
+
+\subsubsection{Modèle de communication}
+Le module de BD crée deux sockets Server :\\
+L’instanciation de ces sockets doit se faire avec les informations lues à partir des fichier config-sample-Deamon.XML et config-sample-MoteurR.
+
+On définit tout d'abord la socket entre la base d'indexation et le moteur de recherche. Le socket reste en écoute 
+des requêtes en provenance du moteur de recherche, une requête est un fichier XML générée suite à une seule et unique recherche pour 
+cela on doit impérativement ajouter un identifiant dans la DTD au retour. Chaque réponse génère un seul fichier 
+XML qui sera envoyé au moteur de recherche on peut facilement retrouver l'ordre grâce au ID de chaque requête. 
+
+On distingue un cas particulier : par exemple l'envoie des résultats en morceaux , quand la recherche prend éventuellement du temps. 
+Là aussi il faut ajouter des informations supplémentaires dans la DTD pour qu'on puisse rendre possible ce genre d'opérations.
+
+On définit ensuite la socket entre la base d'indexation et le moteur d'indexation. Le socket reste en écoute de nouvelle information capturée par le démon
+(Daemon). Chacun peut choisir sa politique de mise à jour ( envoie du fichier XML chaque 20 min par ex etc .) 
+On doit se mettre d'accord sur le format d'échange pour ces deux modules. 
+
+\paragraph{Remarques :} J'ai choisi les ports de façon arbitraires il y a 3 ports le premier et celui par défaut 
+si jamais ce port n'est pas libre ont basculera vers le 2e etc. 
+
+\paragraph{Remarque 2 :} La DTD bd2M. n'est pas encore assez riche pour gérer une recherche dont le nombre 
+de mots-clés et supérieur à 1 comme on l'a vu au TD. Il faut prendre en considération tous les cas possibles, exemple :
+mot1 ou mot2 , mot1 et mot2, etc. 
+
+Je propose qu'on rajoute de nouveaux éléments en dehors de la balise search qui concerne la manière dont on va l'interpréter.
