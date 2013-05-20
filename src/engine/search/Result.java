@@ -3,8 +3,8 @@ package engine.search;
 import java.util.ArrayList;
 
 public class Result {
-	ArrayList<ResultFile> files;
-	int id;
+	private ArrayList<ResultFile> files;
+	private int id;
 	
 	public Result(int n){
 		id = n;
@@ -17,20 +17,24 @@ public class Result {
 		file += "<RESULT id =\""+this.id +"\">\n";
 		for (int i = 0; i < files.size(); i++) {
 			file+= "    <FILE> \n";
-			file+= "        <NAME>"+files.get(i).name+"</NAME>\n";
-			file+= "        <PATH>"+files.get(i).path+"</PATH>\n";
-			file+= "        <PERM>"+files.get(i).perm+"</PERM>\n";
-			file+= "        <SIZE>"+files.get(i).size+"</SIZE>\n";
-			if (files.get(i).lastmodif != null){
-				file+= "        <LASTMODIF>"+files.get(i).lastmodif+"</LASTMODIF>\n";
+			file+= "        <NAME>"+files.get(i).getName()+"</NAME>\n";
+			file+= "        <PATH>"+files.get(i).getPath()+"</PATH>\n";
+			file+= "        <PERM>"+files.get(i).getPerm()+"</PERM>\n";
+			file+= "        <SIZE>"+files.get(i).getSize()+"</SIZE>\n";
+			if (files.get(i).getLastmodif() != null){
+				file+= "        <LASTMODIF>"+files.get(i).getLastmodif()+"</LASTMODIF>\n";
 			}
-			if (files.get(i).proprio != null){
-			file+= "        <PROPRIO>"+files.get(i).proprio+"</PROPRIO>\n";
+			if (files.get(i).getProprio() != null){
+			file+= "        <PROPRIO>"+files.get(i).getProprio()+"</PROPRIO>\n";
 			}
 			file+= "    </FILE>\n";
 			}
 		file += "</RESULT>";
 		return file;
+	}
+	
+	public ArrayList<ResultFile> getFiles(){
+		return files;
 	}
 	
 }

@@ -7,17 +7,24 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import engine.crawler.FileListener;
+import engine.search.Search;
 
+/**
+ * PostgreSQL Database
+ * 
+ * @author Abou Haydar Elias - Univ. Paris Denis Diderot
+ *
+ */
 class PgSQL_DB implements Database {
 
-	Connection conn; // la connexion a la base
-	Statement st;
-	PreparedStatement insert;
-	PreparedStatement delete;
-	PreparedStatement update;
-	String querysql;
-	ResultSet rs;
-	boolean connected;
+	private Connection conn;
+	private Statement st;
+	private PreparedStatement insert;
+	private PreparedStatement delete;
+	private PreparedStatement update;
+	private String querysql;
+	private ResultSet rs;
+	private boolean connected;
 
 	protected PgSQL_DB(String login, String motPasse) {
 		try {
@@ -27,7 +34,6 @@ class PgSQL_DB implements Database {
 			connected = true;
 		} catch (SQLException | ClassNotFoundException e) {
 			connected = false; 
-			// e.printStackTrace();
 		} // Connexion UBUNTU
 	}
 
@@ -97,23 +103,25 @@ class PgSQL_DB implements Database {
 	}
 
 	public ResultSet query(int a) throws SQLException{
-		if (a == 1) rs = st.executeQuery("SELECT * FROM douane;"); 
-		else rs =st.executeQuery("SELECT * FROM produit;");    	
+		if (a == 1) rs = st.executeQuery("SELECT * FROM t_index;"); 
+		else rs =st.executeQuery("SELECT * FROM t_metadata;");    	
 		return rs;
 	}
 
-	public void insertionTuplesUtilisateur(int num,String nom,String ville,int etoiles,String directeur) throws SQLException{
-		Scanner src = new Scanner(System.in);
-		System.out.println("Entrez le numero de l Hotel:");
-		num = src.nextInt();
-	}
 	@Override
-	public void request() {
+	public void request(Search s) {
+		Trigram trg = new Trigram(s.)
 		// TODO Auto-generated method stub
 
 	}
 
-	public void resetDatabase()  
+	@Override
+	public void resetDatabase() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+/**	public void resetDatabase()  
 	{  
 		String s = new String();  
 		StringBuffer sb = new StringBuffer();  
@@ -159,5 +167,5 @@ class PgSQL_DB implements Database {
 			System.out.println(sb.toString());  
 		}  
 
-	}  
+	}  **/
 }
