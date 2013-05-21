@@ -5,6 +5,11 @@ import java.util.Scanner;
 
 import database.trigram.Trigram;
 
+import engine.search.BaliseCreations;
+import engine.search.BaliseIndexation;
+import engine.search.BaliseModifications;
+import engine.search.BaliseRenommage;
+import engine.search.BaliseSuppressions;
 import engine.search.ResultFile;
 import engine.search.Search;
 
@@ -25,15 +30,13 @@ public interface Database {
 	
 	void resetDatabase();
 
-	void insert(String mot);
-
-	void delete(String path) throws SQLException;
+	void delete(BaliseSuppressions b) throws SQLException;
 	
 	PreparedStatement prepareStatement(String sql);
 	
 	Statement createStatement(int t,int r);
 
-	void update(String opath, String npath) throws SQLException;
+	void rename(BaliseRenommage b) throws SQLException;
 
 	void suppressionTable(String table) throws SQLException;
 
@@ -42,5 +45,11 @@ public interface Database {
 	ResultFile FromResultSetToResultFile();
 
 	ResultSet queryTrg(Search s) throws SQLException;
+	
+	void update(BaliseModifications b) throws SQLException;
+
+	void insert(BaliseCreations b);
+	
+	void setBaliseIndexation(BaliseIndexation b);
 }
 

@@ -8,6 +8,9 @@ import java.net.URI;
 
 import org.xml.sax.SAXException;
 
+import database.proxy.Database;
+import database.proxy.Proxy_PgSQL;
+
 import engine.search.BaliseIndexation;
 import engine.search.SimpleSaxParser;
 /**
@@ -40,9 +43,9 @@ public class ServerDBDaemon extends Thread{
 				try {
 					SimpleSaxParser s = new SimpleSaxParser(uri.getPath());
 					
-					BaliseIndexation bi = null;  //  s.getHandler()  .getBaliseIndexation() ?
-					
-					
+					BaliseIndexation bi = s.getHandler().getIndexation();
+					Database db = new Proxy_PgSQL("abou", "x55efviq");
+					db.setBaliseIndexation(bi);
 					
 				} catch (SAXException e) {
 					// TODO Auto-generated catch block

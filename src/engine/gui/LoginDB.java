@@ -9,6 +9,11 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import database.proxy.Database;
 import database.proxy.Proxy_PgSQL;
+import engine.search.BaliseCreations;
+import engine.search.BaliseModifications;
+import engine.search.BaliseRenommage;
+import engine.search.BaliseSuppressions;
+import engine.search.Mot;
 import engine.search.Search;
 import engine.search.TimeSlot;
 import java.awt.event.ActionListener;
@@ -16,6 +21,8 @@ import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
@@ -152,8 +159,17 @@ public class LoginDB {
 		btnInsertTest.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (conn.isconnected())
-						conn.insert("exemple");
+				BaliseCreations bc;
+				if (conn.isconnected()) {
+						bc = new BaliseCreations(0);
+						bc.setPath("/home/exemple/");
+						String s = conn.getNameFromPath("/home/exemple");
+						ArrayList<Mot> indexage = new ArrayList<Mot>();
+						Mot m = new Mot(0);
+						indexage.add(m);
+						bc.setIndexage(indexage);
+						conn.insert(bc);
+				}
 			}
 		});
 		btnInsertTest.setBounds(153, 76, 145, 25);
@@ -211,7 +227,7 @@ public class LoginDB {
 			public void actionPerformed(ActionEvent arg0) {
 				if (conn.isconnected())
 					try {
-						conn.delete("path 1");
+						conn.delete(null);
 						Statement st = conn.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY );
 						ResultSet rs = null;
 						try {
@@ -239,7 +255,7 @@ public class LoginDB {
 		btnUpdateRowTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					conn.update("path 1","nouveau");
+					conn.update(new BaliseModifications(0));
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
