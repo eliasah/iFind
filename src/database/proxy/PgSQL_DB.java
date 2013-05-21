@@ -4,8 +4,11 @@ import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.StringTokenizer;
+
 import database.trigram.Trigram;
 
+import engine.search.ResultFile;
 import engine.search.Search;
 
 /**
@@ -88,16 +91,11 @@ class PgSQL_DB implements Database {
 		}
 	}
 
+	@Override
 	public void suppressionTable(String table) throws SQLException {
 		querysql = "DROP TABLE" + table;
 		st.executeUpdate(querysql);
 		System.out.println("Suppression " + table + " reussi");
-	}
-	
-	public int getIdMeta(){
-		int i = 0;
-		
-		return i;
 	}
 	
 	@Override
@@ -128,7 +126,7 @@ class PgSQL_DB implements Database {
 		}
 	}
 	
-	
+	@Override
 	public ResultSet query(String s) throws SQLException {
 		return st.executeQuery("SELECT * FROM t_index,t_metadata WHERE trg_id = '"+ s + "' and t_index.meta_id = t_metadata.filepath;");
 	}
@@ -155,6 +153,16 @@ class PgSQL_DB implements Database {
 	}
 
 	@Override
+	public String getNameFromPath(String path) {
+		StringTokenizer tokens = new StringTokenizer(path, "/");
+		String token = "";
+		while (tokens.hasMoreTokens()) {
+			token = tokens.nextToken();
+		}
+		return token;
+	}
+	
+	@Override
 	public ResultSet request(Search s) {
 		Trigram trg = new Trigram(s.getWord());
 		ResultSet res = null;
@@ -167,6 +175,12 @@ class PgSQL_DB implements Database {
 		return res;
 	}
 
+	@Override
+	public ResultFile FromResultSetToResultFile() {
+		// TODO
+		return null;
+	}
+	
 	@Override
 	public void resetDatabase() {
 		createDatabase();

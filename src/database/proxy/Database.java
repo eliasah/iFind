@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import database.trigram.Trigram;
 
+import engine.search.ResultFile;
 import engine.search.Search;
 
 /**
@@ -35,5 +36,13 @@ public interface Database {
 	Statement createStatement(int t,int r);
 
 	void update(String opath, String npath) throws SQLException;
+
+	void suppressionTable(String table) throws SQLException;
+
+	ResultSet query(String s) throws SQLException;
+
+	String getNameFromPath(String path);
+
+	ResultFile FromResultSetToResultFile();
 }
 
