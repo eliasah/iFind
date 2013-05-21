@@ -4,8 +4,11 @@ import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.StringTokenizer;
+
 import database.trigram.Trigram;
 
+import engine.search.ResultFile;
 import engine.search.Search;
 
 /**
@@ -88,16 +91,11 @@ class PgSQL_DB implements Database {
 		}
 	}
 
+	@Override
 	public void suppressionTable(String table) throws SQLException {
 		querysql = "DROP TABLE" + table;
 		st.executeUpdate(querysql);
 		System.out.println("Suppression " + table + " reussi");
-	}
-	
-	public int getIdMeta(){
-		int i = 0;
-		
-		return i;
 	}
 	
 	@Override
@@ -128,38 +126,47 @@ class PgSQL_DB implements Database {
 		}
 	}
 	
-	
-	public ResultSet query(String s) throws SQLException {
-		return st.executeQuery("SELECT * FROM t_index,t_metadata WHERE trg_id = '"+ s + "' and t_index.meta_id = t_metadata.filepath;");
-	}
-
 	@Override
-	public ResultSet queryTrg(Trigram t) throws SQLException {
+	public ResultSet queryTrg(Search s) throws SQLException {
+		Trigram t = new Trigram(s.getWord());
 		ArrayList<String> tab = new ArrayList<String>();
 		tab = t.toArrayList();
 
-		String req = "SELECT * from t_index,t_metadata WHERE ";
+		String req = "SELECT filepath from t_index,t_metadata WHERE (";
 
 		Iterator<String> itr = tab.iterator();
 		int cpt = 0;
 		while (itr.hasNext()) {
 			if (cpt > 0)
-				req += " AND ";
+				req += " OR ";
 			req += "trg_id = '" + itr.next() + "'";
 			cpt++;
 		}
-		req += " AND t_index.meta_id = t_metadata.filepath;";
+		req += ")";
+		if (s.getPerm() != null) req+= " AND t_metadata.permission = '" + s.getPerm() +"'";
+		if (s.getExtension() != null) req+= " AND t_metadata.extension = '" + s.getExtension() + "'";
+		req += " AND t_index.meta_id = t_metadata.filepath GROUP BY filepath;";
 		System.out.println(req);
 		return st.executeQuery(req);
 
 	}
 
 	@Override
+	public String getNameFromPath(String path) {
+		StringTokenizer tokens = new StringTokenizer(path, "/");
+		String token = "";
+		while (tokens.hasMoreTokens()) {
+			token = tokens.nextToken();
+		}
+		
+		return token;
+	}
+	
+	@Override
 	public ResultSet request(Search s) {
-		Trigram trg = new Trigram(s.getWord());
 		ResultSet res = null;
 		try {
-			res = queryTrg(trg);
+			res = queryTrg(s);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,6 +174,12 @@ class PgSQL_DB implements Database {
 		return res;
 	}
 
+	@Override
+	public ResultFile FromResultSetToResultFile() {
+		// TODO
+		return null;
+	}
+	
 	@Override
 	public void resetDatabase() {
 		createDatabase();

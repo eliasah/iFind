@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import database.trigram.Trigram;
 
+import engine.search.ResultFile;
 import engine.search.Search;
 /** Proxy class for PgSQL_DB
  * 
@@ -52,11 +53,6 @@ public class Proxy_PgSQL implements Database {
 	}
 
 	@Override
-	public ResultSet queryTrg(Trigram t) throws SQLException {
-		return db.queryTrg(t);
-	}
-
-	@Override
 	public void insert(String s){
 		db.insert(s);
 	}
@@ -79,6 +75,26 @@ public class Proxy_PgSQL implements Database {
 	@Override
 	public void delete(String mot) throws SQLException {
 		db.delete(mot);
+	}
+
+	@Override
+	public void suppressionTable(String table) throws SQLException {
+		db.suppressionTable(table);
+	}
+
+	@Override
+	public String getNameFromPath(String path) {
+		return db.getNameFromPath(path);
+	}
+
+	@Override
+	public ResultFile FromResultSetToResultFile() {
+		return db.FromResultSetToResultFile();
+	}
+
+	@Override
+	public ResultSet queryTrg(Search s) throws SQLException {
+		return db.queryTrg(s);
 	}
 
 	

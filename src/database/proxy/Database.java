@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import database.trigram.Trigram;
 
+import engine.search.ResultFile;
 import engine.search.Search;
 
 /**
@@ -24,8 +25,6 @@ public interface Database {
 	
 	void resetDatabase();
 
-	ResultSet queryTrg(Trigram t) throws SQLException;
-
 	void insert(String mot);
 
 	void delete(String path) throws SQLException;
@@ -35,5 +34,13 @@ public interface Database {
 	Statement createStatement(int t,int r);
 
 	void update(String opath, String npath) throws SQLException;
+
+	void suppressionTable(String table) throws SQLException;
+
+	String getNameFromPath(String path);
+
+	ResultFile FromResultSetToResultFile();
+
+	ResultSet queryTrg(Search s) throws SQLException;
 }
 
