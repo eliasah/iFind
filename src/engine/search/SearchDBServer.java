@@ -18,8 +18,6 @@ public class SearchDBServer extends Thread {
 	}
 	
 	public void run(){
-		int [] ports = {30000,30001,30002};
-		SearchDBServer server = new SearchDBServer(ports);
 		for (int i = 0; i < ports.length; i++) {
 			new DBServerConnectionListener(ports[i]).run();
 		}

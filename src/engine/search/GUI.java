@@ -47,6 +47,9 @@ public class GUI implements Runnable{
 	
 	
 	public GUI (){
+		int[] ports = {30000,30001,30002};
+		SearchDBServer server = new SearchDBServer(ports);
+		server.start();
 		
 		frame = new JFrame("Moteur de Recherche Simple");
 		panel = new JPanel();
