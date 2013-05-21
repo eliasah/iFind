@@ -106,49 +106,31 @@ class PgSQL_DB implements Database {
 		ArrayList<String> tab = t.toArrayList();
 		Iterator it = tab.iterator();
 		String trg;
-		querysql = "INSERT INTO t_metadata VALUES (DEFAULT,'fichier 1','path 1',777,'1999-01-08');";
-		ResultSet rs = null;
+		querysql = "INSERT INTO t_metadata VALUES ('path 4','txt','777','1999-01-08');";
+
 		try {
 			insert = conn.prepareStatement(querysql,Statement.RETURN_GENERATED_KEYS);
 			insert.execute();
 		} catch (SQLException e1) {
-			String errmsg = "ERROR:  duplicate key value violates unique constraint 't_metadata_pkey' \n" +
-					"DETAIL:  Key (meta_id)=( X ) already exists.";
-			System.out.println(errmsg);
+			e1.printStackTrace();
 		}	
-
-		try {
-			rs = insert.getResultSet();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		int i = 0;
-		try {
-			i = rs.getInt(0);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(i);
-		/*while (it.hasNext()) {
+		
+		while (it.hasNext()) {
 			trg = (String) it.next();
 			try {
-				querysql = "INSERT INTO T_INDEX VALUES('" + trg + "'," + id_meta +");";
+				querysql = "INSERT INTO T_INDEX VALUES('" + trg + "','path 4')";
 				insert = conn.prepareStatement(querysql);
 				insert.execute();
 
 			} catch (SQLException e) {
-				String errmsg = "ERROR:  duplicate key value violates unique constraint 't_index_pkey' \n " +
-						"DETAIL:  Key (trg_id, meta_id)=("+trg+","+ id_meta+") already exists.";
-				System.out.println(errmsg);
+				e.printStackTrace();
 			}
-		}*/
+		}
 	}
 	
 	
 	public ResultSet query(String s) throws SQLException {
-		return st.executeQuery("SELECT * FROM t_index,t_metadata WHERE trg_id = '"+ s + "' and t_index.meta_id = t_metadata.meta_id;");
+		return st.executeQuery("SELECT * FROM t_index,t_metadata WHERE trg_id = '"+ s + "' and t_index.meta_id = t_metadata.filepath;");
 	}
 
 	@Override
@@ -166,7 +148,7 @@ class PgSQL_DB implements Database {
 			req += "trg_id = '" + itr.next() + "'";
 			cpt++;
 		}
-		req += " AND t_index.meta_id = t_metadata.meta_id;";
+		req += " AND t_index.meta_id = t_metadata.filepath;";
 		System.out.println(req);
 		return st.executeQuery(req);
 
