@@ -1,28 +1,41 @@
 package engine.search;
+
+import java.util.Hashtable;
+
 /**
  * 
  * @author ahl
  *
  */
 public class BaliseModifications {
+	private int id;
 	private String path;
 	private String datemodification;
 	private String taille;
 	private String proprietaire;
 	private String groupe;
 	private String permissions;
-	private String indexage;
+	private Hashtable<String, Integer> indexage;
 	private String newpath;
 	
-	public BaliseModifications(){
+	public BaliseModifications(int id){
+		this.id = id;
 		path=null;
 		datemodification=null;
 		taille=null;
 		proprietaire=null;
 		groupe=null;
 		permissions=null;
-		indexage=null;
+		indexage=new Hashtable<>();
 		newpath=null;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getPath() {
@@ -73,11 +86,11 @@ public class BaliseModifications {
 		this.permissions = permissions;
 	}
 
-	public String getIndexage() {
+	public Hashtable<String, Integer> getIndexage() {
 		return indexage;
 	}
 
-	public void setIndexage(String indexage) {
+	public void setIndexage(Hashtable<String, Integer> indexage) {
 		this.indexage = indexage;
 	}
 

@@ -5,10 +5,20 @@ package engine.search;
  *
  */
 public class BaliseSuppressions {
+	private int id;
 	private String path;
 	
-	public BaliseSuppressions(String p){
-		path=p;
+	public BaliseSuppressions(int id){
+		this.id = id;
+		path = null;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getPath() {
@@ -18,7 +28,5 @@ public class BaliseSuppressions {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	
 	
 }

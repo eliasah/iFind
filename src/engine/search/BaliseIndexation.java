@@ -12,7 +12,7 @@ public class BaliseIndexation {
 	public BaliseIndexation(){
 		renommage = null;
 		modification = null;
-		suppression=null;
+		suppression = null;
 		creation = null;
 	}
 

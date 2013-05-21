@@ -5,12 +5,22 @@ package engine.search;
  *
  */
 public class BaliseRenommage {
+	private int id;
 	private String path;
 	private String newpath;
 	
-	public BaliseRenommage(){
+	public BaliseRenommage(int id){
+		this.id = id;
 		path=null;
 		newpath=null;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getPath() {
