@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
 /**
  * 
  * @author Ahl Mikael, Jeremie Rouach - Univ. Paris Denis Diderot
- *
+ * 
  */
 
 public class ServerThread extends Thread {

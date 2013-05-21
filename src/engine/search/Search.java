@@ -4,7 +4,7 @@ package engine.search;
  *  permet une manupulation facile contrairement a un XML
  * 
  * @author Ahl Mikael - Univ. Paris Denis Diderot
- * 
+ *
  */
 public class Search {
 	

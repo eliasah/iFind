@@ -29,12 +29,16 @@ public class Result {
 			}
 			file+= "    </FILE>\n";
 			}
-		file += "</RESULT>\n\0";
+		file += "</RESULT>";
 		return file;
 	}
 	
 	public ArrayList<ResultFile> getFiles(){
 		return files;
+	}
+	
+	public int getId(){
+		return id;
 	}
 	
 }
