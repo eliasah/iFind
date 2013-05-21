@@ -92,7 +92,7 @@ public class XMLBuilder {
 			if ((new File(path)).isDirectory())
 				format = "DIR"; // répertoire
 			else 
-				return; // fichier sans extension
+				format = "null"; // fichier sans extension
 		} else {
 			StringTokenizer tokens = new StringTokenizer(path, ".");
 			String token = "";
