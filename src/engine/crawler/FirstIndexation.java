@@ -148,6 +148,7 @@ public class FirstIndexation {
 			xmlBuilder.addEvent(e);
 		}
 
+		System.out.println(xmlBuilder.buildXML());
 		bw.write(xmlBuilder.buildXML());
 		bw.flush();
 		socket.close();

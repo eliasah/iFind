@@ -41,8 +41,7 @@ public class XMLBuilder {
 	 * @return Une chaîne représentant le document XML généré.
 	 */
 	public String buildXML() {
-		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-				"<INDEXATION>" +
+		return "<INDEXATION>" +
 				"<RENOMMAGES>" + this.renaming + "</RENOMMAGES>" +
 				"<MODIFICATIONS>" + this.modification + "</MODIFICATIONS>" +
 				"<SUPPRESSIONS>" + this.deletion + "</SUPPRESSIONS>" +		

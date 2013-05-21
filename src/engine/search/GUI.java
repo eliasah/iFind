@@ -199,7 +199,7 @@ public class GUI implements Runnable{
  	 			   	tabS[i]= new Search(compteur,tab[i],false,null,null,null,null);
  			   	}
  			   	
- 			/*   	client = new SearchClient();
+ 			   	client = new SearchClient();
  			   	client.Connect();
  			   	client.Demande(tabS);
  			   	retourServ = client.EcouteReponse(); 
@@ -211,7 +211,7 @@ public class GUI implements Runnable{
  					data[i][2] = retourServ.getFiles().get(i).getSize();
  				}
 
- 			   	*/
+ 			   	tableauRes.setData(data);
  			   	
 				JOptionPane.showMessageDialog(frame, "Envoi des informations.\nVeuillez patientez s il vous plait.");
  			}
