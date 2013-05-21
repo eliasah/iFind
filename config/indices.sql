@@ -6,7 +6,7 @@ DROP TABLE t_index CASCADE;
 DROP TABLE t_metadata CASCADE;
 
 -- création des tables
-CREATE TABLE t_metadata (meta_id INT PRIMARY KEY, filename VARCHAR(30) NOT NULL, filepath VARCHAR(120) NOT NULL, permission INT NOT NULL, last_mod DATE NOT NULL);
+CREATE TABLE t_metadata (meta_id SERIAL PRIMARY KEY, filename VARCHAR(30) NOT NULL, filepath VARCHAR(120) NOT NULL, permission INT NOT NULL, last_mod DATE NOT NULL);
 
 CREATE TABLE t_index (trg_id VARCHAR(3) NOT NULL,meta_id INT NOT NULL REFERENCES t_metadata(meta_id), PRIMARY KEY(trg_id, meta_id));
 

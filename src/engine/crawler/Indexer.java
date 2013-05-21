@@ -39,10 +39,11 @@ import java.util.regex.Pattern;
  */
 public class Indexer extends Thread {
 
-	private final String ADDRESS = "localhost";
-	private final int PORT = 40000;
-	private final int LIMIT = 3;
+	private final int LIMIT = 5;
 	private final String TYPES_FILE = "config/excluded_types.dat";
+	private final String COMMUNICATION_FILE = "config/daemon_to_bi.dat";
+	private String address;
+	private int port;
 
 	private LinkedBlockingQueue<Event> events;
 	private Hashtable<String, Event> eventsTable;
@@ -58,10 +59,11 @@ public class Indexer extends Thread {
 	 */
 	public Indexer(LinkedBlockingQueue<Event> events) 
 			throws UnknownHostException, IOException {
+		this.configureCommunication();
 		this.events = events;
 		this.excludedTypes = new LinkedList<String>();
 		this.eventsTable = new Hashtable<String, Event>();
-		this.socket = new Socket(ADDRESS, PORT);
+		this.socket = new Socket(address, port);
 		this.bw = new BufferedWriter(
 				new OutputStreamWriter(this.socket.getOutputStream()));
 		this.loadExcludedTypes();
@@ -87,6 +89,15 @@ public class Indexer extends Thread {
 			}
 		}
 	}
+	
+	public void configureCommunication() throws IOException {
+		BufferedReader br =
+				new BufferedReader(new FileReader(COMMUNICATION_FILE));
+		this.address = br.readLine();
+		this.port = Integer.parseInt(br.readLine());
+		br.close();
+	}
+
 
 	/**
 	 * Récupère la liste des types de fichiers à exclure de l'indexation.
@@ -256,8 +267,8 @@ public class Indexer extends Thread {
 		}
 		
 		this.bw.write(xmlBuilder.buildXML());
-		this.bw.write("\n"); // FIXME
 		this.bw.flush();
+		System.out.println("Flux XML envoyé"); // FIXME
 	}
 
 }

@@ -1,0 +1,168 @@
+\section{Introduction}
+
+\subsection{Objectif du document de specification} 
+Ce document de spécification produit des informations spécifiques et nécessaires
+pour définir efficacement les fonctionnalités, l'architecture et la conception
+du système afin de donner la direction à l'équipe de développement sur
+l'architecture du système à développer. Le document de spécification du produit
+est créé pendant la phase de planification du projet. Son public visé est le
+chef de projet, l'équipe de projet et l'équipe de développement et en partie le
+client. Les spécifications techniques et fonctionnelles de ce document sont
+réservées au chef de projet, l'équipe de projet et l'équipe de développement.
+
+
+\subsection{Portée du produit}
+Le logiciel iFind permet de rechercher un fichier dans un ensemble de\\
+répertoires ciblés du système. Cette recherche peut se faire soit en indiquant
+le nom du fichier, soit en donnant une liste de mots contenus dans ce fichier.
+
+% Ajout des définitions, acronymes et abréviations
+\input{definitions}
+
+
+\subsection{References}
+IEEE Std 830-1998 Recommended Practice for Software Requirements Specifications 
+
+\newpage
+
+\section{Aperçu Général et Guide de Conception}
+Cette section décrit les principes et les stratégies qui seront utilisées comme
+des lignes directrices lors de la conception et de la mise en œuvre du système.
+
+\subsection{Perspective du produit}
+iFind utilise une base de données construite à l'aide d'un moteur d'indexation
+et mise à jour tous les dix évènements. La requête est envoyée au moteur
+de recherche via une interface graphique (GUI) (voir Figure 1). On utilise une
+interface graphique, pour permettre à l’utilisateur de rechercher ce dont il a
+besoin. La GUI est constituée d’un champ de saisie, d’un bouton “Chercher” ainsi
+que d’un explorateur qui permettra d’ouvrir les fichiers trouvés (extension). De
+base, l’explorateur contiendra un tableau dans lequel on affichera les
+résultats. Le champ de saisie reçoit une requête sous forme d’expression
+régulière ou des mots simples.
+
+Dans cet exemple, la recherche envoie tous les fichiers contenant les mots
+"toto" ou "abc".
+
+\begin{figure}[!h]
+\includegraphics[scale=0.7]{rechercheSimple.png}
+\caption{Interface graphique du moteur de recherche.}
+\end{figure}
+
+\subsection{Fonctionnalités du produit}
+Lors de la première utilisation, iFind lance un démon ayant pour tâche d'indexer
+un corpus ciblé. Ce démon va envoyer l'ensemble des données à indexer
+à la base d'indexation, qui construira la base de données utilisée pour les 
+recherches. Cette base de données va jouer un rôle clé dans la phase de 
+recherche de fichiers.
+Un algorithme est appliqué pour identifier dans le corpus (en utilisant 
+l'index), les fichiers
+qui correspondent le mieux aux mots contenus dans la requête, afin de présenter
+les résultats des recherches par ordre de pertinence. 
+Ensuite, tous les dix évènements détectés par le démon, celui-ci
+envoie les nouvelles informations à indexer à la base d'indexation.
+
+\subsubsection{Utilisation normale}
+L'utilisateur entre une requête dans la barre de recherche en suivant la syntaxe
+du moteur de recherche (cf partie 2.3.2).\\
+TODO (retour de la requête)
+
+
+\subsubsection{Utilisation avancée}
+
+La recherche avancée permet d'affiner la recherche de document en se basant sur un critère de type.
+Un utilisateur pourra rechercher des morceaux de musique par artiste, album ou titre du morceaux.
+Il pourra aussi recherches des images. Le moteur de recherche dans ce cas cherche à filtrer les résultats pour faire en sorte que
+les résultats affichés en sortie corresponde juste à des fichiers de type image. (jpg,jpeg,bmp)
+
+Concernant les documents textuelles, l'interface de recherche de ces documents permet de rechercher un document par auteur du document, genre, extension et la date de modification. La pertinence des résultats obtenus dans ce cas depend de la disponibilité de ce information par rapport a ces documents. C'est à dire, si un genre de document n'est par fourni, et on souhaite rechercher un genre précis du documents.
+
+Il y a des chances que le moteur de recherche ne puisse pas retrouver le document recherché même si celui ci existe sur le disque.
+
+Dans le cas où le document recherché n'est pas présent, un message apparaîtra afin de guider l'utilisateur. 
+De plus, la date et l'heure de la dernière indexation est indiqué.
+
+La partie inférieure de la fenêtre permet de visualiser la liste des documents trouvés. 
+Cette dernière se compose d'une colonne indiquant le nom du document, une deuxième indiquant sa date de création, une troisième indiquant sa date de modification (la plus récente) et enfin la dernière indiquant le type.
+
+
+
+L'utilisateur peut également entrer une requête incluant des critères spéciaux
+sur les fichiers à rechercher :
+\begin{itemize}
+ \item l'auteur
+ \item la date de création
+ \item la dernière date de modification
+ \item le type
+ \item la taille (pour les fichiers de type image)
+ \item la durée (pour les fichiers de type musique ou vidéo)
+\end{itemize}
+
+Il est possible de paramétrer les fonctionnalités suivantes de l'indexation :
+\begin{itemize}
+ \item Indexation ciblée : on délimite l'emplacement du corpus à indexer.
+ \item Indexation filtrée : on peut choisir le type de fichier à indexer.
+\end{itemize}
+
+
+\subsection{Caractéristique d'utilisation}
+
+\subsubsection{Grammaire BNF}
+Dans ce paragraphe, on introduira la grammaire qui définira le langage de requêtes que l'on associe au moteur de recherche.\\
+
+Un mot est formé de chiffres et/ou de lettres minuscules ou majuscules, possiblement accentuées.\\
+
+Une requête doit obligatoirement commencer par un mot.\\
+
+Dans le cas d'une recherche multiple, la liste de mots à rechercher est soit délimitée par 
+des espaces (dans le cas d'une conjonction), soit délimitée par le marqueur \textbf{-or} (dans le
+cas d'une disjonction).\\
+
+La requête peut être complétée par des options :
+\begin{itemize}
+ \item la recherche par type de fichiers, avec le marqueur \textbf{-f}
+ \item l'exclusion d'une liste de mots, avec le marqueur \textbf{-e}
+ \end{itemize}
+
+\paragraph{Grammaire BNF\\}
+Dans la suite, les symboles terminaux seront notés en \textbf{gras}.
+Les symboles non-terminaux seront notés en \textit{italique}. Une séquence entre crochets est optionnelle (comme par exemple ``\textit{[} word \textit{]}'').\\
+Une séquence entre accolades se répète zéro fois ou plus, (comme par exemple ``\textit{\{} , word \textit{\}}'').\\
+Sauf indication contraire, la sémantique d’une séquence est une liste dont la tête est le premier élément de la séquence.\\
+
+\begin{tabular}{p{1.5cm} p{0.5cm} p{9cm} }
+& & \\
+\textbf{char} & $\equiv$ & [:alnum:]\\
+\textbf{word} & $\equiv$ & $\textbf{char}^+$\\
+\textit{query} & ::= & \textbf{word} \textit{\{} \textbf{-or} \textbf{word} \textit{\}} \textit{[} \textit{options} \textit{]}\\
+& | & \textbf{word} \textit{\{} \textbf{word} \textit{\}} \textit{[} \textit{options} \textit{]}\\
+\textit{options} & ::= & \textbf{-e} \textbf{word} \textit{\{} \textbf{word} \textit{\}}\\
+\end{tabular}
+
+% insertion du tableau contenant la syntaxe
+\input{SynMR}
+
+\subsubsection{Messages d'erreur possibles}
+Si la requête entrée par l'utilisateur est mal formée, le message suivant apparaît :
+"La requête entrée ne respecte pas la syntaxe. Cliquez sur Aide pour plus d'informations."
+(Cliquer sur Aide ouvre une petite fenêtre contenant les règles de syntaxe d'une requête.)
+L'utilisateur est alors invité à reformuler sa requête.
+
+Si la base de données est corrompue et entraîne l'arrêt de la recherche et de l'indexation, l'utilisateur est invité à la réinitialiser :
+"La base de données a été corrompue et doit être intégralement reconstruite. 
+Cette opération peut prendre du temps. Voulez-vous réinitialiser la base de données maintenant ?
+Si vous cliquez sur Annuler, la base de données ne sera pas reconstruite et iFind ne sera plus utilisable."
+((OK) (Annuler) <- boutons)
+
+\subsection{Contraintes générales}
+La fraîcheur des résultats dépendra de la fraîcheur de la dernière indexation faite.\\
+L'indexation a lieu tous les dix évènements (par exemple, dix créations de fichier).
+Il peut arriver qu'un fichier supprimé soit retourné comme résultat d'une recherche, 
+mais seulement si le fichier a été supprimé il y a moins de dix évènements.
+
+\subsection{Dépendances}
+Le logiciel iFind est utilisable sur une distribution GNU/Linux.\\
+Il est nécessaire d'installer PostgreSQL pour utiliser le logiciel.\\
+JNotify possède une licence GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999.
+\newpage
+
+\input{specification}

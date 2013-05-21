@@ -4,6 +4,8 @@ package database.proxy;
 import java.sql.*;
 import java.util.Scanner;
 
+import database.trigram.Trigram;
+
 import engine.search.Search;
 
 public class Proxy_PgSQL implements Database {
@@ -43,4 +45,27 @@ public class Proxy_PgSQL implements Database {
 	public void resetDatabase() {
 		db.resetDatabase();		
 	}
+
+	@Override
+	public ResultSet queryTrg(Trigram t) throws SQLException {
+		return db.queryTrg(t);
+	}
+
+	@Override
+	public void insert(String s) {
+		db.insert(s);
+	}
+
+	@Override
+	public PreparedStatement prepareStatement(String sql){
+		return db.prepareStatement(sql);
+	}
+
+	@Override
+	public Statement createStatement(int t, int r) {
+		return db.createStatement(t, r);
+	}
+
+	
+
 }

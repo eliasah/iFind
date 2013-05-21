@@ -1,5 +1,5 @@
-package engine.search;
 
+package MoteurDeRecherche;
 import java.awt.*;
 
 import javax.swing.*;
@@ -7,18 +7,34 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 
-public class User_Advanced {
+public class User_Advanced implements Runnable{
 
-	static JFrame frame;
-	static JPanel master_panel;
-	static JPanel top_panel;
-	static JPanel mid_panel;
-	static JPanel field_panel;
-	static JPanel button_panel;
-	static JPanel bot_panel;
+	 JFrame frame;
+	 JPanel master_panel;
+	 JPanel top_panel;
+	 JPanel mid_panel;
+	 JPanel empty_panel;
+	 JPanel field_panel;
+	 JPanel button_panel;
+	 JPanel bot_panel;
+	
+	public User_Advanced(){
+		super();
+	}
 	
 	public static void main(String[] args) {
 
+		SwingUtilities.invokeLater(new User_Advanced());
+
+		
+		
+		
+	}
+
+	@Override
+	public void run() {
+		
+		
 		frame = new JFrame();
 		master_panel = new JPanel(new BorderLayout());
 		
@@ -34,6 +50,7 @@ public class User_Advanced {
 		mid_panel = new JPanel(new BorderLayout());
 		field_panel = new JPanel(grid_mid);
 		button_panel = new JPanel(new FlowLayout());
+		empty_panel = new JPanel(new FlowLayout());
 		
 		bot_panel = new JPanel(new BorderLayout());
 		
@@ -41,15 +58,19 @@ public class User_Advanced {
 		master_panel.add(mid_panel,BorderLayout.CENTER);
 		master_panel.add(bot_panel,BorderLayout.SOUTH);
 		
-		mid_panel.add(field_panel,BorderLayout.NORTH);
-		mid_panel.add(button_panel,BorderLayout.CENTER);
+		JLabel vide3 = new JLabel("");
+		empty_panel.add(vide3);
+		
+		mid_panel.add(empty_panel,BorderLayout.NORTH);
+		mid_panel.add(field_panel,BorderLayout.CENTER);
+		mid_panel.add(button_panel,BorderLayout.SOUTH);
 		
 		
-		// Top Panel : Presentation de l'interface avancÔøΩe
+		// Top Panel : Presentation de l'interface avancée
 		
 		top_panel.setBackground(Color.LIGHT_GRAY);
-		JLabel lab = new JLabel("Bienvenue sur l'interface avancÔøΩe.");
-		JLabel lab2 = new JLabel("Vous avez la possibilitÔøΩ d'ajouter plusieurs critÔøΩres ÔøΩ votre recherche.");
+		JLabel lab = new JLabel("Bienvenue sur l'interface avancée.");
+		JLabel lab2 = new JLabel("Vous avez la possibilité d'ajouter plusieurs critères à votre recherche.");
 		JLabel lab3 = new JLabel("Appuyez sur le bouton pour lancer la recherche.");
  		
  		lab.setHorizontalAlignment(JLabel.CENTER);
@@ -66,7 +87,7 @@ public class User_Advanced {
  		
  		JLabel lab4 = new JLabel("Une partie ou l'ensemble du fichier.");
  		JLabel lab5 = new JLabel("Type");
- 		JLabel lab6 = new JLabel("Date de CrÔøΩation");
+ 		JLabel lab6 = new JLabel("Date de Création");
  		JLabel lab7 = new JLabel("Contenu");
  		
  		lab4.setHorizontalAlignment(JLabel.CENTER);
@@ -99,17 +120,22 @@ public class User_Advanced {
  		
   		button_panel.add(button);
  		
-		
- 		// bot Panel : Tableau des rÔøΩsultats
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		// bot Panel : Tableau des résultats
  		
  		final String[] entetes = {"Nom ","Auteur","Date de Creation","Type"};
 		  final Object [][] donnees = new Object[][]{
-	                {"Nom", "Auteur", "Date de CrÔøΩation", "Type"},
+	                {"Nom", "Auteur", "Date de Création", "Type"},
 	                {" ", " ", " ", " "},
 	                {"Nicolas", "Van de Kampf", "01/01/2013", true},
 	                {"Damien", "Cuthbert", "01/01/2013", true},
 	                {"Corinne", "Valance", "01/01/2013", false},
-	                {"Emilie", "SchrÔøΩdinger", "01/01/2013",true},
+	                {"Emilie", "Schrödinger", "01/01/2013",true},
 	                {"Delphine", "Duke", "01/01/2013", false},
 	                {"Eric", "Trump", "01/01/2013", true},
 	        };
@@ -129,7 +155,7 @@ public class User_Advanced {
 		
 	     };
 	       
-	     //creation de la Jtable contenant le tableau des rÔøΩsultats
+	     //creation de la Jtable contenant le tableau des résultats
 	     
 	       JTable table = new JTable(dataModel);
 	      
@@ -143,10 +169,9 @@ public class User_Advanced {
  		
  		
 		frame.pack();
-		frame.setBounds(100,100,910,510);
+		frame.setBounds(190,100,910,610);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		
 		
 		
 	}

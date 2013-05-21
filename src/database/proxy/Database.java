@@ -3,6 +3,8 @@ package database.proxy;
 import java.sql.*;
 import java.util.Scanner;
 
+import database.trigram.Trigram;
+
 import engine.search.Search;
 
 /**
@@ -21,6 +23,13 @@ public interface Database {
 	void request(Search s);
 	
 	void resetDatabase();
+
+	ResultSet queryTrg(Trigram t) throws SQLException;
+
+	void insert(String mot);
+
+	PreparedStatement prepareStatement(String sql);
 	
+	Statement createStatement(int t,int r);
 }
 
