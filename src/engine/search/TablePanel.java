@@ -1,4 +1,4 @@
-package MoteurDeRecherche;
+package engine.search;
 
 import java.awt.BorderLayout;
 
