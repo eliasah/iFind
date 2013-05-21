@@ -7,8 +7,8 @@ package engine.search;
 public class BaliseSuppressions {
 	private String path;
 	
-	public BaliseSuppressions(){
-		path=null;
+	public BaliseSuppressions(String p){
+		path=p;
 	}
 
 	public String getPath() {
