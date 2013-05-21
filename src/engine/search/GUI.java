@@ -17,12 +17,13 @@ import javax.swing.text.StyledEditorKit;
 
 
 /*
- * Auteur : Rouach J�r�mie
+ * Auteur : Rouach Jeremie
  * 
  */
 
  
 public class GUI implements Runnable{
+	
 	final JFrame frame;
 	final JPanel panel;
 	BorderLayout layout;
@@ -40,10 +41,15 @@ public class GUI implements Runnable{
 	String searchtxt;
 	
 	ResultTable tableauRes;
+	SearchClient client;
+	Result retourServ;
 	
 	
 	
 	public GUI (){
+		int[] ports = {30000,30001,30002};
+		SearchDBServer server = new SearchDBServer(ports);
+		server.start();
 		
 		frame = new JFrame("Moteur de Recherche Simple");
 		panel = new JPanel();
@@ -68,11 +74,9 @@ public class GUI implements Runnable{
 		
 		JMenu menu = new JMenu("Fichier");
 		
-	//	JMenuItem open = new JMenuItem("Ouvrir...");
- 		JMenuItem quit = new JMenuItem("Quitter");
+  		JMenuItem quit = new JMenuItem("Quitter");
 		
- 	//	menu.add(open);
- 		menu.add(quit);
+  		menu.add(quit);
 		
 		
 		JMenu menu3 = new JMenu("Aide");
@@ -104,7 +108,9 @@ public class GUI implements Runnable{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(frame, "Le logiciel iFind permet de rechercher un fichier dans un ensemble de repertoires ciblees du systeme.\nCette recherche peut se faire soit en indiquant le nom du fichier, soit en donnant une liste de mots contenus dans ce fichier.");
+				JOptionPane.showMessageDialog(frame, "Le logiciel iFind permet de rechercher un fichier dans un ensemble de repertoires " +
+						"ciblees du systeme.\nCette recherche peut se faire soit en indiquant le nom du fichier, soit en " +
+						"donnant une liste de mots contenus dans ce fichier.");
 			}
 		});
 		
@@ -136,7 +142,7 @@ public class GUI implements Runnable{
 		
 		//Label de presentation du TxtField + TxtField	qui appartiennent au panel_north
 		
-	    search = new JLabel("Une partie ou l'ensemble du nom du document : ");
+	    search = new JLabel("Une partie ou l ensemble du nom du document : ");
 		panel_north.add(search,BorderLayout.NORTH);
 		
 		searchField = new JTextField();
@@ -154,9 +160,9 @@ public class GUI implements Runnable{
 		tableauRes = new ResultTable();
 		
 		
-	       //bouton pour passer � l'interface avanc�e
+	       //bouton pour passer a l interface avancee
 	       
-		JButton advanced = new JButton("Utilisateur Avanc� ?");	
+		JButton advanced = new JButton("Utilisateur Avancee ?");	
 		panel_north.add(advanced,BorderLayout.SOUTH);
 	 	       
  	       advanced.addActionListener(new ActionListener() {
@@ -179,7 +185,7 @@ public class GUI implements Runnable{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// R�cup�ration du nom + compteur incr pour l'id + creation de(s) objet(s) Search (un mot par objet Search)
+				// Recuperation du nom + compteur incr pour l id + creation de(s) objet(s) Search (un mot par objet Search)
 				
 				compteur++;
 				
@@ -193,7 +199,21 @@ public class GUI implements Runnable{
  	 			   	tabS[i]= new Search(compteur,tab[i],false,null,null,null,null);
  			   	}
  			   	
-				JOptionPane.showMessageDialog(frame, "Envoi des informations.\nVeuillez patientez s'il vous pla�t.");
+ 			   	client = new SearchClient();
+ 			   	client.Connect();
+ 			   	client.Demande(tabS);
+ 			   	retourServ = client.EcouteReponse(); 
+ 			   	
+ 				Object[][] data = new Object[retourServ.getFiles().size()][3];
+ 				for(int i=0;i<retourServ.getFiles().size();i++){
+ 					data[i][0] = retourServ.getFiles().get(i).getName();
+ 					data[i][1] = retourServ.getFiles().get(i).getPath();
+ 					data[i][2] = retourServ.getFiles().get(i).getSize();
+ 				}
+
+ 			   	
+ 			   	
+				JOptionPane.showMessageDialog(frame, "Envoi des informations.\nVeuillez patientez s il vous plait.");
  			}
 			
 		});
@@ -203,10 +223,11 @@ public class GUI implements Runnable{
 		mbar.add(menu);
 		mbar.add(menu2);
 		mbar.add(menu3);
+		frame.setJMenuBar(mbar);		
 
+		
 		frame.pack();
 		frame.setMinimumSize(frame.getSize());
-		frame.setJMenuBar(mbar);		
 		
  		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
