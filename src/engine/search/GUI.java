@@ -1,4 +1,4 @@
-package MoteurDeRecherche;
+package engine.search;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,7 +17,7 @@ import javax.swing.text.StyledEditorKit;
 
 
 /*
- * Auteur : Rouach JŽrŽmie
+ * Auteur : Rouach Jï¿½rï¿½mie
  * 
  */
 
@@ -112,7 +112,7 @@ public class GUI implements Runnable{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frame, "Version alpha : 05/2013  \n Tous droits reservŽs.");
+				JOptionPane.showMessageDialog(frame, "Version alpha : 05/2013  \n Tous droits reservï¿½s.");
 			}
 		});
 				
@@ -154,9 +154,9 @@ public class GUI implements Runnable{
 		tableauRes = new ResultTable();
 		
 		
-	       //bouton pour passer ˆ l'interface avancŽe
+	       //bouton pour passer ï¿½ l'interface avancï¿½e
 	       
-		JButton advanced = new JButton("Utilisateur AvancŽ ?");	
+		JButton advanced = new JButton("Utilisateur Avancï¿½ ?");	
 		panel_north.add(advanced,BorderLayout.SOUTH);
 	 	       
  	       advanced.addActionListener(new ActionListener() {
@@ -179,7 +179,7 @@ public class GUI implements Runnable{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// RŽcupŽration du nom + compteur incr pour l'id + creation de(s) objet(s) Search (un mot par objet Search)
+				// Rï¿½cupï¿½ration du nom + compteur incr pour l'id + creation de(s) objet(s) Search (un mot par objet Search)
 				
 				compteur++;
 				
@@ -193,7 +193,7 @@ public class GUI implements Runnable{
  	 			   	tabS[i]= new Search(compteur,tab[i],false,null,null,null,null);
  			   	}
  			   	
-				JOptionPane.showMessageDialog(frame, "Envoi des informations.\nVeuillez patientez s'il vous pla”t.");
+				JOptionPane.showMessageDialog(frame, "Envoi des informations.\nVeuillez patientez s'il vous plaï¿½t.");
  			}
 			
 		});

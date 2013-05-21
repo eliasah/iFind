@@ -12,6 +12,9 @@ import java.util.Scanner;
 
 import org.xml.sax.SAXException;
 
+import database.proxy.Database;
+import database.proxy.Proxy_PgSQL;
+
 /**
  * 
  * @author Ahl Mikael, Jeremie Rouach - Univ. Paris Denis Diderot
@@ -45,7 +48,11 @@ public class ServerThread extends Thread {
 				
 				
 					Search search = s.getHandler().getSearch();
-				
+					
+					Database db = new Proxy_PgSQL("abou", "x55efviq");
+					db.request(search);
+					
+					
 					//TODO Construire l'objet result en demandant le resultat a la BDD en utilisant search 
 					Result result= new Result(1);
 				
