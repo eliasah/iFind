@@ -25,8 +25,11 @@ public class SearchClient {
 	private OutputStreamWriter out;
 	private InputStreamReader in;
 	
-	public SearchClient(Search[] r){
-		req = r;
+	public SearchClient(){
+		
+	}
+	
+	public void Connect(){
 		try {
 			System.out.println("connection on port " + port[0]);
 			socket = new Socket("localhost",port[0]);
@@ -54,8 +57,11 @@ public class SearchClient {
 	
 	
 	
-	public void Demande(){
+	public void Demande(Search[] r){
 		//Envoie la demande avec la requete req de l'objet
+		System.out.println("debut demande");
+		this.req = r;
+		
 		try {
 			for(int i=0;i<req.length;i++){
 				out = new OutputStreamWriter(socket.getOutputStream());
@@ -71,6 +77,8 @@ public class SearchClient {
 		//Recoit la reponse du serveur, la recoit et transforme l'xml recu en un objet Result
 		//Une fois les result correspondant a la recherche recu, si il y en avait plusieurs, les tri
 		//Ceux qui corresponde a plusieurs Search en premier, (plus pertinent) etc...
+		
+		System.out.println("debut ecouteReponse");
 		Result retour= new Result(req[0].getId());
 		Result[] result = new Result[req.length];
 		
@@ -80,7 +88,7 @@ public class SearchClient {
 			char[] cbuf = new char[10];
 			
 			for(int i=0; i< req.length;	i++){
-			
+				System.out.println("Ecoute i:"+i);
 				String ResultXml="";
 				while( -1 !=in.read(cbuf)){
 					ResultXml += cbuf; 
@@ -162,5 +170,17 @@ public class SearchClient {
 	public String toString() {
 		return "SearchClient [port=" + Arrays.toString(port) + ", service="
 				+ socket + "]";
+	}
+	public static void main(String[] args) {
+		
+		SearchClient client= new SearchClient();
+		Search s1 = new Search(1,"toto",false,"user/ahl",null,null,null);
+		Search s2 = new Search(2,"titi",false,"user/ahl",null,null,null);
+		Search[] req = {s1,s2};
+		client.Connect();
+		client.Demande(req);
+		Result r = client.EcouteReponse();
+		System.out.println(r.ConvertToXml());
+		
 	}
 }
