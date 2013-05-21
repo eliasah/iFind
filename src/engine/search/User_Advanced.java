@@ -1,5 +1,6 @@
 
-package MoteurDeRecherche;
+package engine.search;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,9 +9,10 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.text.StyledEditorKit;
 
 /*
- * Auteur : Rouach Jérémie
+ * Auteur : Rouach Jeremie
  * 
  */
 
@@ -95,11 +97,11 @@ public class User_Advanced implements Runnable{
 		mid_panel.add(field_panel,BorderLayout.CENTER);
  		
 		
-		// Top Panel : Presentation de l'interface avancée
+		// Top Panel : Presentation de l interface avancee
 		
 		top_panel.setBackground(Color.LIGHT_GRAY);
 		JLabel lab = new JLabel("                          ");
-		JLabel lab2 = new JLabel("Bienvenue sur l'interface avancée du logiciel iFind.");
+		JLabel lab2 = new JLabel("Bienvenue sur l interface avancee du logiciel iFind.");
 		JLabel lab3 = new JLabel("                         ");
  		
  		lab.setHorizontalAlignment(JLabel.CENTER);
@@ -117,9 +119,9 @@ public class User_Advanced implements Runnable{
  		
  		// Mid Panel : Champs de recherche et bouton 
  		
- 		JLabel lab4 = new JLabel("Une partie ou l'ensemble du fichier.");
- 		JLabel lab5 = new JLabel("Chemin d'Accès");
- 		JLabel lab6 = new JLabel("Date de Création");
+ 		JLabel lab4 = new JLabel("Une partie ou l ensemble du fichier.");
+ 		JLabel lab5 = new JLabel("Chemin d'Acces");
+ 		JLabel lab6 = new JLabel("Date de Creation");
  		JLabel lab7 = new JLabel("Contenu");
  		JLabel lab8 = new JLabel("Extension");
  		JLabel lab9 = new JLabel("");
@@ -172,7 +174,7 @@ public class User_Advanced implements Runnable{
   		
   		
 
- 		// bot Panel : Tableau des résultats
+ 		// bot Panel : Tableau des resultats
 		
 		
 		tableauRes = new ResultTable();
@@ -216,24 +218,88 @@ public class User_Advanced implements Runnable{
  			   	String[] tab = name.split(" ");
  			   	Search[] tabS = new Search[tab.length];
  			   	
- 			   //	tabS[0]= new Search(compteur,tab[0],false,chemin,null,extension,null);
- 			   	
+  			   	
  			   	for(int i=0;i<tabS.length;i++){
  	 			   	tabS[i]= new Search(compteur,tab[i],false,chemin,null,extension,null);
  			   	}
  			   	
-				JOptionPane.showMessageDialog(frame, "Envoi des informations.\nVeuillez patientez s'il vous plaît.");
-
- 			   	
-				//SearchClient des que Mik a fini.
- 			   	// puis zou
-				
+				JOptionPane.showMessageDialog(frame, "Envoi des informations.\nVeuillez patientez s il vous plait.");
+ 			  				
 				
 			}
 		});
 	   	
+JMenuBar mbar = new JMenuBar();
+		
+		JMenu menu = new JMenu("Fichier");
+		
+  		JMenuItem quit = new JMenuItem("Quitter");
+		
+  		menu.add(quit);
+		
+		
+		JMenu menu3 = new JMenu("Aide");
+		
+		JMenuItem apropos = new JMenuItem("A Propos");
+		JMenuItem version = new JMenuItem("Version");
+ 		
+		menu3.add(apropos);
+		menu3.add(version);
+		
+		JMenu menu2 =new JMenu("Edition");
+		 
+		
+		// Gestion automatique du menu d Edition : couper/copier/coller
+		
+		Action copier=new StyledEditorKit.CopyAction();
+		Action coller = new StyledEditorKit.PasteAction();
+		Action couper = new StyledEditorKit.CutAction();
+ 		
+		//puis ajout
+		
+		menu2.add(copier);
+		menu2.add(coller);
+		menu2.add(couper);
+		
+		//Gestion des menus a propos, version
+		
+		apropos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(frame, "Le logiciel iFind permet de rechercher un fichier dans un ensemble de repertoires " +
+						"ciblees du systeme.\nCette recherche peut se faire soit en indiquant le nom du fichier, soit en " +
+						"donnant une liste de mots contenus dans ce fichier.");
+			}
+		});
+		
+		version.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(frame, "Version alpha : 05/2013  \n Tous droits reservÔøΩs.");
+			}
+		});
+				
+		 
+		
+		// Gestion du menu quitter
 
-	   
+		
+		
+		quit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
+		 
+		mbar.add(menu);
+		mbar.add(menu2);
+		mbar.add(menu3);
+		frame.setJMenuBar(mbar);
  		
 		frame.pack();
 		frame.setBounds(190,100,910,762);
