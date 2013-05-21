@@ -49,6 +49,7 @@ public class SimpleContentHandler implements ContentHandler {
 
 	public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributs) throws SAXException {
 		//Ouverture d'une balise,on la met sur la pile
+		System.out.println("Ouverture de la balise : " + localName);
 
 		// ### INDEXATION
 		if (localName.equals("INDEXATION"))
@@ -83,23 +84,45 @@ public class SimpleContentHandler implements ContentHandler {
 			//			else
 			this.indexation.getSuppression().add(new BaliseSuppressions(0));
 		// INDEXATION : sous-sous-balises
-		if (localName.equals("MOT")) {
-			String tmp1 = balises.pop();
-			String tmp2 = balises.pop();
-			int frequence = 0;
+		if (localName.equals("INDEXAGE")) {
 			if (balises.peek().equals("FICHIERCREE")) {
-				if (attributs.getLocalName(0).equals("frequence"))
-					frequence = Integer.parseInt(attributs.getValue(0));
-				this.indexation.getCreation().get(this.indexation.getCreation().size()-1).getIndexage().add(new Mot(frequence));
+				this.indexation.getCreation().get(this.indexation.getCreation().size()-1).setIndexage(new ArrayList<Mot>());
+				System.out.println("TOTO " + this.indexation.getCreation().get(this.indexation.getCreation().size()-1).getIndexage());
 			}
 			if (balises.peek().equals("FICHIERMODIFIE")) {
+				System.out.println("BIDULE");
+				this.indexation.getModification().get(this.indexation.getModification().size()-1).setIndexage(new ArrayList<Mot>());
+				System.out.println("TOTO " + this.indexation.getModification().get(this.indexation.getModification().size()-1).getIndexage());
+			}
+			//balises.push(tmp);
+		}
+
+		if (localName.equals("MOT")) {
+			System.out.println(balises.toString());
+			System.out.println("char mot");
+			String tmp1 = balises.pop(); // indexage
+			int frequence = 0;
+			if (balises.peek().equals("FICHIERCREE")) {
+				System.out.println("mot -> index -> fichiercree");
 				if (attributs.getLocalName(0).equals("frequence"))
 					frequence = Integer.parseInt(attributs.getValue(0));
-				this.indexation.getModification().get(this.indexation.getModification().size()-1).getIndexage().add(new Mot(frequence));
+				// PROBLEME APRES
+				this.indexation.getCreation().get(this.indexation.getCreation().size()-1).getIndexage().add(new Mot(frequence));
+				System.out.println("mot -> index -> fichiercree FIN");
 			}
-			balises.push(tmp2);
+			if (balises.peek().equals("FICHIERMODIFIE")) {
+				System.out.println("mot -> index ->fichiermodifier");
+				if (attributs.getLocalName(0).equals("frequence"))
+					frequence = Integer.parseInt(attributs.getValue(0));
+				System.out.println("TEST");// PROBLEME APRES
+				System.out.println(indexation.getModification().get(0).getIndexage().size());
+				this.indexation.getModification().get(this.indexation.getModification().size()-1).getIndexage().add(new Mot(frequence));
+				System.out.println("mot -> index -> fichiermodifie FIN");
+			}
+			//balises.push(tmp2);
 			balises.push(tmp1);
 		}
+
 		// ### FIN INDEXATION
 
 		// RECHERCHE
@@ -198,16 +221,20 @@ public class SimpleContentHandler implements ContentHandler {
 			String tmp1 = balises.pop();
 			String tmp2 = balises.pop();
 			if (balises.peek().equals("FICHIERCREE")) {
+				System.out.println("toto");
 				ArrayList<Mot> mots = this.indexation.getCreation().get(this.indexation.getCreation().size()-1).getIndexage();
 				mots.get(mots.size()-1).setMot(content);
 			}
 			if (balises.peek().equals("FICHIERMODIFIE")) {
+				System.out.println("titi");
 				ArrayList<Mot> mots = this.indexation.getModification().get(this.indexation.getModification().size()-1).getIndexage();
 				mots.get(mots.size()-1).setMot(content);
 			}
 			balises.push(tmp2);
 			balises.push(tmp1);
 		}
+
+
 		//######## FIN PARTIE INDEXATION ##########
 
 		//########   PARTIE SEARCH   ########

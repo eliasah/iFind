@@ -8,7 +8,7 @@ import org.xml.sax.SAXException;
 public class Test {
 
 	public static void main(String[] args) {
-		URI uri = URI.create("testDTD2");
+		URI uri = URI.create("testDTD");
 		try {
 			SimpleSaxParser parser = new SimpleSaxParser(uri.getPath());
 			//BaliseIndexation b = parser.getHandler().getIndexation();
