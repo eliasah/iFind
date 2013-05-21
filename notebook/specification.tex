@@ -18,6 +18,9 @@ Notre système se compose de trois sous-systèmes :
 \end{itemize}
 
 \subsubsection{Architecture du Moteur de recherche}
+Le moteur de recherche (MR) communique avec la base d'indexation (BI) par l'intermédiaire d'un flux XML au travers d'une Socket.
+Le flux XML envoyé par le MR est associé à un identifiant, qui permet de savoir à quelle requête est associée quelle réponse.
+L'envoi respecte la DTD (voir annexe).
 
 \input{bnf}
 Model :
@@ -35,7 +38,8 @@ Le moteur d'indexation se compose de deux instances.\\
 La première est lancée uniquement lorsqu'il faut entièrement créer l'index (lors de l'installation, par exemple).\\
 La deuxième, le démon, communique en permanence avec la base d'indexation afin de lui envoyer
 les différents évènements qui ont eu lieu à l'intérieur du corpus et qui doivent être indexés.
-L'envoi se fait par l'intermédiaire d'un flux XML au travers d'une Socket (voir annexe TODO et TODO).
+L'envoi se fait par l'intermédiaire d'un flux XML au travers d'une Socket. L'envoi respecte la DTD (voir annexe)
+établie par les chefs de projets pendant les réunions.
 
 \subsubsection{Architecture de la base d'indexation}
 La base d'indexation est une base de donnée PostgreSQL, en un premier temps, qui permettra au moteur de recherche 
@@ -62,26 +66,14 @@ Ce paragraphe décrit les charges fonctionnelles du système en détail et d'aut
 Ce paragraphe décrit les divers modèles du système ainsi que leurs relations entre composantes du système et de son environnement.
 
 \subsubsection{Modèle de communication}
-Le module de BD crée deux sockets Server :\\
-L’instanciation de ces sockets doit se faire avec les informations lues à partir des fichier config-sample-Deamon.XML et config-sample-MoteurR.
+Le base d'indexation écoute sur deux ports différents, un pour la communication avec le moteur d'indexation, 
+et un pour la communication avec le moteur de recherche.
 
-On définit tout d'abord la socket entre la base d'indexation et le moteur de recherche. Le socket reste en écoute 
-des requêtes en provenance du moteur de recherche, une requête est un fichier XML générée suite à une seule et unique recherche pour 
-cela on doit impérativement ajouter un identifiant dans la DTD au retour. Chaque réponse génère un seul fichier 
-XML qui sera envoyé au moteur de recherche on peut facilement retrouver l'ordre grâce au ID de chaque requête. 
+\paragraph{Communication avec le moteur d'indexation}
+La base d'indexation (BI) attend qu'un moteur d'indexation (MI) se connecte sur le port 40000. Lorsque la connexion est établie, 
+la BI lit le flux XML envoyé par le MI. La connexion entre le MI et la BI n'est fermée que lorsque l'un des deux modules
+est fermé.
 
-On distingue un cas particulier : par exemple l'envoie des résultats en morceaux , quand la recherche prend éventuellement du temps. 
-Là aussi il faut ajouter des informations supplémentaires dans la DTD pour qu'on puisse rendre possible ce genre d'opérations.
-
-On définit ensuite la socket entre la base d'indexation et le moteur d'indexation. Le socket reste en écoute de nouvelle information capturée par le démon
-(Daemon). Chacun peut choisir sa politique de mise à jour ( envoie du fichier XML chaque 20 min par ex etc .) 
-On doit se mettre d'accord sur le format d'échange pour ces deux modules. 
-
-\paragraph{Remarques :} J'ai choisi les ports de façon arbitraires il y a 3 ports le premier et celui par défaut 
-si jamais ce port n'est pas libre ont basculera vers le 2e etc. 
-
-\paragraph{Remarque 2 :} La DTD bd2M. n'est pas encore assez riche pour gérer une recherche dont le nombre 
-de mots-clés et supérieur à 1 comme on l'a vu au TD. Il faut prendre en considération tous les cas possibles, exemple :
-mot1 ou mot2 , mot1 et mot2, etc. 
-
-Je propose qu'on rajoute de nouveaux éléments en dehors de la balise search qui concerne la manière dont on va l'interpréter.
+\paragraph{Communication avec le moteur de recherche}
+La base d'indexation (BI) attend qu'un moteur de recherche (MR) se connecte sur le port 30000. Lorsque la connexion est établie,
+la BI lit le flux XML envoyé par le MR. La BI génère une réponse au flux et la renvoie au MR, via le port 30000 sous forme de XML.
