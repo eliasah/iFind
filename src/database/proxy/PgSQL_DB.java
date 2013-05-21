@@ -4,11 +4,8 @@ import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
-
 import database.trigram.Trigram;
 
-import engine.crawler.FileListener;
 import engine.search.Search;
 
 /**
@@ -21,19 +18,16 @@ class PgSQL_DB implements Database {
 
 	private Connection conn;
 	private Statement st;
-	private PreparedStatement insert;
-	private PreparedStatement delete;
-	private PreparedStatement update;
 	private String querysql;
 	private ResultSet rs;
+	private PreparedStatement insert;
 	private boolean connected;
 	private int id_meta;
 	
 	protected PgSQL_DB(String login, String motPasse) {
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection(
-					"jdbc:postgresql://localhost/ifind", login, motPasse);
+			conn = DriverManager.getConnection("jdbc:postgresql://localhost/ifind", login, motPasse);
 			st = conn.createStatement();
 			connected = true;
 		} catch (SQLException | ClassNotFoundException e) {
@@ -52,6 +46,7 @@ class PgSQL_DB implements Database {
 		conn.close();
 	}
 
+	@Override
 	public void createDatabase() {
 		System.out.println("Creating Database");
 
@@ -99,23 +94,44 @@ class PgSQL_DB implements Database {
 		System.out.println("Suppression " + table + " reussi");
 	}
 	
+	public int getIdMeta(){
+		int i = 0;
+		
+		return i;
+	}
+	
 	@Override
 	public void insert(String mot) {
 		Trigram t = new Trigram(mot);
 		ArrayList<String> tab = t.toArrayList();
 		Iterator it = tab.iterator();
 		String trg;
-		querysql = "INSERT INTO t_metadata(DEFAULT,filename,filepath,permission,last_mod) VALUES (DEFAULT,'fichier 1','path 1',777,'1999-01-08');";
+		querysql = "INSERT INTO t_metadata VALUES (DEFAULT,'fichier 1','path 1',777,'1999-01-08');";
+		ResultSet rs = null;
 		try {
-			insert = conn.prepareStatement(querysql);
+			insert = conn.prepareStatement(querysql,Statement.RETURN_GENERATED_KEYS);
 			insert.execute();
-			System.out.println("meta");
 		} catch (SQLException e1) {
 			String errmsg = "ERROR:  duplicate key value violates unique constraint 't_metadata_pkey' \n" +
-					"DETAIL:  Key (meta_id)=("+id_meta+") already exists.";
+					"DETAIL:  Key (meta_id)=( X ) already exists.";
+			System.out.println(errmsg);
+		}	
+
+		try {
+			rs = insert.getResultSet();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		while (it.hasNext()) {
+		int i = 0;
+		try {
+			i = rs.getInt(0);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(i);
+		/*while (it.hasNext()) {
 			trg = (String) it.next();
 			try {
 				querysql = "INSERT INTO T_INDEX VALUES('" + trg + "'," + id_meta +");";
@@ -127,7 +143,7 @@ class PgSQL_DB implements Database {
 						"DETAIL:  Key (trg_id, meta_id)=("+trg+","+ id_meta+") already exists.";
 				System.out.println(errmsg);
 			}
-		}
+		}*/
 	}
 	
 	
@@ -194,6 +210,23 @@ class PgSQL_DB implements Database {
 			e.printStackTrace();
 		}
 		return s;
+	}
+
+	@Override
+	public void delete(String path) throws SQLException {
+		PreparedStatement st = conn.prepareStatement("DELETE FROM t_metadata WHERE filepath = ?");
+		st.setString(1, path);
+		int rowsDeleted = st.executeUpdate();
+		System.out.println(rowsDeleted + " rows deleted");
+	}
+
+	@Override
+	public void update(String opath, String npath) throws SQLException {
+		PreparedStatement st = conn.prepareStatement("UPDATE t_metadata SET filepath = ? where filepath = ?;");
+		st.setString(1,npath);
+		st.setString(2,opath);
+		int rowsUpdated = st.executeUpdate();
+		System.out.println(rowsUpdated + "rows updated");
 	}
 	
 }

@@ -28,8 +28,12 @@ public interface Database {
 
 	void insert(String mot);
 
+	void delete(String path) throws SQLException;
+	
 	PreparedStatement prepareStatement(String sql);
 	
 	Statement createStatement(int t,int r);
+
+	void update(String opath, String npath) throws SQLException;
 }
 
