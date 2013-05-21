@@ -115,21 +115,46 @@ public class SearchClient {
 		if(result.length == 1){
 			return result[0];
 		}
+		ArrayList<Integer> pertinenceList = new ArrayList<Integer>();
+		ArrayList<ResultFile> nontri = new ArrayList<ResultFile>();
 		
+		
+		//Prend chaque element de chaque Array de result et le compare avec tous les autres elements
+		//Pour voir si un certain fichier est dans plusieurs retour de result (ex: search titi search toto)
+		// fichier qui contient les 2 sera dans les 2 result, donc tres pertinent, nous le voulons en premier
 		for(int i=0; i<result.length;i++){
 			ArrayList<ResultFile> flist = result[i].getFiles();
-			for (int j = 0; j < result.length; j++) {
+			for (int j = 0; j < result[i].getFiles().size(); j++) {
 				ResultFile f = flist.get(j);
+				int pertinence = 0;
 				for (int k = 0; k < result.length; k++) {
-					if(k != i){
-						if (result[k].getFiles().co) {
-							
-						} 
-					}	
+					for (int k2 = 0; k2 < result[k].getFiles().size(); k2++) {
+						if(k != i){
+							if (result[k].getFiles().get(k2).getPath().equals(f.getPath())) {
+								pertinence ++;
+								//on enleve l'autre element, nous ne voulons pas de doublons;
+								result[k].getFiles().remove(k2);
+							} 
+						}
+					}
 				}
+				pertinenceList.add(pertinence);
+				nontri.add(f);
 			}	
 		}
 		
+		//Une fois les pertinence de chaque element vue, on met tous dans retour de manier trie
+		for (int j = 0; j < pertinenceList.size(); j++) {
+			int max = 0;
+			for (int i = 0; i < pertinenceList.size(); i++) {
+				if(pertinenceList.get(i) >= max){
+					max = pertinenceList.get(i);
+				}
+			}
+			retour.getFiles().add(nontri.get(max));
+			nontri.remove(max);
+			pertinenceList.remove(max);
+		}
 		return retour;
 	}
 	
