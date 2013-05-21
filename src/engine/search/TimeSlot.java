@@ -1,4 +1,5 @@
-package engine.search;
+package MoteurDeRecherche;
+ 
 import java.text.SimpleDateFormat;
 
 /** 
@@ -17,9 +18,7 @@ public class TimeSlot {
 	private int monthE;
 	private int yearE;
 	
-	/**
-	 * Contructeur par defaut
-	 */
+
 	public TimeSlot(){
 		dayB= 0;
 		monthB=0;
