@@ -29,7 +29,7 @@ public class Result {
 			}
 			file+= "    </FILE>\n";
 			}
-		file += "</RESULT>";
+		file += "</RESULT>\n\0";
 		return file;
 	}
 	
