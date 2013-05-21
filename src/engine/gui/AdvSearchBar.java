@@ -21,7 +21,7 @@ public class AdvSearchBar extends JPanel {
 		add(txtsearch);
 
 		JButton btnsearch = new JButton("Rechercher Av");
-		btnsearch.setBounds(388, 15, 131, 25);
+		btnsearch.setBounds(388, 15, 201, 25);
 		btnsearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

@@ -111,7 +111,7 @@ public class LoginDB {
 					Statement st = conn.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY );
 					ResultSet rs = null;
 					try {
-						rs = st.executeQuery( "SELECT * FROM t_index" );
+						rs = st.executeQuery( "SELECT * FROM t_metadata" );
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -167,7 +167,7 @@ public class LoginDB {
 					Statement st = conn.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY );
 					ResultSet rs = null;
 					try {
-						rs = st.executeQuery( "SELECT * FROM t_index" );
+						rs = st.executeQuery( "SELECT * FROM t_metadata;" );
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

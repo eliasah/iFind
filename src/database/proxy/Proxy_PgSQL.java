@@ -37,8 +37,8 @@ public class Proxy_PgSQL implements Database {
 	}
 
 	@Override
-	public void request(Search s){
-		db.request(s);
+	public ResultSet request(Search s){
+		return db.request(s);
 	}
 
 	@Override

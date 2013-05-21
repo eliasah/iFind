@@ -20,7 +20,7 @@ public interface Database {
 	
 	boolean isconnected();
 	
-	void request(Search s);
+	ResultSet request(Search s);
 	
 	void resetDatabase();
 

@@ -101,15 +101,15 @@ class PgSQL_DB implements Database {
 	
 	@Override
 	public void insert(String mot) {
-		int id_meta = 1000;
 		Trigram t = new Trigram(mot);
 		ArrayList<String> tab = t.toArrayList();
 		Iterator it = tab.iterator();
 		String trg;
-		querysql = "INSERT INTO t_metadata VALUES (" + id_meta + ",'fichier 1','path 1',777,'1999-01-08');";
+		querysql = "INSERT INTO t_metadata(DEFAULT,filename,filepath,permission,last_mod) VALUES (DEFAULT,'fichier 1','path 1',777,'1999-01-08');";
 		try {
 			insert = conn.prepareStatement(querysql);
 			insert.execute();
+			System.out.println("meta");
 		} catch (SQLException e1) {
 			String errmsg = "ERROR:  duplicate key value violates unique constraint 't_metadata_pkey' \n" +
 					"DETAIL:  Key (meta_id)=("+id_meta+") already exists.";
@@ -131,18 +131,8 @@ class PgSQL_DB implements Database {
 	}
 	
 	
-	
-	public void insertionTuplesPredefinis() throws SQLException {
-		querysql = "INSERT...";
-		insert = conn.prepareStatement(querysql);
-		insert.execute();
-		System.out.println("Insertion reussi");
-	}
-
 	public ResultSet query(String s) throws SQLException {
-		return st
-				.executeQuery("SELECT * FROM t_index,t_metadata WHERE trg_id = '"
-						+ s + "' and t_index.meta_id = t_metadata.meta_id;");
+		return st.executeQuery("SELECT * FROM t_index,t_metadata WHERE trg_id = '"+ s + "' and t_index.meta_id = t_metadata.meta_id;");
 	}
 
 	@Override
@@ -167,20 +157,21 @@ class PgSQL_DB implements Database {
 	}
 
 	@Override
-	public void request(Search s) {
+	public ResultSet request(Search s) {
 		Trigram trg = new Trigram(s.getWord());
+		ResultSet res = null;
 		try {
-			ResultSet res = queryTrg(trg);
+			res = queryTrg(trg);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return res;
 	}
 
 	@Override
 	public void resetDatabase() {
-		// TODO Auto-generated method stub
-
+		createDatabase();
 	}
 
 	@Override
@@ -189,7 +180,6 @@ class PgSQL_DB implements Database {
 		try {
 			ps = conn.prepareStatement(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ps;
@@ -201,7 +191,6 @@ class PgSQL_DB implements Database {
 		try {
 			s = conn.createStatement(t, r);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return s;

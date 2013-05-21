@@ -8,12 +8,15 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 public class TablePanel extends JPanel {
-  public TablePanel( TableModel model ) {
-    table = new JTable( model );
-    
-    setLayout( new BorderLayout() );
-    add( new JScrollPane( table ), BorderLayout.CENTER );
-   
-  }
-  private JTable table;
+
+	private JTable table;
+	private static final long serialVersionUID = 1L;
+
+	public TablePanel( TableModel model ) {
+		table = new JTable( model );
+
+		setLayout( new BorderLayout() );
+		add( new JScrollPane( table ), BorderLayout.CENTER );
+
+	}
 }
