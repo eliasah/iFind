@@ -98,4 +98,9 @@ public class SearchClient {
 		return "SearchClient [port=" + Arrays.toString(port) + ", service="
 				+ socket + "]";
 	}
+	public static void main(String[] args) {
+		Search s= new Search(1);
+		SearchClient sc = new SearchClient(s);
+		
+	}
 }
