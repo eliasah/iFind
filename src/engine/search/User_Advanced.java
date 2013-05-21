@@ -34,7 +34,6 @@ public class User_Advanced implements Runnable{
 	 JTextField field7;
 	 JTextField field8;
 	 
-	 ResultTable tableauRes;
 	
 	 String name;
 	 String chemin;
@@ -44,6 +43,11 @@ public class User_Advanced implements Runnable{
 	 
 	 Search searchObj ;
 	 int compteur = 0;
+	
+	 
+	 ResultTable tableauRes;
+	 SearchClient client;
+	 Result retourServ;
 	 
 	 
 	 
@@ -222,6 +226,21 @@ public class User_Advanced implements Runnable{
  			   	for(int i=0;i<tabS.length;i++){
  	 			   	tabS[i]= new Search(compteur,tab[i],false,chemin,null,extension,null);
  			   	}
+ 			   	
+ 			   	// Connexion au client : init, client.connect / client.demande(tabS) / client.EcouteReponse
+ 			   client = new SearchClient();
+			   	client.Connect();
+			   	client.Demande(tabS);
+			   	retourServ = client.EcouteReponse(); 
+			   	
+				Object[][] data = new Object[retourServ.getFiles().size()][3];
+				for(int i=0;i<retourServ.getFiles().size();i++){
+					data[i][0] = retourServ.getFiles().get(i).getName();
+					data[i][1] = retourServ.getFiles().get(i).getPath();
+					data[i][2] = retourServ.getFiles().get(i).getSize();
+				}
+
+			   	tableauRes.setData(data);
  			   	
 				JOptionPane.showMessageDialog(frame, "Envoi des informations.\nVeuillez patientez s il vous plait.");
  			  				

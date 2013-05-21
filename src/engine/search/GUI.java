@@ -211,7 +211,7 @@ public class GUI implements Runnable{
  					data[i][2] = retourServ.getFiles().get(i).getSize();
  				}
 
- 			   	
+ 			   	tableauRes.setData(data);
  			   	
 				JOptionPane.showMessageDialog(frame, "Envoi des informations.\nVeuillez patientez s il vous plait.");
  			}
