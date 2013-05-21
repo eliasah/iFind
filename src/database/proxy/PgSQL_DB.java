@@ -8,6 +8,12 @@ import java.util.StringTokenizer;
 
 import database.trigram.Trigram;
 
+import engine.search.BaliseCreations;
+import engine.search.BaliseIndexation;
+import engine.search.BaliseModifications;
+import engine.search.BaliseRenommage;
+import engine.search.BaliseSuppressions;
+import engine.search.Mot;
 import engine.search.ResultFile;
 import engine.search.Search;
 
@@ -18,7 +24,7 @@ import engine.search.Search;
  * 
  */
 class PgSQL_DB implements Database {
-
+	private BaliseIndexation balise;	
 	private Connection conn;
 	private Statement st;
 	private String querysql;
@@ -26,7 +32,7 @@ class PgSQL_DB implements Database {
 	private PreparedStatement insert;
 	private boolean connected;
 	private int id_meta;
-	
+
 	protected PgSQL_DB(String login, String motPasse) {
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -97,14 +103,18 @@ class PgSQL_DB implements Database {
 		st.executeUpdate(querysql);
 		System.out.println("Suppression " + table + " reussi");
 	}
-	
+
 	@Override
-	public void insert(String mot) {
-		Trigram t = new Trigram(mot);
-		ArrayList<String> tab = t.toArrayList();
-		Iterator it = tab.iterator();
-		String trg;
-		querysql = "INSERT INTO t_metadata VALUES ('path 4','txt','777','1999-01-08');";
+	public void insert(BaliseCreations b) {
+		String s, trg;
+		Trigram t;
+		ArrayList<String> tab;
+		ArrayList<Mot> mot = b.getIndexage();
+		Iterator itm = mot.iterator();
+		Iterator it;
+
+		querysql = "INSERT INTO t_metadata VALUES ('" +
+				b.getPath() + "','"+ b.getFormat() + "','" + b.getPermission() + ',' + b.getDatecreation()+"');";
 
 		try {
 			insert = conn.prepareStatement(querysql,Statement.RETURN_GENERATED_KEYS);
@@ -112,20 +122,28 @@ class PgSQL_DB implements Database {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}	
-		
-		while (it.hasNext()) {
-			trg = (String) it.next();
-			try {
-				querysql = "INSERT INTO T_INDEX VALUES('" + trg + "','path 4')";
-				insert = conn.prepareStatement(querysql);
-				insert.execute();
 
-			} catch (SQLException e) {
-				e.printStackTrace();
+
+		while(itm.hasNext()){
+			s = (String) itm.next();
+			t = new Trigram(s);
+			tab = t.toArrayList();
+			it = tab.iterator();
+			while (it.hasNext()) {
+				trg = (String) it.next();
+				try {
+					querysql = "INSERT INTO T_INDEX VALUES('" + trg + "','"+ b.getPath() + "')";
+					insert = conn.prepareStatement(querysql);
+					insert.execute();
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+
 		}
 	}
-	
+
 	@Override
 	public ResultSet queryTrg(Search s) throws SQLException {
 		Trigram t = new Trigram(s.getWord());
@@ -158,10 +176,10 @@ class PgSQL_DB implements Database {
 		while (tokens.hasMoreTokens()) {
 			token = tokens.nextToken();
 		}
-		
+
 		return token;
 	}
-	
+
 	@Override
 	public ResultSet request(Search s) {
 		ResultSet res = null;
@@ -179,7 +197,7 @@ class PgSQL_DB implements Database {
 		// TODO
 		return null;
 	}
-	
+
 	@Override
 	public void resetDatabase() {
 		createDatabase();
@@ -208,20 +226,102 @@ class PgSQL_DB implements Database {
 	}
 
 	@Override
-	public void delete(String path) throws SQLException {
+	public void delete(BaliseSuppressions b) throws SQLException {
 		PreparedStatement st = conn.prepareStatement("DELETE FROM t_metadata WHERE filepath = ?");
-		st.setString(1, path);
+		st.setString(1, b.getPath());
 		int rowsDeleted = st.executeUpdate();
 		System.out.println(rowsDeleted + " rows deleted");
 	}
 
 	@Override
-	public void update(String opath, String npath) throws SQLException {
+	public void rename(BaliseRenommage b) throws SQLException {
+		String opath = b.getPath();
+		String npath = b.getNewpath();
 		PreparedStatement st = conn.prepareStatement("UPDATE t_metadata SET filepath = ? where filepath = ?;");
 		st.setString(1,npath);
 		st.setString(2,opath);
 		int rowsUpdated = st.executeUpdate();
 		System.out.println(rowsUpdated + "rows updated");
 	}
-	
+
+	@Override
+	public void update(BaliseModifications b) throws SQLException {
+		b.getPath();
+		b.getNewpath();
+		b.getDatemodification();
+		b.getPermissions();		
+		// TODO URGENT!!!
+		System.out.println("NOT YET IMPLEMENT");
+	}
+
+	@Override
+	public void setBaliseIndexation(BaliseIndexation b) {
+		ArrayList<BaliseCreations> listbc = b.getCreation();
+		ArrayList<BaliseSuppressions> listbs = b.getSuppression();
+		ArrayList<BaliseModifications> listbm = b.getModification();
+		ArrayList<BaliseRenommage> listbr = b.getRenommage();
+		Iterator it;
+
+		if (listbc != null) {
+			BaliseCreations bc;
+			it = listbc.iterator();
+			while(it.hasNext()){
+				bc = (BaliseCreations) it.next();
+				insert(bc);
+			}
+		}
+		
+		if (listbc != null) {
+			BaliseCreations bc;
+			it = listbc.iterator();
+			while(it.hasNext()){
+				bc = (BaliseCreations) it.next();
+				insert(bc);
+			}
+		}
+
+		if (listbs != null) {
+			BaliseSuppressions bs;
+			it = listbs.iterator();
+			while(it.hasNext()){
+				bs = (BaliseSuppressions) it.next();
+				try {
+					delete(bs);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		if (listbm != null) {
+			BaliseModifications bm;
+			it = listbc.iterator();
+			while(it.hasNext()){
+				bm = (BaliseModifications) it.next();
+				try {
+					update(bm);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		if (listbr != null) {
+			BaliseRenommage br;
+			it = listbc.iterator();
+			while(it.hasNext()){
+				br = (BaliseRenommage) it.next();
+				try {
+					rename(br);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+
 }

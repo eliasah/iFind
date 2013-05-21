@@ -7,6 +7,11 @@ import java.util.Scanner;
 
 import database.trigram.Trigram;
 
+import engine.search.BaliseCreations;
+import engine.search.BaliseIndexation;
+import engine.search.BaliseModifications;
+import engine.search.BaliseRenommage;
+import engine.search.BaliseSuppressions;
 import engine.search.ResultFile;
 import engine.search.Search;
 /** Proxy class for PgSQL_DB
@@ -53,8 +58,8 @@ public class Proxy_PgSQL implements Database {
 	}
 
 	@Override
-	public void insert(String s){
-		db.insert(s);
+	public void insert(BaliseCreations b){
+		db.insert(b);
 	}
 
 	@Override
@@ -68,13 +73,13 @@ public class Proxy_PgSQL implements Database {
 	}
 
 	@Override
-	public void update(String opath,String npath) throws SQLException {
-		db.update(opath,npath);		
+	public void rename(BaliseRenommage b) throws SQLException {
+		db.rename(b);		
 	}
 
 	@Override
-	public void delete(String mot) throws SQLException {
-		db.delete(mot);
+	public void delete(BaliseSuppressions b) throws SQLException {
+		db.delete(b);
 	}
 
 	@Override
@@ -95,6 +100,16 @@ public class Proxy_PgSQL implements Database {
 	@Override
 	public ResultSet queryTrg(Search s) throws SQLException {
 		return db.queryTrg(s);
+	}
+
+	@Override
+	public void update(BaliseModifications b) throws SQLException {
+		db.update(b);
+	}
+
+	@Override
+	public void setBaliseIndexation(BaliseIndexation b) {
+		db.setBaliseIndexation(b);
 	}
 
 	
