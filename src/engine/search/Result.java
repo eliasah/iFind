@@ -37,4 +37,8 @@ public class Result {
 		return files;
 	}
 	
+	public int getId(){
+		return id;
+	}
+	
 }

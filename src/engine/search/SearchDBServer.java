@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import database.proxy.Database;
-import database.proxy.Proxy_PgSQL;
 /** Lance le serveur, qui lance des sous thread pour ecouter 3 ports: 30000 30001 et 30002
  * 
  * @author Ahl Mikael

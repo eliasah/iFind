@@ -46,6 +46,7 @@ public class LoginDB {
 	private Statement st;
 	private ResultSet rs;
 	private TablePanel tablePanel;
+	private JButton btnUpdateRowTest;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -117,7 +118,7 @@ public class LoginDB {
 						e1.printStackTrace();
 					}
 					ResultSetTableModel rtm = new ResultSetTableModel( rs );
-					TablePanel tablePanel = new TablePanel( rtm );
+					tablePanel = new TablePanel( rtm );
 					tablePanel.setBounds(12, 169, 424, 211);
 					frmLogin.getContentPane().add(tablePanel);
 
@@ -140,11 +141,11 @@ public class LoginDB {
 				}
 			}
 		});
-		create.setBounds(12,105,187,25);
+		create.setBounds(12,105,129,25);
 		create.setVisible(false);
 
 		disconnect = new JButton("Disconnect");
-		disconnect.setBounds(12, 76, 187, 25);
+		disconnect.setBounds(12, 76, 129, 25);
 		disconnect.setVisible(false);
 
 		btnInsertTest = new JButton("Insert Test");
@@ -152,10 +153,10 @@ public class LoginDB {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (conn.isconnected())
-					conn.insert("exemple");
+						conn.insert("exemple");
 			}
 		});
-		btnInsertTest.setBounds(211, 76, 145, 25);
+		btnInsertTest.setBounds(153, 76, 145, 25);
 		btnInsertTest.setVisible(false);
 		btnSearchTest = new JButton("Search Test");
 		btnSearchTest.addActionListener(new ActionListener() {
@@ -173,13 +174,13 @@ public class LoginDB {
 						e1.printStackTrace();
 					}
 					ResultSetTableModel rtm = new ResultSetTableModel( rs );
-					TablePanel tablePanel = new TablePanel( rtm );
+					tablePanel = new TablePanel( rtm );
 					tablePanel.setBounds(12, 169, 424, 211);
 					frmLogin.getContentPane().add(tablePanel);
 				}
 			}
 		});
-		btnSearchTest.setBounds(211, 105, 145, 25);
+		btnSearchTest.setBounds(153, 105, 145, 25);
 		btnSearchTest.setVisible(false);
 
 		btnDropDatabase = new JButton("Drop Database");
@@ -190,7 +191,7 @@ public class LoginDB {
 					conn.resetDatabase();
 			}
 		});
-		btnDropDatabase.setBounds(12, 132, 187, 25);
+		btnDropDatabase.setBounds(12, 132, 129, 25);
 		btnDropDatabase.setVisible(false);
 
 		frmLogin.getContentPane().add(lbluser);
@@ -205,5 +206,47 @@ public class LoginDB {
 		frmLogin.getContentPane().add(btnSearchTest);
 		frmLogin.getContentPane().add(btnDropDatabase);
 
+		JButton btnDeleteRowTest = new JButton("Delete Row Test");
+		btnDeleteRowTest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (conn.isconnected())
+					try {
+						conn.delete("path 1");
+						Statement st = conn.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY );
+						ResultSet rs = null;
+						try {
+							rs = st.executeQuery( "SELECT * FROM t_metadata;" );
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						ResultSetTableModel rtm = new ResultSetTableModel( rs );
+						tablePanel = new TablePanel( rtm );
+						tablePanel.setBounds(12, 169, 424, 211);
+						frmLogin.getContentPane().add(tablePanel);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+		});
+
+		btnDeleteRowTest.setBounds(153, 132, 145, 25);
+		frmLogin.getContentPane().add(btnDeleteRowTest);
+		
+		btnUpdateRowTest = new JButton("Update Row Test");
+		btnUpdateRowTest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					conn.update("path 1","nouveau");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btnUpdateRowTest.setBounds(310, 76, 135, 25);
+		frmLogin.getContentPane().add(btnUpdateRowTest);
 	}
 }

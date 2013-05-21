@@ -2,12 +2,17 @@ package database.proxy;
 
 
 import java.sql.*;
+
 import java.util.Scanner;
 
 import database.trigram.Trigram;
 
 import engine.search.Search;
-
+/** Proxy class for PgSQL_DB
+ * 
+ * @author Abou Haydar Elias - Univ. Paris Denis Diderot
+ *
+ */
 public class Proxy_PgSQL implements Database {
 
 	private PgSQL_DB db;
@@ -52,7 +57,7 @@ public class Proxy_PgSQL implements Database {
 	}
 
 	@Override
-	public void insert(String s) {
+	public void insert(String s){
 		db.insert(s);
 	}
 
@@ -64,6 +69,16 @@ public class Proxy_PgSQL implements Database {
 	@Override
 	public Statement createStatement(int t, int r) {
 		return db.createStatement(t, r);
+	}
+
+	@Override
+	public void update(String opath,String npath) throws SQLException {
+		db.update(opath,npath);		
+	}
+
+	@Override
+	public void delete(String mot) throws SQLException {
+		db.delete(mot);
 	}
 
 	
