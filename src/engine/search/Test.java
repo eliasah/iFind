@@ -1,40 +1,20 @@
 package engine.search;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.Proxy;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-
-import javax.xml.parsers.ParserConfigurationException;
+import java.net.URI;
 
 import org.xml.sax.SAXException;
 
-import database.proxy.Database;
-import database.proxy.Proxy_PgSQL;
-
 public class Test {
 
-
-	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
-		Database db = new Proxy_PgSQL("abou", "x55efviq");
-		Search s = new Search(1, "exem", false, null, "654", "txt", null); // id , word , content , path , permission ,ext , timeslot
-		ResultSet rs = db.request(s);
-		Result res = new Result(1);
+	public static void main(String[] args) {
+		URI uri = URI.create("testDTD2");
 		try {
-			while (rs.next()) { 
-				String filename = rs.getString(1);
-				ResultFile rf = new ResultFile();
-				rf.setPath(filename);
-				res.getFiles().add(rf);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			SimpleSaxParser parser = new SimpleSaxParser(uri.getPath());
+			//BaliseIndexation b = parser.getHandler().getIndexation();
+			//System.out.println(b.getSuppression().get(0).getPath());
+		} catch (SAXException | IOException e) {
 			e.printStackTrace();
-		}
-		System.out.println(res.ConvertToXml());
+		};
 	}
-
 }
