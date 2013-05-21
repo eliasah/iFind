@@ -2,6 +2,11 @@ package database.proxy;
 
 import java.sql.Date;
 
+/**
+ * 
+ * @author Abou Haydar Elias - Univ. Paris Denis Diderot
+ *
+ */
 public class Metadata {
 	private int id;
 	private String 	path;

@@ -12,6 +12,11 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * 
+ * @author Abou Haydar Elias - Univ. Paris Denis Diderot
+ *
+ */
 public class Trigram{
 	private HashMap set;
 	private int cpt;
