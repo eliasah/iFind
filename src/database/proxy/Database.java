@@ -25,8 +25,6 @@ public interface Database {
 	
 	void resetDatabase();
 
-	ResultSet queryTrg(Trigram t) throws SQLException;
-
 	void insert(String mot);
 
 	void delete(String path) throws SQLException;
@@ -39,10 +37,10 @@ public interface Database {
 
 	void suppressionTable(String table) throws SQLException;
 
-	ResultSet query(String s) throws SQLException;
-
 	String getNameFromPath(String path);
 
 	ResultFile FromResultSetToResultFile();
+
+	ResultSet queryTrg(Search s) throws SQLException;
 }
 

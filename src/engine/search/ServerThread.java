@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.*;
+import java.sql.Array;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -48,13 +51,25 @@ public class ServerThread extends Thread {
 				
 				
 					Search search = s.getHandler().getSearch();
-					
 					Database db = new Proxy_PgSQL("abou", "x55efviq");
-					db.request(search);
+
+					ResultSet rs = db.request(search);
+					Result result = new Result(search.getId());
+					try {
+						while (rs.next()) { 
+							String filename = rs.getString(1);
+							ResultFile rf = new ResultFile();
+							rf.setPath(filename);
+							rf.setPerm(rs.getString("permission"));
+							rf.setLastmodif("last_mod");
+							result.getFiles().add(rf);
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println(result.ConvertToXml());
 					
-					
-					//TODO Construire l'objet result en demandant le resultat a la BDD en utilisant search 
-					Result result= new Result(1);
 				
 				
 					out = new OutputStreamWriter(this.s.getOutputStream());

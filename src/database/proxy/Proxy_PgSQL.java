@@ -53,11 +53,6 @@ public class Proxy_PgSQL implements Database {
 	}
 
 	@Override
-	public ResultSet queryTrg(Trigram t) throws SQLException {
-		return db.queryTrg(t);
-	}
-
-	@Override
 	public void insert(String s){
 		db.insert(s);
 	}
@@ -88,11 +83,6 @@ public class Proxy_PgSQL implements Database {
 	}
 
 	@Override
-	public ResultSet query(String s) throws SQLException {
-		return db.query(s);
-	}
-
-	@Override
 	public String getNameFromPath(String path) {
 		return db.getNameFromPath(path);
 	}
@@ -100,6 +90,11 @@ public class Proxy_PgSQL implements Database {
 	@Override
 	public ResultFile FromResultSetToResultFile() {
 		return db.FromResultSetToResultFile();
+	}
+
+	@Override
+	public ResultSet queryTrg(Search s) throws SQLException {
+		return db.queryTrg(s);
 	}
 
 	

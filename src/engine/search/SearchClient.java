@@ -174,7 +174,7 @@ public class SearchClient {
 	public static void main(String[] args) {
 		
 		SearchClient client= new SearchClient();
-		Search s1 = new Search(1,"toto",false,"user/ahl",null,null,null);
+		Search s1 = new Search(1,"exem",false,"nouveau",null,null,null);
 		Search s2 = new Search(2,"titi",false,"user/ahl",null,null,null);
 		Search[] req = {s1,s2};
 		client.Connect();
