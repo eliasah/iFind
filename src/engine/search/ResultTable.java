@@ -1,4 +1,4 @@
-package MoteurDeRecherche;
+package engine.search;
 
 import java.sql.ResultSet;
 
@@ -10,39 +10,52 @@ import javax.swing.JScrollPane;
 public class ResultTable extends JPanel {
 
 	private JTable tblresult;
-
+	private MyTableModel model;
+	public Object[][] data;
+	
+	public void setData(Object[][] d){
+		this.data = d;
+	}
+	
 	public ResultTable() {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane);
-		tblresult = new JTable(new MyTableModel());
+		model = new MyTableModel();
+		tblresult = new JTable(model);
 		scrollPane.setViewportView(tblresult);
 	}
-
+	
+	
+// tableau des resultats a modifier
+	
 	class MyTableModel extends AbstractTableModel {
-		private String[] columnNames = {"File name",
-				"Path",
-				"Size",
-				"Type",
-				"Last Modified"};
-		private Object[][] data = {
-				{"jerem.txt", "ServerIFind/BDD",
-				"1Ko", new Integer(5), new Boolean(false)},
-				{"mika.txt", "C:/Users",
-				"2Ko", new Integer(3), new Boolean(true)},
-				{"elias.txt", "D:/Documents",
-				"3Ko", new Integer(2), new Boolean(false)},
-				{"isabelle.txt", "E:/Desktop",
-				"4Ko", new Integer(20), new Boolean(true)},
-				{"ghost.txt", "F:/Workspace",
-				"5Ko", new Integer(10), new Boolean(false)}
+		private String[] columnNames = {"Nom du fichier",
+				"Chemin d Acces",
+				"Taille"};
+		
+		Object[][] data = {
+				{"toto.txt","C:/","1ko"},
+				{"tata.txt","C:/","2ko"},
+				{"titi.txt","C:/","4ko"}
+				
 		};
+		
+	
 		
 		private boolean DEBUG;
 
+
+
+ 
 		public MyTableModel() {
 			super();
 		}
+		
+		//public void setData(Object[][] d){
+		//	this.data = d ;
+		//}
+		
 		
 		public MyTableModel(Object[][] data) {
 			super();
