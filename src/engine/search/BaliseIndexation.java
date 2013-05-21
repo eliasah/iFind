@@ -1,11 +1,13 @@
 package engine.search;
 
+import java.util.ArrayList;
+
 public class BaliseIndexation {
 	
-	private BaliseRenommage renommage; //Fichierrenomme( path, newpath)
-	private BaliseModifications modification; //Fichiermodifier (path, datemodification, taille, proprietaire, groupe, permissions, indexage, newpath? )
-	private BaliseSuppressions suppression; //Fichiersuprime (path)
-	private BaliseCreations creation; //fichiercree (path, format, datecreation, taille, proprietaire, groupe, permission, indexage)
+	private ArrayList<BaliseRenommage> renommage; //Fichierrenomme( path, newpath)
+	private ArrayList<BaliseModifications> modification; //Fichiermodifier (path, datemodification, taille, proprietaire, groupe, permissions, indexage, newpath? )
+	private ArrayList<BaliseSuppressions> suppression; //Fichiersuprime (path)
+	private ArrayList<BaliseCreations> creation; //fichiercree (path, format, datecreation, taille, proprietaire, groupe, permission, indexage)
 	
 	public BaliseIndexation(){
 		renommage = null;
@@ -14,38 +16,36 @@ public class BaliseIndexation {
 		creation = null;
 	}
 
-	public BaliseRenommage getRenommage() {
+	public ArrayList<BaliseRenommage> getRenommage() {
 		return renommage;
 	}
 
-	public void setRenommage(BaliseRenommage renommage) {
+	public void setRenommage(ArrayList<BaliseRenommage> renommage) {
 		this.renommage = renommage;
 	}
 
-	public BaliseModifications getModification() {
+	public ArrayList<BaliseModifications> getModification() {
 		return modification;
 	}
 
-	public void setModification(BaliseModifications modification) {
+	public void setModification(ArrayList<BaliseModifications> modification) {
 		this.modification = modification;
 	}
 
-	public BaliseSuppressions getSuppression() {
+	public ArrayList<BaliseSuppressions> getSuppression() {
 		return suppression;
 	}
 
-	public void setSuppression(BaliseSuppressions suppression) {
+	public void setSuppression(ArrayList<BaliseSuppressions> suppression) {
 		this.suppression = suppression;
 	}
 
-	public BaliseCreations getCreation() {
+	public ArrayList<BaliseCreations> getCreation() {
 		return creation;
 	}
 
-	public void setCreation(BaliseCreations creation) {
+	public void setCreation(ArrayList<BaliseCreations> creation) {
 		this.creation = creation;
 	}
-	
-	
 	
 }
