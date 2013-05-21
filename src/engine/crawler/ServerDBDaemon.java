@@ -40,7 +40,7 @@ public class ServerDBDaemon extends Thread{
 				try {
 					SimpleSaxParser s = new SimpleSaxParser(uri.getPath());
 					
-					BaliseIndexation bi = null;  //  s.getHandler()  .getBaliseIndexation() ?
+					BaliseIndexation bi = s.getHandler().getIndexation();
 					
 					
 					
