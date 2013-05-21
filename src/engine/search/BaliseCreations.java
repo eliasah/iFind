@@ -1,6 +1,6 @@
 package engine.search;
 
-import java.util.Hashtable;
+import java.util.ArrayList;
 
 /**
  * 
@@ -16,9 +16,9 @@ public class BaliseCreations {
 	private String proprietaire;
 	private String groupe;
 	private String permission;
-	private Hashtable<String, Integer> indexage;
+	private ArrayList<Mot> indexage;
 	
-	public BaliseCreations(int id){
+	public BaliseCreations(int id) {
 		this.id = id;
 		path=null;
 		format=null;
@@ -27,7 +27,7 @@ public class BaliseCreations {
 		proprietaire=null;
 		groupe=null;
 		permission=null;
-		indexage=new Hashtable<>();
+		indexage=null;
 	}
 	
 	public int getId() {
@@ -94,11 +94,11 @@ public class BaliseCreations {
 		this.permission = permission;
 	}
 
-	public Hashtable<String, Integer> getIndexage() {
+	public ArrayList<Mot> getIndexage() {
 		return indexage;
 	}
 
-	public void setIndexage(Hashtable<String, Integer> indexage) {
+	public void setIndexage(ArrayList<Mot> indexage) {
 		this.indexage = indexage;
 	}
 }

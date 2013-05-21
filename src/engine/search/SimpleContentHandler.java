@@ -31,22 +31,22 @@ public class SimpleContentHandler implements ContentHandler {
 		locator = new LocatorImpl();
 	}
 
-	
+
 	public void setDocumentLocator(Locator value) {
 		locator =  value;
 	}
 
-	
+
 	public void startDocument() throws SAXException {
 		System.out.println("Debut du parsing");
 	}
 
-	
+
 	public void endDocument() throws SAXException {
 		System.out.println("Fin du parsing" );
 	}
 
-	
+
 	public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributs) throws SAXException {
 		//Ouverture d'une balise,on la met sur la pile
 
@@ -63,17 +63,43 @@ public class SimpleContentHandler implements ContentHandler {
 			this.indexation.setSuppression(new ArrayList<BaliseSuppressions>());
 		// INDEXATION : sous-balises
 		if (localName.equals("FICHIERCREE"))
-			if (attributs.getLocalName(0).equals("id"))
-				this.indexation.getCreation().add(new BaliseCreations(Integer.parseInt(attributs.getValue(0))));
+			//			if (attributs.getLocalName(0).equals("id"))
+			//				this.indexation.getCreation().add(new BaliseCreations(Integer.parseInt(attributs.getValue(0))));
+			//			else
+			this.indexation.getCreation().add(new BaliseCreations(0));
 		if (localName.equals("FICHIERMODIFIE"))
-			if (attributs.getLocalName(0).equals("id"))
-				this.indexation.getModification().add(new BaliseModifications(Integer.parseInt(attributs.getValue(0))));
+			//			if (attributs.getLocalName(0).equals("id"))
+			//				this.indexation.getModification().add(new BaliseModifications(Integer.parseInt(attributs.getValue(0))));
+			//			else
+			this.indexation.getModification().add(new BaliseModifications(0));
 		if (localName.equals("FICHIERRENOMME"))
-			if (attributs.getLocalName(0).equals("id")) 
-				this.indexation.getRenommage().add(new BaliseRenommage(Integer.parseInt(attributs.getValue(0))));
+			//			if (attributs.getLocalName(0).equals("id")) 
+			//				this.indexation.getRenommage().add(new BaliseRenommage(Integer.parseInt(attributs.getValue(0))));
+			//			else
+			this.indexation.getRenommage().add(new BaliseRenommage(0));
 		if (localName.equals("FICHIERSUPPRIME"))
-			if (attributs.getLocalName(0).equals("id"))
-				this.indexation.getSuppression().add(new BaliseSuppressions(Integer.parseInt(attributs.getValue(0))));
+			//			if (attributs.getLocalName(0).equals("id"))
+			//				this.indexation.getSuppression().add(new BaliseSuppressions(Integer.parseInt(attributs.getValue(0))));
+			//			else
+			this.indexation.getSuppression().add(new BaliseSuppressions(0));
+		// INDEXATION : sous-sous-balises
+		if (localName.equals("MOT")) {
+			String tmp1 = balises.pop();
+			String tmp2 = balises.pop();
+			int frequence = 0;
+			if (balises.peek().equals("FICHIERCREE")) {
+				if (attributs.getLocalName(0).equals("frequence"))
+					frequence = Integer.parseInt(attributs.getValue(0));
+				this.indexation.getCreation().get(this.indexation.getCreation().size()-1).getIndexage().add(new Mot(frequence));
+			}
+			if (balises.peek().equals("FICHIERMODIFIE")) {
+				if (attributs.getLocalName(0).equals("frequence"))
+					frequence = Integer.parseInt(attributs.getValue(0));
+				this.indexation.getModification().get(this.indexation.getModification().size()-1).getIndexage().add(new Mot(frequence));
+			}
+			balises.push(tmp2);
+			balises.push(tmp1);
+		}
 		// ### FIN INDEXATION
 
 		// RECHERCHE
@@ -89,7 +115,7 @@ public class SimpleContentHandler implements ContentHandler {
 		this.balises.push(localName);
 	}
 
-	
+
 	public void endElement(String nameSpaceURI, String localName, String rawName) throws SAXException {
 		//Fermeture d'une balise, on la depile donc.
 		System.out.print("Fermeture de la balise : " + localName);
@@ -100,7 +126,7 @@ public class SimpleContentHandler implements ContentHandler {
 		System.out.println();
 	}
 
-	
+
 	public void characters(char[] ch, int start, int end) throws SAXException {
 		// lit l'interieure des balises, la balise sur la pile est la balise courante,
 		//On regarde ainsi dans quel balise on est pour recup�r� le string et le mettre dans l'attribu de search correspondant
@@ -171,10 +197,14 @@ public class SimpleContentHandler implements ContentHandler {
 		if (balises.peek().equals("MOT")) {
 			String tmp1 = balises.pop();
 			String tmp2 = balises.pop();
-			if (balises.peek().equals("FICHIERCREE"))
-				System.out.println("TODO");
-			if (balises.peek().equals("FICHIERMODIFIE"))
-				System.out.println("TODO");
+			if (balises.peek().equals("FICHIERCREE")) {
+				ArrayList<Mot> mots = this.indexation.getCreation().get(this.indexation.getCreation().size()-1).getIndexage();
+				mots.get(mots.size()-1).setMot(content);
+			}
+			if (balises.peek().equals("FICHIERMODIFIE")) {
+				ArrayList<Mot> mots = this.indexation.getModification().get(this.indexation.getModification().size()-1).getIndexage();
+				mots.get(mots.size()-1).setMot(content);
+			}
 			balises.push(tmp2);
 			balises.push(tmp1);
 		}
@@ -237,7 +267,10 @@ public class SimpleContentHandler implements ContentHandler {
 			result.getFiles().get(result.getFiles().size()-1).setName(content);
 		}
 		if(balises.peek().equals("PATH")){
-			result.getFiles().get(result.getFiles().size()-1).setPath(content);
+			String tmp = balises.pop();
+			if (balises.peek().equals("FILE"))
+				result.getFiles().get(result.getFiles().size()-1).setPath(content);
+			balises.push(tmp);
 		}
 		if(balises.peek().equals("PERM")){
 			result.getFiles().get(result.getFiles().size()-1).setPerm(content);
@@ -289,6 +322,11 @@ public class SimpleContentHandler implements ContentHandler {
 
 	public Result getResult() {
 		return result;
+	}
+
+
+	public BaliseIndexation getIndexation() {
+		return indexation;
 	}
 
 }
