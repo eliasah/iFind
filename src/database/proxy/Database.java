@@ -1,9 +1,9 @@
 package database.proxy;
 
-import java.sql.*;
-import java.util.Scanner;
-
-import database.trigram.Trigram;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import engine.search.BaliseCreations;
 import engine.search.BaliseIndexation;
@@ -24,32 +24,32 @@ public interface Database {
 	
 	void createDatabase();
 	
-	boolean isconnected();
+	Statement createStatement(int t,int r);
 	
-	ResultSet request(Search s);
-	
-	void resetDatabase();
-
 	void delete(BaliseSuppressions b) throws SQLException;
 	
-	PreparedStatement prepareStatement(String sql);
+	ResultFile FromResultSetToResultFile();
+
+	String getNameFromPath(String path);
 	
-	Statement createStatement(int t,int r);
+	void insert(BaliseCreations b);
+	
+	boolean isconnected();
+
+	PreparedStatement prepareStatement(String sql);
+
+	ResultSet queryTrg(Search s) throws SQLException;
 
 	void rename(BaliseRenommage b) throws SQLException;
 
-	void suppressionTable(String table) throws SQLException;
+	ResultSet request(Search s);
 
-	String getNameFromPath(String path);
-
-	ResultFile FromResultSetToResultFile();
-
-	ResultSet queryTrg(Search s) throws SQLException;
-	
-	void update(BaliseModifications b) throws SQLException;
-
-	void insert(BaliseCreations b);
+	void resetDatabase();
 	
 	void setBaliseIndexation(BaliseIndexation b);
+
+	void suppressionTable(String table) throws SQLException;
+	
+	void update(BaliseModifications b) throws SQLException;
 }
 
